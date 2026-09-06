@@ -1,0 +1,504 @@
+{
+  "meta": {
+    "generated_at": "2026-09-05T14:35:10.947682+00:00",
+    "buses_processed": [
+      "BUS_01",
+      "BUS_02",
+      "BUS_03"
+    ],
+    "total_packets": 36,
+    "total_detections": 3,
+    "total_events": 1
+  },
+  "detections": [
+    {
+      "packet_id": "ce43ef61-04ee-4320-b768-6cf6ac6e5ad8",
+      "device_id": "BUS_01",
+      "timestamp": 1788413672.42,
+      "timestamp_iso": "2026-09-03T05:34:32.420000+00:00",
+      "latitude": 20.292,
+      "longitude": 85.821,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.01,
+      "detections": []
+    },
+    {
+      "packet_id": "2e32daa0-b51e-46f1-8fbf-ad6ef8abdfbf",
+      "device_id": "BUS_01",
+      "timestamp": 1788413674.42,
+      "timestamp_iso": "2026-09-03T05:34:34.420000+00:00",
+      "latitude": 20.2928,
+      "longitude": 85.8217,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.01,
+      "detections": []
+    },
+    {
+      "packet_id": "526a7b80-7b37-43b7-a84f-0d133cb67a81",
+      "device_id": "BUS_01",
+      "timestamp": 1788413676.42,
+      "timestamp_iso": "2026-09-03T05:34:36.420000+00:00",
+      "latitude": 20.2936,
+      "longitude": 85.8224,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "71b1572b-1551-42c4-a1ca-d914a16284d7",
+      "device_id": "BUS_01",
+      "timestamp": 1788413678.42,
+      "timestamp_iso": "2026-09-03T05:34:38.420000+00:00",
+      "latitude": 20.2944,
+      "longitude": 85.8231,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "d42213f3-76e0-47e1-84bf-122584da2356",
+      "device_id": "BUS_01",
+      "timestamp": 1788413680.42,
+      "timestamp_iso": "2026-09-03T05:34:40.420000+00:00",
+      "latitude": 20.2952,
+      "longitude": 85.8238,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "1f32793a-d1ae-47d1-8774-e93cc437752b",
+      "device_id": "BUS_01",
+      "timestamp": 1788413682.42,
+      "timestamp_iso": "2026-09-03T05:34:42.420000+00:00",
+      "latitude": 20.29615,
+      "longitude": 85.82455,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.04,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.87,
+          "bbox": {
+            "x": 320.0,
+            "y": 300.0,
+            "width": 130.0,
+            "height": 95.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
+    },
+    {
+      "packet_id": "d980d46c-942e-450f-bcdb-1146ae674b7f",
+      "device_id": "BUS_01",
+      "timestamp": 1788413684.42,
+      "timestamp_iso": "2026-09-03T05:34:44.420000+00:00",
+      "latitude": 20.2968,
+      "longitude": 85.8252,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "5756705b-b7b7-45d6-93ac-d530fef0e763",
+      "device_id": "BUS_01",
+      "timestamp": 1788413686.42,
+      "timestamp_iso": "2026-09-03T05:34:46.420000+00:00",
+      "latitude": 20.2976,
+      "longitude": 85.8259,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "9cada7f9-529f-4ae2-80dc-c949efa5cfca",
+      "device_id": "BUS_01",
+      "timestamp": 1788413688.42,
+      "timestamp_iso": "2026-09-03T05:34:48.420000+00:00",
+      "latitude": 20.2984,
+      "longitude": 85.8266,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "a0734ce6-a688-4f97-9788-a6f908710a7d",
+      "device_id": "BUS_01",
+      "timestamp": 1788413690.42,
+      "timestamp_iso": "2026-09-03T05:34:50.420000+00:00",
+      "latitude": 20.2992,
+      "longitude": 85.8273,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "1069c001-ba52-4c8e-870d-8efc3e4adca3",
+      "device_id": "BUS_01",
+      "timestamp": 1788413692.42,
+      "timestamp_iso": "2026-09-03T05:34:52.420000+00:00",
+      "latitude": 20.3,
+      "longitude": 85.828,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "5d28333b-c501-474a-b811-16bf9573ff2b",
+      "device_id": "BUS_01",
+      "timestamp": 1788413694.42,
+      "timestamp_iso": "2026-09-03T05:34:54.420000+00:00",
+      "latitude": 20.3008,
+      "longitude": 85.8287,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "584b03bf-b1ff-4360-b12b-f3356cf60a90",
+      "device_id": "BUS_02",
+      "timestamp": 1788413672.421,
+      "timestamp_iso": "2026-09-03T05:34:32.421000+00:00",
+      "latitude": 20.292,
+      "longitude": 85.821,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "c518b7b4-4738-4fff-9635-7f1d0cfd6dfc",
+      "device_id": "BUS_02",
+      "timestamp": 1788413674.421,
+      "timestamp_iso": "2026-09-03T05:34:34.421000+00:00",
+      "latitude": 20.2928,
+      "longitude": 85.8217,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "8e7c8c91-6e52-44ff-acf6-a0e80d14e740",
+      "device_id": "BUS_02",
+      "timestamp": 1788413676.421,
+      "timestamp_iso": "2026-09-03T05:34:36.421000+00:00",
+      "latitude": 20.2936,
+      "longitude": 85.8224,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "72ffd446-0ba1-4581-99cf-3c6d64e13227",
+      "device_id": "BUS_02",
+      "timestamp": 1788413678.421,
+      "timestamp_iso": "2026-09-03T05:34:38.421000+00:00",
+      "latitude": 20.2944,
+      "longitude": 85.8231,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "469e34dd-7f99-4292-a5d6-7f005883d6e1",
+      "device_id": "BUS_02",
+      "timestamp": 1788413680.421,
+      "timestamp_iso": "2026-09-03T05:34:40.421000+00:00",
+      "latitude": 20.2952,
+      "longitude": 85.8238,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "4347cd61-6f8c-44f7-b552-07909b1654c5",
+      "device_id": "BUS_02",
+      "timestamp": 1788413682.421,
+      "timestamp_iso": "2026-09-03T05:34:42.421000+00:00",
+      "latitude": 20.2962,
+      "longitude": 85.82459,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.03,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.87,
+          "bbox": {
+            "x": 320.0,
+            "y": 300.0,
+            "width": 130.0,
+            "height": 95.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
+    },
+    {
+      "packet_id": "c6a7243e-b51b-4b82-9a93-d3ff943847ea",
+      "device_id": "BUS_02",
+      "timestamp": 1788413684.421,
+      "timestamp_iso": "2026-09-03T05:34:44.421000+00:00",
+      "latitude": 20.2968,
+      "longitude": 85.8252,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "61572ff5-24a7-4b8c-8a84-bf27a8281fea",
+      "device_id": "BUS_02",
+      "timestamp": 1788413686.421,
+      "timestamp_iso": "2026-09-03T05:34:46.421000+00:00",
+      "latitude": 20.2976,
+      "longitude": 85.8259,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "02af3170-3962-4f14-a81e-b2f60b81c5a6",
+      "device_id": "BUS_02",
+      "timestamp": 1788413688.421,
+      "timestamp_iso": "2026-09-03T05:34:48.421000+00:00",
+      "latitude": 20.2984,
+      "longitude": 85.8266,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "f653a892-91d6-47f2-a1ee-19242e34a5c4",
+      "device_id": "BUS_02",
+      "timestamp": 1788413690.421,
+      "timestamp_iso": "2026-09-03T05:34:50.421000+00:00",
+      "latitude": 20.2992,
+      "longitude": 85.8273,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "cbeb90b2-3681-4754-8f68-ade8e8bb3951",
+      "device_id": "BUS_02",
+      "timestamp": 1788413692.421,
+      "timestamp_iso": "2026-09-03T05:34:52.421000+00:00",
+      "latitude": 20.3,
+      "longitude": 85.828,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "6902e641-95b7-45aa-9994-e30056108ddb",
+      "device_id": "BUS_02",
+      "timestamp": 1788413694.421,
+      "timestamp_iso": "2026-09-03T05:34:54.421000+00:00",
+      "latitude": 20.3008,
+      "longitude": 85.8287,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "d7d8ec75-f5c5-4ed6-ba0e-53d1301ace41",
+      "device_id": "BUS_03",
+      "timestamp": 1788413672.422,
+      "timestamp_iso": "2026-09-03T05:34:32.422000+00:00",
+      "latitude": 20.292,
+      "longitude": 85.821,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "51a7d4f8-1880-4842-92e0-01db8fcc21cf",
+      "device_id": "BUS_03",
+      "timestamp": 1788413674.422,
+      "timestamp_iso": "2026-09-03T05:34:34.422000+00:00",
+      "latitude": 20.2928,
+      "longitude": 85.8217,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "6719fa23-bc72-440c-8b6e-8057bf45f8fb",
+      "device_id": "BUS_03",
+      "timestamp": 1788413676.422,
+      "timestamp_iso": "2026-09-03T05:34:36.422000+00:00",
+      "latitude": 20.2936,
+      "longitude": 85.8224,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "4b86e691-c64e-494b-be30-b7e46cde886f",
+      "device_id": "BUS_03",
+      "timestamp": 1788413678.422,
+      "timestamp_iso": "2026-09-03T05:34:38.422000+00:00",
+      "latitude": 20.2944,
+      "longitude": 85.8231,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "bf566c22-cf42-44f4-b551-2af6252c3348",
+      "device_id": "BUS_03",
+      "timestamp": 1788413680.422,
+      "timestamp_iso": "2026-09-03T05:34:40.422000+00:00",
+      "latitude": 20.2952,
+      "longitude": 85.8238,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "35fb366c-2683-4fa7-9915-da8f2ccab960",
+      "device_id": "BUS_03",
+      "timestamp": 1788413682.422,
+      "timestamp_iso": "2026-09-03T05:34:42.422000+00:00",
+      "latitude": 20.29615,
+      "longitude": 85.82455,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.03,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.87,
+          "bbox": {
+            "x": 320.0,
+            "y": 300.0,
+            "width": 130.0,
+            "height": 95.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
+    },
+    {
+      "packet_id": "e807d1d1-9200-435d-90e5-a7ac11822756",
+      "device_id": "BUS_03",
+      "timestamp": 1788413684.422,
+      "timestamp_iso": "2026-09-03T05:34:44.422000+00:00",
+      "latitude": 20.2968,
+      "longitude": 85.8252,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "c9dc606c-046a-4f7e-8eaf-7746d461303b",
+      "device_id": "BUS_03",
+      "timestamp": 1788413686.422,
+      "timestamp_iso": "2026-09-03T05:34:46.422000+00:00",
+      "latitude": 20.2976,
+      "longitude": 85.8259,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "6bd90eed-49fb-479e-886b-4bfb0a96c64a",
+      "device_id": "BUS_03",
+      "timestamp": 1788413688.422,
+      "timestamp_iso": "2026-09-03T05:34:48.422000+00:00",
+      "latitude": 20.2984,
+      "longitude": 85.8266,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "4e64c102-be60-4430-b210-72dac22b4d67",
+      "device_id": "BUS_03",
+      "timestamp": 1788413690.422,
+      "timestamp_iso": "2026-09-03T05:34:50.422000+00:00",
+      "latitude": 20.2992,
+      "longitude": 85.8273,
+      "speed_kmh": 24.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "59130c34-c146-4aec-a73a-3928c03e0b7b",
+      "device_id": "BUS_03",
+      "timestamp": 1788413692.422,
+      "timestamp_iso": "2026-09-03T05:34:52.422000+00:00",
+      "latitude": 20.3,
+      "longitude": 85.828,
+      "speed_kmh": 25.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    },
+    {
+      "packet_id": "0e0dfd7f-c755-4336-8f10-d7e1d69ee7de",
+      "device_id": "BUS_03",
+      "timestamp": 1788413694.422,
+      "timestamp_iso": "2026-09-03T05:34:54.422000+00:00",
+      "latitude": 20.3008,
+      "longitude": 85.8287,
+      "speed_kmh": 26.5,
+      "inference_time_ms": 0.0,
+      "detections": []
+    }
+  ],
+  "events": [
+    {
+      "event_id": "8ba11c02-18ad-44f6-bab7-a4acf1d390ee",
+      "type": "road_defect",
+      "subtype": "pothole",
+      "latitude": 20.296167,
+      "longitude": 85.824563,
+      "status": "HIGH_PRIORITY",
+      "severity": "MEDIUM",
+      "model_confidence": 0.87,
+      "event_confidence": 1.0,
+      "unique_sources": 3,
+      "observation_count": 3,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_02",
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.0,
+      "created_at": 1788413682.42,
+      "updated_at": 1788413682.422,
+      "observations": [
+        {
+          "observation_id": "ccb4cbdc-2eb4-416d-92f5-e2e7d085a26b",
+          "device_id": "BUS_01",
+          "timestamp": 1788413682.42,
+          "timestamp_iso": "2026-09-03T05:34:42.420000+00:00",
+          "latitude": 20.29615,
+          "longitude": 85.82455,
+          "defect_type": "pothole",
+          "model_confidence": 0.87
+        },
+        {
+          "observation_id": "36238be4-9cbb-4c73-8752-da045a02961d",
+          "device_id": "BUS_02",
+          "timestamp": 1788413682.421,
+          "timestamp_iso": "2026-09-03T05:34:42.421000+00:00",
+          "latitude": 20.2962,
+          "longitude": 85.82459,
+          "defect_type": "pothole",
+          "model_confidence": 0.87
+        },
+        {
+          "observation_id": "4f50c6b0-2199-4c5b-a705-af773dca40bc",
+          "device_id": "BUS_03",
+          "timestamp": 1788413682.422,
+          "timestamp_iso": "2026-09-03T05:34:42.422000+00:00",
+          "latitude": 20.29615,
+          "longitude": 85.82455,
+          "defect_type": "pothole",
+          "model_confidence": 0.87
+        }
+      ]
+    }
+  ]
+}

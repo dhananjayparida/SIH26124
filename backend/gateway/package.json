@@ -1,0 +1,15 @@
+{
+  "name": "urban-intel-gateway",
+  "version": "1.0.0",
+  "description": "Node.js API Gateway and WebSocket proxy for SIH26124 Urban Intelligence Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "verify:public": "node verify_public_gateway.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,8 @@
+names:
+  0: pothole
+  1: crack
+  2: rutting
+  3: waterlogging
+path: C:\Users\kaalk\.gemini\antigravity\scratch\SIH26124-Urban-Intelligence\data\training_dataset
+train: train/images
+val: val/images

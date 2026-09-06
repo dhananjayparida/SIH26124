@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Urban Intelligence Node</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <span class="status-dot" id="statusDot"></span>
+      <h1 style="display:inline">FLEET SENSOR NODE</h1>
+    </div>
+    <div class="device-badge" id="deviceBadge">BUS_SIM_01</div>
+  </header>
+
+  <div class="viewport" id="viewportArea">
+    <video id="videoElement" autoplay playsinline muted></video>
+    <canvas id="captureCanvas" width="640" height="480"></canvas>
+
+    <div class="overlay-hud">
+      <div class="hud-pill" id="fpsHud">FPS: 0.0</div>
+      <div class="hud-pill" id="netHud">BANDWIDTH: 0 KB/s</div>
+    </div>
+
+    <div id="tapToStartPrompt" style="position: absolute; text-align: center; pointer-events: none; padding: 12px; background: rgba(15,23,42,0.85); border-radius: 8px; border: 1px solid var(--border-glow, rgba(56,189,248,0.4));">
+      <div style="font-size: 24px; margin-bottom: 4px;">📷</div>
+      <div style="font-size: 14px; font-weight: 700; color: #38bdf8;">TAP BUTTON BELOW</div>
+      <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">To Start Live Dashcam Stream</div>
+    </div>
+  </div>
+
+  <div style="background: #0f172a; padding: 6px 12px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #1e293b; font-size: 11px;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <span style="color: #94a3b8; font-weight: 600;">GPS:</span>
+      <span id="gpsStatusPill" style="font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(56,189,248,0.2); color: #38bdf8;">BHUBANESWAR</span>
+    </div>
+    <div style="display: flex; gap: 4px;">
+      <button id="btnGpsSim" style="background: #0284c7; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer;">
+        🚌 JANPATH LOOP
+      </button>
+      <button id="btnGpsReal" style="background: #1e293b; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer;">
+        📍 HARDWARE GPS
+      </button>
+    </div>
+  </div>
+
+  <div class="telemetry-grid">
+    <div class="telemetry-item">
+      LAT / LON
+      <span id="coordsDisplay">20.29200, 85.82100</span>
+    </div>
+    <div class="telemetry-item">
+      SPEED / ACCURACY
+      <span id="speedDisplay">24.5 km/h | ±3m</span>
+    </div>
+    <div class="telemetry-item">
+      PACKETS / SKEW
+      <span id="packetDisplay">0 sent | 0.0s</span>
+    </div>
+  </div>
+
+  <div class="controls-bar">
+    <button class="btn btn-primary" id="btnToggleStream">START SENSING</button>
+    <button class="btn btn-secondary" id="btnSimulateDefect">TRIGGER DEFECT</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

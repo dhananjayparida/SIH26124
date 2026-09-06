@@ -1,0 +1,755 @@
+import React, { useState, useEffect } from 'react';
+import { useStore } from '../state/store';
+import { X, ShieldAlert, CheckCircle2, Wrench, Clock, Bus, MapPin, Award, Crosshair, Navigation, Maximize2, Image as ImageIcon, Eye, Copy, Check } from 'lucide-react';
+import { formatSpeedKmh } from '../utils/geo';
+
+export default function EntityPanel() {
+  const selectedEntity = useStore((state) => state.selectedEntity);
+  const clearSelection = useStore((state) => state.clearSelection);
+  const fetchEvents = useStore((state) => state.fetchEvents);
+  const fetchEventDetail = useStore((state) => state.fetchEventDetail);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [activeEvidenceIndex, setActiveEvidenceIndex] = useState(0);
+  const [isEvidenceModalOpen, setEvidenceModalOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const [copiedCoords, setCopiedCoords] = useState(false);
+
+  useEffect(() => {
+    setActiveEvidenceIndex(0);
+    setImgError(false);
+    setCopiedCoords(false);
+  }, [selectedEntity?.id]);
+
+  const copyCoords = (lat, lon) => {
+    if (lat && lon) {
+      navigator.clipboard.writeText(`${lat.toFixed(6)}, ${lon.toFixed(6)}`);
+      setCopiedCoords(true);
+      setTimeout(() => setCopiedCoords(false), 1500);
+    }
+  };
+
+  if (!selectedEntity) {
+    return (
+      <div style={{ padding: '30px 20px', textAlign: 'center', color: 'var(--text-dim)', fontSize: '13px' }}>
+        <MapPin size={24} style={{ marginBottom: '8px', opacity: 0.5 }} />
+        <div>Click any urban event or vehicle on the map to investigate evidence, live camera feed, and urban memory.</div>
+      </div>
+    );
+  }
+
+  // Handle Vehicle Selection -> LIVE CAMERA & TELEMETRY STREAM
+  if (selectedEntity.type === 'vehicle') {
+    const v = selectedEntity.data || {};
+    const isLive = v.status === 'LIVE';
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        {/* Header */}
+        <div style={{ padding: '16px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: '11px', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              MOBILE SENSING NODE
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--accent-cyan)' }}>
+              {selectedEntity.id}
+            </div>
+          </div>
+          <button
+            onClick={clearSelection}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <div style={{ padding: '16px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Status Pills */}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div
+              style={{
+                flex: 1,
+                padding: '8px',
+                borderRadius: '6px',
+                background: isLive ? 'rgba(16, 185, 129, 0.15)' : 'rgba(100, 116, 139, 0.15)',
+                border: isLive ? '1px solid #10b981' : '1px solid #64748b',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>SOURCE HEALTH</div>
+              <div style={{ fontSize: '12px', fontWeight: 800, color: isLive ? '#10b981' : '#94a3b8' }}>
+                {v.status || 'OFFLINE'}
+              </div>
+            </div>
+
+            <div
+              style={{
+                flex: 1,
+                padding: '8px',
+                borderRadius: '6px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>SPEED</div>
+              <div style={{ fontSize: '13px', fontWeight: 800, color: '#38bdf8' }}>
+                {v.speed !== undefined && v.speed !== null ? `${formatSpeedKmh(v.speed)} km/h` : '0.0 km/h'}
+              </div>
+            </div>
+
+            <div
+              style={{
+                flex: 1,
+                padding: '8px',
+                borderRadius: '6px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>HEADING</div>
+              <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>
+                {v.heading ? `${v.heading.toFixed(0)}°` : 'N/A'}
+              </div>
+            </div>
+          </div>
+
+          {/* LIVE CAMERA DASHCAM STREAM VIEW */}
+          <div>
+            <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span>LIVE DASHCAM FEED</span>
+              {isLive && (
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#ef4444', fontSize: '11px', fontWeight: 700 }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
+                  LIVE
+                </span>
+              )}
+            </div>
+
+            <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)', background: '#000', minHeight: '190px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {v.latestFrame ? (
+                <img
+                  src={v.latestFrame}
+                  alt="Live Camera Feed"
+                  style={{ width: '100%', height: 'auto', maxHeight: '240px', objectFit: 'cover', display: 'block' }}
+                />
+              ) : (
+                <div style={{ textAlign: 'center', color: 'var(--text-dim)', padding: '20px' }}>
+                  <Bus size={32} style={{ opacity: 0.3, marginBottom: '8px' }} />
+                  <div>Awaiting camera stream from {selectedEntity.id}...</div>
+                  <div style={{ fontSize: '11px', color: 'var(--accent-cyan)', marginTop: '4px' }}>
+                    Open PWA on phone and tap "START SENSING"
+                  </div>
+                </div>
+              )}
+
+              {/* HUD Overlay on Video */}
+              {v.latestFrame && (
+                <div style={{ position: 'absolute', bottom: '8px', left: '8px', right: '8px', background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(4px)', padding: '4px 8px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: 'monospace', color: '#38bdf8' }}>
+                  <span>{selectedEntity.id}</span>
+                  <span>{v.latitude?.toFixed(4)}, {v.longitude?.toFixed(4)}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Cockpit & Track Controls */}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              onClick={() => {
+                useStore.getState().setFollowedVehicle(selectedEntity.id);
+                useStore.getState().setCockpitMode(true);
+              }}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                background: '#0284c7',
+                border: 'none',
+                color: 'white',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
+              }}
+            >
+              <Crosshair size={14} /> ENTER COCKPIT
+            </button>
+            <button
+              onClick={() => {
+                const current = useStore.getState().followedVehicleId;
+                useStore.getState().setFollowedVehicle(current === selectedEntity.id ? null : selectedEntity.id);
+              }}
+              style={{
+                padding: '8px 12px',
+                background: useStore.getState().followedVehicleId === selectedEntity.id ? '#f59e0b' : 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                color: useStore.getState().followedVehicleId === selectedEntity.id ? '#000' : '#cbd5e1',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              {useStore.getState().followedVehicleId === selectedEntity.id ? 'FOLLOWING' : 'FOLLOW'}
+            </button>
+          </div>
+
+          {/* Telemetry Information */}
+          <div style={{ background: 'var(--bg-card)', padding: '12px', borderRadius: '8px', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-dim)' }}>Source Type:</span>
+              <span className="mono" style={{ textTransform: 'uppercase' }}>{v.source_type || 'phone_pwa'}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ color: 'var(--text-dim)' }}>Current Coordinates:</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="mono">{v.latitude?.toFixed(5)}, {v.longitude?.toFixed(5)}</span>
+                {v.latitude && v.longitude && (
+                  <button
+                    onClick={() => copyCoords(v.latitude, v.longitude)}
+                    style={{ background: 'transparent', border: 'none', color: copiedCoords ? '#10b981' : 'var(--accent-cyan)', cursor: 'pointer', padding: '2px', display: 'flex', alignItems: 'center' }}
+                    title="Copy Coordinates to Clipboard"
+                  >
+                    {copiedCoords ? <Check size={12} /> : <Copy size={12} />}
+                  </button>
+                )}
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-dim)' }}>Packets Processed:</span>
+              <span className="mono">{v.packets_sent || 0} frames</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-dim)' }}>Detections Triggered:</span>
+              <span className="mono" style={{ color: '#facc15' }}>{v.detections_reported || 0}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const ev = selectedEntity.data || {};
+  const timeline = ev.urban_memory_timeline || [];
+
+  const handleReportRepair = async () => {
+    setActionLoading(true);
+    try {
+      await fetch(`/api/events/${ev.event_id}/repair-report`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authority-Token': import.meta.env.VITE_AUTHORITY_TOKEN || ''
+        },
+        body: JSON.stringify({ authority: 'Bhubaneswar Municipal Corp', notes: 'Dispatched maintenance team' })
+      });
+      await fetchEventDetail(ev.event_id);
+      await fetchEvents();
+    } catch (e) {
+      console.error(e);
+    }
+    setActionLoading(false);
+  };
+
+  const handleResolve = async () => {
+    setActionLoading(true);
+    try {
+      await fetch(`/api/events/${ev.event_id}/resolve`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authority-Token': import.meta.env.VITE_AUTHORITY_TOKEN || ''
+        },
+        body: JSON.stringify({ authority: 'BMC Quality Inspector' })
+      });
+      await fetchEventDetail(ev.event_id);
+      await fetchEvents();
+    } catch (e) {
+      console.error(e);
+    }
+    setActionLoading(false);
+  };
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'HIGH_PRIORITY': return { bg: 'rgba(239, 68, 68, 0.15)', color: '#ef4444', border: '#ef4444' };
+      case 'CORROBORATED': return { bg: 'rgba(249, 115, 22, 0.15)', color: '#f97316', border: '#f97316' };
+      case 'REPAIR_REPORTED': return { bg: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', border: '#38bdf8' };
+      case 'RESOLVED': return { bg: 'rgba(16, 185, 129, 0.15)', color: '#10b981', border: '#10b981' };
+      default: return { bg: 'rgba(250, 204, 21, 0.15)', color: '#facc15', border: '#facc15' };
+    }
+  };
+
+  const statusStyle = getStatusStyle(ev.status);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {/* Header */}
+      <div style={{ padding: '16px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {/* Domain badge */}
+          {(() => {
+            const DOMAIN_META = {
+              ROAD_DAMAGE:    { label: 'ROAD DAMAGE',    color: '#ef4444' },
+              INFRASTRUCTURE: { label: 'INFRASTRUCTURE', color: '#f97316' },
+              WATERLOGGING:   { label: 'WATERLOGGING',   color: '#06b6d4' },
+              ROAD_HAZARD:    { label: 'ROAD HAZARD',    color: '#eab308' },
+              TRAFFIC:        { label: 'TRAFFIC',         color: '#38bdf8' },
+              SAFETY:         { label: 'SAFETY',          color: '#a855f7' },
+              INCIDENT:       { label: 'INCIDENT',        color: '#dc2626' },
+            };
+            const domainKey = (ev.type || 'ROAD_DAMAGE').toUpperCase();
+            const dm = DOMAIN_META[domainKey] || DOMAIN_META.ROAD_DAMAGE;
+            return (
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                marginBottom: '4px'
+              }}>
+                <span style={{
+                  fontSize: '10px', fontWeight: 800, letterSpacing: '0.5px',
+                  color: dm.color,
+                  background: `${dm.color}18`,
+                  border: `1px solid ${dm.color}44`,
+                  padding: '2px 8px', borderRadius: '4px',
+                }}>● {dm.label}</span>
+                <span style={{ fontSize: '10px', color: 'var(--text-dim)', letterSpacing: '0.4px' }}>
+                  CLICK-TO-INVESTIGATE
+                </span>
+              </div>
+            );
+          })()}
+          <div style={{ fontSize: '16px', fontWeight: 800, textTransform: 'capitalize', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {(ev.subtype || 'Unknown').replace(/_/g, ' ')}
+          </div>
+        </div>
+        <button
+          onClick={clearSelection}
+          style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+        >
+          <X size={18} />
+        </button>
+      </div>
+
+      {/* Main Details */}
+      <div style={{ padding: '16px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {/* Status Badge & Priority */}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <div
+            style={{
+              flex: 1,
+              padding: '8px',
+              borderRadius: '6px',
+              background: statusStyle.bg,
+              border: `1px solid ${statusStyle.border}`,
+              textAlign: 'center'
+            }}
+          >
+            <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>LIFECYCLE STATUS</div>
+            <div style={{ fontSize: '12px', fontWeight: 800, color: statusStyle.color }}>
+              {ev.status}
+            </div>
+          </div>
+
+          <div
+            style={{
+              flex: 1,
+              padding: '8px',
+              borderRadius: '6px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              textAlign: 'center'
+            }}
+          >
+            <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>CONFIDENCE</div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#38bdf8' }}>
+              {((ev.event_confidence || 0) * 100).toFixed(0)}%
+            </div>
+          </div>
+
+          <div
+            style={{
+              flex: 1,
+              padding: '8px',
+              borderRadius: '6px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-color)',
+              textAlign: 'center'
+            }}
+          >
+            <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>SOURCES</div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc' }}>
+              {ev.unique_sources} VEHICLES
+            </div>
+          </div>
+        </div>
+
+        {/* Evidence Visual Snapshot */}
+        <div>
+          <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ImageIcon size={13} color="var(--accent-cyan)" />
+              VISUAL EVIDENCE
+              {ev.evidence_uris && ev.evidence_uris.length > 1 && (
+                <span style={{ fontSize: '10px', color: 'var(--accent-cyan)', background: 'rgba(56, 189, 248, 0.15)', padding: '1px 5px', borderRadius: '4px' }}>
+                  {activeEvidenceIndex + 1}/{ev.evidence_uris.length}
+                </span>
+              )}
+            </span>
+            {ev.evidence_uris && ev.evidence_uris.length > 0 && !imgError && (
+              <button
+                onClick={() => setEvidenceModalOpen(true)}
+                style={{
+                  background: 'rgba(56, 189, 248, 0.1)',
+                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                  color: 'var(--accent-cyan)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+                title="Inspect High-Resolution Evidence Frame"
+              >
+                <Maximize2 size={11} /> Expand
+              </button>
+            )}
+          </div>
+
+          {ev.evidence_uris && ev.evidence_uris.length > 0 && !imgError ? (
+            <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)', background: '#0a0f1d' }}>
+              <img
+                src={ev.evidence_uris[activeEvidenceIndex] || ev.evidence_uris[0]}
+                alt="Defect Evidence"
+                style={{
+                  width: '100%',
+                  height: '180px',
+                  objectFit: 'cover',
+                  display: 'block',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s'
+                }}
+                onClick={() => setEvidenceModalOpen(true)}
+                onError={() => {
+                  setImgError(true);
+                }}
+              />
+
+              {/* Defect Type Pill Overlay */}
+              <div style={{
+                position: 'absolute',
+                top: '8px',
+                left: '8px',
+                background: ev.subtype === 'pothole' ? 'rgba(239, 68, 68, 0.9)' : ev.subtype === 'no_zebracrossing' ? 'rgba(245, 158, 11, 0.9)' : 'rgba(2, 132, 199, 0.9)',
+                backdropFilter: 'blur(4px)',
+                color: 'white',
+                padding: '2px 8px',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 800,
+                letterSpacing: '0.5px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                textTransform: 'uppercase'
+              }}>
+                <span>{ev.subtype || 'DEFECT'}</span>
+                <span>•</span>
+                <span>{((ev.model_confidence || ev.event_confidence || 0.85) * 100).toFixed(0)}% CONF</span>
+              </div>
+
+              {/* Multi-Photo Carousel Selector */}
+              {ev.evidence_uris.length > 1 && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: '8px',
+                  left: '8px',
+                  display: 'flex',
+                  gap: '4px',
+                  background: 'rgba(0, 0, 0, 0.65)',
+                  backdropFilter: 'blur(4px)',
+                  padding: '3px 6px',
+                  borderRadius: '12px'
+                }}>
+                  {ev.evidence_uris.slice(0, 5).map((uri, idx) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveEvidenceIndex(idx);
+                        setImgError(false);
+                      }}
+                      style={{
+                        width: '18px',
+                        height: '18px',
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: activeEvidenceIndex === idx ? 'var(--accent-cyan)' : 'rgba(255, 255, 255, 0.3)',
+                        color: activeEvidenceIndex === idx ? '#0a0f1d' : '#fff',
+                        fontSize: '9px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        padding: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {idx + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Click to inspect watermark */}
+              <div
+                onClick={() => setEvidenceModalOpen(true)}
+                style={{
+                  position: 'absolute',
+                  bottom: '8px',
+                  right: '8px',
+                  background: 'rgba(15, 23, 42, 0.85)',
+                  backdropFilter: 'blur(4px)',
+                  color: '#94a3b8',
+                  padding: '3px 8px',
+                  borderRadius: '4px',
+                  fontSize: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                <Eye size={11} color="var(--accent-cyan)" />
+                <span>Click to zoom</span>
+              </div>
+            </div>
+          ) : (
+            <div style={{
+              height: '120px',
+              background: 'rgba(15, 23, 42, 0.6)',
+              borderRadius: '8px',
+              border: '1px dashed var(--border-color)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              color: 'var(--text-dim)',
+              fontSize: '12px',
+              padding: '16px',
+              textAlign: 'center'
+            }}>
+              <ShieldAlert size={24} color="var(--text-dim)" style={{ opacity: 0.6 }} />
+              <div>
+                <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>Defect Telemetry Corroborated</span>
+              </div>
+              <span style={{ fontSize: '10px', color: 'var(--text-dim)' }}>
+                Visual snapshot saved in local evidence store or telemetry replay
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Metadata Details */}
+        <div style={{ background: 'var(--bg-card)', padding: '12px', borderRadius: '8px', fontSize: '12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ color: 'var(--text-dim)' }}>Event ID:</span>
+            <span className="mono">{ev.event_id?.substring(0, 12)}...</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ color: 'var(--text-dim)' }}>Coordinates:</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span className="mono">{ev.latitude?.toFixed(5)}, {ev.longitude?.toFixed(5)}</span>
+              {ev.latitude && ev.longitude && (
+                <button
+                  onClick={() => copyCoords(ev.latitude, ev.longitude)}
+                  style={{ background: 'transparent', border: 'none', color: copiedCoords ? '#10b981' : 'var(--accent-cyan)', cursor: 'pointer', padding: '2px', display: 'flex', alignItems: 'center' }}
+                  title="Copy Coordinates to Clipboard"
+                >
+                  {copiedCoords ? <Check size={12} /> : <Copy size={12} />}
+                </button>
+              )}
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ color: 'var(--text-dim)' }}>Severity Rating:</span>
+            <span style={{ fontWeight: 700, color: ev.severity === 'HIGH' ? '#ef4444' : '#f59e0b' }}>
+              {ev.severity}
+            </span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ color: 'var(--text-dim)' }}>Priority Score:</span>
+            <span className="mono" style={{ fontWeight: 700 }}>{ev.priority_score}</span>
+          </div>
+        </div>
+
+        {/* Urban Memory Timeline (§12) */}
+        <div>
+          <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Clock size={14} color="var(--accent-cyan)" />
+            <span>URBAN MEMORY TIMELINE ({timeline.length})</span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderLeft: '2px solid rgba(56, 189, 248, 0.3)', paddingLeft: '12px' }}>
+            {timeline.map((obs, idx) => (
+              <div key={obs.observation_id || idx} style={{ fontSize: '11px', background: 'rgba(255,255,255,0.02)', padding: '6px 8px', borderRadius: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
+                  <span style={{ color: 'var(--accent-cyan)' }}>#{idx + 1} {obs.device_id}</span>
+                  <span className="mono" style={{ color: '#10b981' }}>{(obs.model_confidence * 100).toFixed(0)}% conf</span>
+                </div>
+                <div style={{ color: 'var(--text-dim)', fontSize: '10px', marginTop: '2px' }}>
+                  {new Date(obs.timestamp * 1000).toLocaleTimeString()} · lat {obs.latitude.toFixed(4)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Municipal Workflow Action Buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: 'auto', paddingTop: '12px' }}>
+          {ev.status !== 'REPAIR_REPORTED' && ev.status !== 'RESOLVED' && (
+            <button
+              onClick={handleReportRepair}
+              disabled={actionLoading}
+              style={{
+                padding: '10px',
+                borderRadius: '6px',
+                border: 'none',
+                background: '#0284c7',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: '13px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <Wrench size={16} />
+              DISPATCH REPAIR CREW
+            </button>
+          )}
+
+          {ev.status !== 'RESOLVED' && (
+            <button
+              onClick={handleResolve}
+              disabled={actionLoading}
+              style={{
+                padding: '10px',
+                borderRadius: '6px',
+                border: 'none',
+                background: '#15803d',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: '13px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <CheckCircle2 size={16} />
+              MARK AS RESOLVED
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Lightbox / High-Resolution Visual Evidence Inspection Modal */}
+      {isEvidenceModalOpen && ev.evidence_uris && ev.evidence_uris.length > 0 && (
+        <div
+          className="modal-overlay"
+          onClick={() => setEvidenceModalOpen(false)}
+          style={{ zIndex: 9999 }}
+        >
+          <div
+            className="modal-content"
+            style={{ maxWidth: '820px', background: '#090d16', border: '1px solid var(--accent-cyan)' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ImageIcon size={18} color="var(--accent-cyan)" />
+                <span style={{ fontSize: '15px', fontWeight: 800 }}>
+                  HIGH-RESOLUTION VISUAL EVIDENCE AUDIT — {ev.subtype?.toUpperCase() || 'DEFECT'}
+                </span>
+              </div>
+              <button
+                onClick={() => setEvidenceModalOpen(false)}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <div style={{
+                position: 'relative',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                background: '#000',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '300px',
+                maxHeight: '520px'
+              }}>
+                <img
+                  src={ev.evidence_uris[activeEvidenceIndex] || ev.evidence_uris[0]}
+                  alt="Defect Evidence Full"
+                  style={{ maxWidth: '100%', maxHeight: '520px', objectFit: 'contain' }}
+                />
+              </div>
+
+              {/* Evidence Telemetry Stamp */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                gap: '10px',
+                background: 'var(--bg-card)',
+                padding: '12px',
+                borderRadius: '8px',
+                fontSize: '11px'
+              }}>
+                <div>
+                  <div style={{ color: 'var(--text-dim)' }}>EVENT IDENTIFIER</div>
+                  <div className="mono" style={{ fontWeight: 700, color: 'var(--accent-cyan)', marginTop: '2px' }}>
+                    {ev.event_id}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ color: 'var(--text-dim)' }}>GEO-COORDINATES</div>
+                  <div className="mono" style={{ fontWeight: 700, color: '#f8fafc', marginTop: '2px' }}>
+                    {ev.latitude?.toFixed(6)}, {ev.longitude?.toFixed(6)}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ color: 'var(--text-dim)' }}>DETECTION CONFIDENCE</div>
+                  <div className="mono" style={{ fontWeight: 700, color: '#10b981', marginTop: '2px' }}>
+                    {((ev.model_confidence || ev.event_confidence || 0.85) * 100).toFixed(1)}% (D-FINE)
+                  </div>
+                </div>
+                <div>
+                  <div style={{ color: 'var(--text-dim)' }}>CORROBORATION</div>
+                  <div className="mono" style={{ fontWeight: 700, color: '#f59e0b', marginTop: '2px' }}>
+                    {ev.unique_sources || 1} Independent Vehicle{ev.unique_sources > 1 ? 's' : ''}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
