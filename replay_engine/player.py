@@ -74,45 +74,6 @@ class ReplayPlayer:
 
             extra_meta = {"source_type": "replay"}
 
-            # Configure multi-class defect injection based on row index and mode
-            if has_defect or self.defect_mode == "all":
-                mock_defects = []
-
-                if self.defect_mode in ["pothole", "all"] and (has_defect or idx % 3 == 0):
-                    mock_defects.append({
-                        "class_name": "pothole",
-                        "confidence": 0.89,
-                        "x": 280,
-                        "y": 280,
-                        "w": 130,
-                        "h": 85
-                    })
-
-                if self.defect_mode in ["no_zebracrossing", "all"] and (idx % 3 == 1 or idx == 2):
-                    mock_defects.append({
-                        "class_name": "no_zebracrossing",
-                        "confidence": 0.86,
-                        "x": 320,
-                        "y": 360,
-                        "w": 260,
-                        "h": 70
-                    })
-
-                if self.defect_mode in ["vehicle", "all"] and (idx % 2 == 0 or idx == 1):
-                    mock_defects.append({
-                        "class_name": "vehicle",
-                        "confidence": 0.93,
-                        "x": 420,
-                        "y": 210,
-                        "w": 100,
-                        "h": 75
-                    })
-
-                if mock_defects:
-                    extra_meta["mock_defect"] = mock_defects[0]
-                    if len(mock_defects) > 1:
-                        extra_meta["mock_defects"] = mock_defects
-
             gps = GPSReading(
                 latitude=float(row["latitude"]),
                 longitude=float(row["longitude"]),
@@ -127,7 +88,7 @@ class ReplayPlayer:
                 device_id=self.device_id,
                 frame_timestamp=now,
                 gps=gps,
-                frame_base64=frame_b64,
+                frame_base64=frame_b64 if has_defect else "",
                 extra_metadata=extra_meta
             )
 
@@ -138,7 +99,7 @@ class ReplayPlayer:
                     data=payload_bytes,
                     headers={"Content-Type": "application/json"}
                 )
-                with urllib.request.urlopen(req, timeout=5.0) as response:
+                with urllib.request.urlopen(req, timeout=15.0) as response:
                     if response.status == 200:
                         data = json.loads(response.read().decode('utf-8'))
                         fused = data.get("fused_events", [])
@@ -189,7 +150,7 @@ def run_multi_vehicle_demo(backend_url: str = "http://127.0.0.1:5000", speed: fl
     print("==================================================================")
     print("  SIH26124 MULTI-VEHICLE DEFECT & VIDEO RECORDING REPLAY")
     print(f"  Mode: {defect_mode} (potholes, missing zebra crossing, vehicles)")
-    print("  Running BUS_01, BUS_02, BUS_03 concurrently on Janpath Corridor...")
+    print("  Running BUS_01, BUS_02, BUS_03 concurrently on Transit Route...")
     print("==================================================================")
 
     threads = [

@@ -226,6 +226,7 @@ class IngestionLoadBalancer {
         status: displayStatus,
         detections_count: result.detections_count || 0,
         detections_reported: result.detections_reported || 0,
+        detections: result.detections || [],
         frame_base64: packet.frame_base64 || null,
         fused_events: result.fused_events || []
       });
@@ -272,7 +273,7 @@ app.post('/devices/register', async (req, res) => {
   if (!consumeRateLimit(`register:${requestIp(req)}`, config.REGISTRATION_LIMIT)) {
     return res.status(429).json({ error: 'Registration rate limit exceeded' });
   }
-  const { device_id, source_type = 'phone_pwa', route_id = 'Janpath-Route-1', latitude = null, longitude = null, speed = 0, heading = 0 } = req.body;
+  const { device_id, source_type = 'phone_pwa', route_id = '', latitude = null, longitude = null, speed = 0, heading = 0 } = req.body;
   const devId = device_id || `BUS_LIVE_${String(registeredDevices.size + 1).padStart(2, '0')}`;
 
   if (!/^[A-Za-z0-9_-]{1,64}$/.test(devId)) {

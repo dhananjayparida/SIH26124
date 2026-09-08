@@ -1,0 +1,1763 @@
+{
+  "meta": {
+    "generated_at": "2026-09-08T17:12:56.378066+00:00",
+    "video_file": "video2.mp4",
+    "video_fps": 30.0,
+    "video_duration_sec": 27.37,
+    "total_video_frames": 821,
+    "frames_sampled": 103,
+    "sample_fps": 4.0,
+    "device_id": "GITA_CAM",
+    "gps_origin": {
+      "latitude": 20.18,
+      "longitude": 85.74
+    },
+    "conf_threshold": 0.2,
+    "model": "dfine",
+    "model_weights": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\models\\dfine_road_defect_latest.pt",
+    "processing_time_sec": 68.52,
+    "total_detections": 22,
+    "total_events": 1,
+    "annotated_video": "output\\video_result2_gita_annotated_annotated.mp4"
+  },
+  "detections": [
+    {
+      "frame_index": 0,
+      "video_time_sec": 0.0,
+      "packet_id": "91420c0e-aec7-4a5b-87d3-7554220a3db9",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887507.857034,
+      "timestamp_iso": "2026-09-08T17:11:47.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 7194.98,
+      "detections": []
+    },
+    {
+      "frame_index": 8,
+      "video_time_sec": 0.267,
+      "packet_id": "a741721f-1e79-4ea8-8f96-677c44a6b4a3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887508.1237006,
+      "timestamp_iso": "2026-09-08T17:11:48.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 464.38,
+      "detections": []
+    },
+    {
+      "frame_index": 16,
+      "video_time_sec": 0.533,
+      "packet_id": "445a8a0b-15c5-4e77-9a61-3cdcf77bc648",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887508.3903673,
+      "timestamp_iso": "2026-09-08T17:11:48.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 524.44,
+      "detections": []
+    },
+    {
+      "frame_index": 24,
+      "video_time_sec": 0.8,
+      "packet_id": "4647c2bb-f616-4da0-aecc-f48a5d978a83",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887508.657034,
+      "timestamp_iso": "2026-09-08T17:11:48.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 396.61,
+      "detections": []
+    },
+    {
+      "frame_index": 32,
+      "video_time_sec": 1.067,
+      "packet_id": "af45064c-1e65-4ce2-b7cd-42a33e6358c0",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887508.9237006,
+      "timestamp_iso": "2026-09-08T17:11:48.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 326.33,
+      "detections": []
+    },
+    {
+      "frame_index": 40,
+      "video_time_sec": 1.333,
+      "packet_id": "32e3a69f-c828-4ba8-8850-ba86e668ce10",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887509.1903672,
+      "timestamp_iso": "2026-09-08T17:11:49.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 349.52,
+      "detections": []
+    },
+    {
+      "frame_index": 48,
+      "video_time_sec": 1.6,
+      "packet_id": "be173e65-08e6-491a-b493-ee5df6ca3fb3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887509.4570339,
+      "timestamp_iso": "2026-09-08T17:11:49.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 323.21,
+      "detections": []
+    },
+    {
+      "frame_index": 56,
+      "video_time_sec": 1.867,
+      "packet_id": "89f9937e-8cec-4f26-bd18-7a10d9b86fda",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887509.7237005,
+      "timestamp_iso": "2026-09-08T17:11:49.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 369.06,
+      "detections": []
+    },
+    {
+      "frame_index": 64,
+      "video_time_sec": 2.133,
+      "packet_id": "ad748784-7d36-4f56-973d-785cc6d5a639",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887509.9903674,
+      "timestamp_iso": "2026-09-08T17:11:49.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 626.0,
+      "detections": []
+    },
+    {
+      "frame_index": 72,
+      "video_time_sec": 2.4,
+      "packet_id": "cfee22c6-e08d-46f8-97dc-f9aadfc2f119",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887510.257034,
+      "timestamp_iso": "2026-09-08T17:11:50.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 320.38,
+      "detections": []
+    },
+    {
+      "frame_index": 80,
+      "video_time_sec": 2.667,
+      "packet_id": "fd7e5adc-7a09-4e91-928d-62b0bac5d010",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887510.5237007,
+      "timestamp_iso": "2026-09-08T17:11:50.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 337.68,
+      "detections": []
+    },
+    {
+      "frame_index": 88,
+      "video_time_sec": 2.933,
+      "packet_id": "6310c827-5678-4373-bf2d-6d97c8ac45a8",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887510.7903674,
+      "timestamp_iso": "2026-09-08T17:11:50.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 332.91,
+      "detections": []
+    },
+    {
+      "frame_index": 96,
+      "video_time_sec": 3.2,
+      "packet_id": "1b409e71-71ea-4399-89ff-62da94af578d",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887511.057034,
+      "timestamp_iso": "2026-09-08T17:11:51.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 398.17,
+      "detections": []
+    },
+    {
+      "frame_index": 104,
+      "video_time_sec": 3.467,
+      "packet_id": "b808a086-0f54-4326-b0b7-ffae31cc0e91",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887511.3237007,
+      "timestamp_iso": "2026-09-08T17:11:51.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 378.7,
+      "detections": []
+    },
+    {
+      "frame_index": 112,
+      "video_time_sec": 3.733,
+      "packet_id": "5285a3eb-bc2d-4471-8986-0e946fbfe37b",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887511.5903673,
+      "timestamp_iso": "2026-09-08T17:11:51.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 315.06,
+      "detections": []
+    },
+    {
+      "frame_index": 120,
+      "video_time_sec": 4.0,
+      "packet_id": "276d45a7-3c03-465e-8568-c09193d8d7b7",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887511.857034,
+      "timestamp_iso": "2026-09-08T17:11:51.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 339.6,
+      "detections": []
+    },
+    {
+      "frame_index": 128,
+      "video_time_sec": 4.267,
+      "packet_id": "64153253-5531-41d6-b707-157f57cabeab",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887512.1237006,
+      "timestamp_iso": "2026-09-08T17:11:52.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 463.49,
+      "detections": []
+    },
+    {
+      "frame_index": 136,
+      "video_time_sec": 4.533,
+      "packet_id": "bff6a214-3fb1-4316-9970-ee3d376086e2",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887512.3903673,
+      "timestamp_iso": "2026-09-08T17:11:52.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 339.34,
+      "detections": []
+    },
+    {
+      "frame_index": 144,
+      "video_time_sec": 4.8,
+      "packet_id": "f7adaac1-f9b1-4bcb-a17f-9498a3ac5ad8",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887512.657034,
+      "timestamp_iso": "2026-09-08T17:11:52.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 425.86,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2289,
+          "bbox": {
+            "x": 319.7,
+            "y": 656.5,
+            "width": 160.3,
+            "height": 207.3
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 152,
+      "video_time_sec": 5.067,
+      "packet_id": "7f32fb83-51dd-42b2-9175-73e2fdefd98f",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887512.9237006,
+      "timestamp_iso": "2026-09-08T17:11:52.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 327.73,
+      "detections": []
+    },
+    {
+      "frame_index": 160,
+      "video_time_sec": 5.333,
+      "packet_id": "673d3363-881e-4ca7-a28a-549cbb095b90",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887513.1903672,
+      "timestamp_iso": "2026-09-08T17:11:53.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 328.43,
+      "detections": []
+    },
+    {
+      "frame_index": 168,
+      "video_time_sec": 5.6,
+      "packet_id": "a0919fcd-f24a-4c2f-89ab-97c988b15140",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887513.4570339,
+      "timestamp_iso": "2026-09-08T17:11:53.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 349.65,
+      "detections": []
+    },
+    {
+      "frame_index": 176,
+      "video_time_sec": 5.867,
+      "packet_id": "841b322c-901f-4b9d-8786-b43e62a08ab0",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887513.7237005,
+      "timestamp_iso": "2026-09-08T17:11:53.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 349.44,
+      "detections": []
+    },
+    {
+      "frame_index": 184,
+      "video_time_sec": 6.133,
+      "packet_id": "feee8093-021f-4ef1-989d-a01f9540b25e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887513.9903674,
+      "timestamp_iso": "2026-09-08T17:11:53.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 353.82,
+      "detections": []
+    },
+    {
+      "frame_index": 192,
+      "video_time_sec": 6.4,
+      "packet_id": "20a4377d-277d-401e-9616-e4f71e5bfd7a",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887514.257034,
+      "timestamp_iso": "2026-09-08T17:11:54.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 345.98,
+      "detections": []
+    },
+    {
+      "frame_index": 200,
+      "video_time_sec": 6.667,
+      "packet_id": "bf994a44-48d0-4386-a387-64eae64852ff",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887514.5237007,
+      "timestamp_iso": "2026-09-08T17:11:54.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 330.84,
+      "detections": []
+    },
+    {
+      "frame_index": 208,
+      "video_time_sec": 6.933,
+      "packet_id": "c238aa73-7d01-4842-bfac-f5bce5cc15ec",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887514.7903674,
+      "timestamp_iso": "2026-09-08T17:11:54.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 375.2,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.3308,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.2,
+            "width": 156.0,
+            "height": 207.9
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.2628,
+          "bbox": {
+            "x": 320.5,
+            "y": 656.4,
+            "width": 159.0,
+            "height": 207.6
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 216,
+      "video_time_sec": 7.2,
+      "packet_id": "6ec6ea2e-63e5-48ab-a55c-ee027d2c06eb",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887515.057034,
+      "timestamp_iso": "2026-09-08T17:11:55.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 503.5,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.4352,
+          "bbox": {
+            "x": 321.7,
+            "y": 656.0,
+            "width": 158.1,
+            "height": 207.8
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 224,
+      "video_time_sec": 7.467,
+      "packet_id": "c0d2192a-0148-4d70-95f1-d20e0ba25f14",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887515.3237007,
+      "timestamp_iso": "2026-09-08T17:11:55.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 1068.99,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.3834,
+          "bbox": {
+            "x": 323.2,
+            "y": 656.0,
+            "width": 157.4,
+            "height": 207.9
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.2224,
+          "bbox": {
+            "x": 0.4,
+            "y": 656.2,
+            "width": 164.0,
+            "height": 207.7
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 232,
+      "video_time_sec": 7.733,
+      "packet_id": "c493a2ae-5ea5-4caf-816d-100b0d4e59b3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887515.5903673,
+      "timestamp_iso": "2026-09-08T17:11:55.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 792.89,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.3467,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.2,
+            "width": 156.7,
+            "height": 207.7
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 240,
+      "video_time_sec": 8.0,
+      "packet_id": "ede47414-0b2a-470a-abbc-45b78c3bf336",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887515.857034,
+      "timestamp_iso": "2026-09-08T17:11:55.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 498.28,
+      "detections": []
+    },
+    {
+      "frame_index": 248,
+      "video_time_sec": 8.267,
+      "packet_id": "c2c8d59c-2428-4380-9b12-819ac2dfd005",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887516.1237006,
+      "timestamp_iso": "2026-09-08T17:11:56.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 548.32,
+      "detections": []
+    },
+    {
+      "frame_index": 256,
+      "video_time_sec": 8.533,
+      "packet_id": "8dca8df7-988b-436e-b8bd-5c5a020c6111",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887516.3903673,
+      "timestamp_iso": "2026-09-08T17:11:56.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 554.66,
+      "detections": []
+    },
+    {
+      "frame_index": 264,
+      "video_time_sec": 8.8,
+      "packet_id": "8fb695b0-14e3-4564-8171-0e87eb0e7dc6",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887516.657034,
+      "timestamp_iso": "2026-09-08T17:11:56.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 379.44,
+      "detections": []
+    },
+    {
+      "frame_index": 272,
+      "video_time_sec": 9.067,
+      "packet_id": "ec91c256-275b-41f3-ac36-1ab4328304d1",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887516.9237006,
+      "timestamp_iso": "2026-09-08T17:11:56.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 346.05,
+      "detections": []
+    },
+    {
+      "frame_index": 280,
+      "video_time_sec": 9.333,
+      "packet_id": "e8d732ef-a338-4119-a77c-c66016fdeb1e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887517.1903672,
+      "timestamp_iso": "2026-09-08T17:11:57.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 334.51,
+      "detections": []
+    },
+    {
+      "frame_index": 288,
+      "video_time_sec": 9.6,
+      "packet_id": "a4fbe50c-757c-4a9d-8beb-6cc7c66545c9",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887517.4570339,
+      "timestamp_iso": "2026-09-08T17:11:57.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 328.53,
+      "detections": []
+    },
+    {
+      "frame_index": 296,
+      "video_time_sec": 9.867,
+      "packet_id": "47d19cb7-01b0-45d2-a6a2-851d952305ee",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887517.7237005,
+      "timestamp_iso": "2026-09-08T17:11:57.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 309.53,
+      "detections": []
+    },
+    {
+      "frame_index": 304,
+      "video_time_sec": 10.133,
+      "packet_id": "1842c361-d13a-48cb-a040-fd8ee4c9d8f0",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887517.9903674,
+      "timestamp_iso": "2026-09-08T17:11:57.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 346.24,
+      "detections": []
+    },
+    {
+      "frame_index": 312,
+      "video_time_sec": 10.4,
+      "packet_id": "5854ec93-23a1-40a0-8217-c7b159557828",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887518.257034,
+      "timestamp_iso": "2026-09-08T17:11:58.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 348.66,
+      "detections": []
+    },
+    {
+      "frame_index": 320,
+      "video_time_sec": 10.667,
+      "packet_id": "42587564-9a8a-4eab-82ac-1f15f7a3f857",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887518.5237007,
+      "timestamp_iso": "2026-09-08T17:11:58.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 324.22,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.6048,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.1,
+            "width": 160.4,
+            "height": 207.8
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.3067,
+          "bbox": {
+            "x": 322.3,
+            "y": 656.1,
+            "width": 157.6,
+            "height": 207.8
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 328,
+      "video_time_sec": 10.933,
+      "packet_id": "0c176991-afe2-4acc-824b-41c084e7dfc3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887518.7903674,
+      "timestamp_iso": "2026-09-08T17:11:58.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 389.04,
+      "detections": []
+    },
+    {
+      "frame_index": 336,
+      "video_time_sec": 11.2,
+      "packet_id": "a50d47f3-f96d-4208-9350-ddd0d3821d9d",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887519.057034,
+      "timestamp_iso": "2026-09-08T17:11:59.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 330.47,
+      "detections": []
+    },
+    {
+      "frame_index": 344,
+      "video_time_sec": 11.467,
+      "packet_id": "476e5c13-7196-4755-8edf-d66806fab70c",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887519.3237007,
+      "timestamp_iso": "2026-09-08T17:11:59.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 348.66,
+      "detections": []
+    },
+    {
+      "frame_index": 352,
+      "video_time_sec": 11.733,
+      "packet_id": "f070326c-96e3-419d-8327-3b8179d16e75",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887519.5903673,
+      "timestamp_iso": "2026-09-08T17:11:59.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 288.5,
+      "detections": []
+    },
+    {
+      "frame_index": 360,
+      "video_time_sec": 12.0,
+      "packet_id": "e5827eb1-ee30-4027-bb73-5d8a230892d7",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887519.857034,
+      "timestamp_iso": "2026-09-08T17:11:59.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 430.79,
+      "detections": []
+    },
+    {
+      "frame_index": 368,
+      "video_time_sec": 12.267,
+      "packet_id": "24d545ba-2760-4a17-b9f3-c66e4df13166",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887520.1237006,
+      "timestamp_iso": "2026-09-08T17:12:00.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 345.67,
+      "detections": []
+    },
+    {
+      "frame_index": 376,
+      "video_time_sec": 12.533,
+      "packet_id": "21a7877d-9a5c-43df-bedd-39c284b1ad77",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887520.3903673,
+      "timestamp_iso": "2026-09-08T17:12:00.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 327.97,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.211,
+          "bbox": {
+            "x": 323.2,
+            "y": 656.1,
+            "width": 156.7,
+            "height": 207.8
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 384,
+      "video_time_sec": 12.8,
+      "packet_id": "8cbed682-1722-48be-a94d-b04e30a25402",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887520.657034,
+      "timestamp_iso": "2026-09-08T17:12:00.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 609.57,
+      "detections": []
+    },
+    {
+      "frame_index": 392,
+      "video_time_sec": 13.067,
+      "packet_id": "ef45e358-ac11-4a2d-9cf6-059a61cf5454",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887520.9237006,
+      "timestamp_iso": "2026-09-08T17:12:00.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 810.33,
+      "detections": []
+    },
+    {
+      "frame_index": 400,
+      "video_time_sec": 13.333,
+      "packet_id": "02677f47-10cd-4817-a4ac-ebde665e7a9b",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887521.1903672,
+      "timestamp_iso": "2026-09-08T17:12:01.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 416.88,
+      "detections": []
+    },
+    {
+      "frame_index": 408,
+      "video_time_sec": 13.6,
+      "packet_id": "906c7bac-203d-4e0a-b3d6-89d394e9cb00",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887521.4570339,
+      "timestamp_iso": "2026-09-08T17:12:01.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 261.24,
+      "detections": []
+    },
+    {
+      "frame_index": 416,
+      "video_time_sec": 13.867,
+      "packet_id": "ce8d3215-97b2-4cfe-83a8-0642835043de",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887521.7237005,
+      "timestamp_iso": "2026-09-08T17:12:01.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 279.63,
+      "detections": []
+    },
+    {
+      "frame_index": 424,
+      "video_time_sec": 14.133,
+      "packet_id": "4f4f34c5-407f-4d8c-87ae-8d0ddc18b865",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887521.9903674,
+      "timestamp_iso": "2026-09-08T17:12:01.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 264.37,
+      "detections": []
+    },
+    {
+      "frame_index": 432,
+      "video_time_sec": 14.4,
+      "packet_id": "33d34c06-5b1d-4b91-aa11-7bc720e98f6a",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887522.257034,
+      "timestamp_iso": "2026-09-08T17:12:02.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 269.3,
+      "detections": []
+    },
+    {
+      "frame_index": 440,
+      "video_time_sec": 14.667,
+      "packet_id": "c13dfcab-3997-4f23-bcfc-c9931e9e8fbf",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887522.5237007,
+      "timestamp_iso": "2026-09-08T17:12:02.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 270.0,
+      "detections": []
+    },
+    {
+      "frame_index": 448,
+      "video_time_sec": 14.933,
+      "packet_id": "118d7cc4-a18b-4217-8676-22d246695699",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887522.7903674,
+      "timestamp_iso": "2026-09-08T17:12:02.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 254.0,
+      "detections": []
+    },
+    {
+      "frame_index": 456,
+      "video_time_sec": 15.2,
+      "packet_id": "3220aa4b-667c-4987-b429-c9b97969b973",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887523.057034,
+      "timestamp_iso": "2026-09-08T17:12:03.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 273.14,
+      "detections": []
+    },
+    {
+      "frame_index": 464,
+      "video_time_sec": 15.467,
+      "packet_id": "4c135b57-b84e-4e1b-a0d1-e39be1716350",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887523.3237007,
+      "timestamp_iso": "2026-09-08T17:12:03.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 273.02,
+      "detections": []
+    },
+    {
+      "frame_index": 472,
+      "video_time_sec": 15.733,
+      "packet_id": "152636eb-1780-46b5-91b2-9c28ecf87de2",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887523.5903673,
+      "timestamp_iso": "2026-09-08T17:12:03.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 278.16,
+      "detections": []
+    },
+    {
+      "frame_index": 480,
+      "video_time_sec": 16.0,
+      "packet_id": "2715b489-1c2f-4a63-878e-145b197a248f",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887523.857034,
+      "timestamp_iso": "2026-09-08T17:12:03.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 309.21,
+      "detections": []
+    },
+    {
+      "frame_index": 488,
+      "video_time_sec": 16.267,
+      "packet_id": "ef49edc8-1f5c-49e1-b9f3-56c5c8556120",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887524.1237006,
+      "timestamp_iso": "2026-09-08T17:12:04.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 278.48,
+      "detections": []
+    },
+    {
+      "frame_index": 496,
+      "video_time_sec": 16.533,
+      "packet_id": "dd066866-8f58-4ab4-a782-f588f94eec01",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887524.3903673,
+      "timestamp_iso": "2026-09-08T17:12:04.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 298.34,
+      "detections": []
+    },
+    {
+      "frame_index": 504,
+      "video_time_sec": 16.8,
+      "packet_id": "dfa646ae-88ae-4fce-952a-b44556cb7ea5",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887524.657034,
+      "timestamp_iso": "2026-09-08T17:12:04.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 275.37,
+      "detections": []
+    },
+    {
+      "frame_index": 512,
+      "video_time_sec": 17.067,
+      "packet_id": "ad6325df-886a-49b7-9c9a-77b3540d00dc",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887524.9237006,
+      "timestamp_iso": "2026-09-08T17:12:04.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 246.93,
+      "detections": []
+    },
+    {
+      "frame_index": 520,
+      "video_time_sec": 17.333,
+      "packet_id": "06a03662-3b76-4d74-9cac-c8c70dad978f",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887525.1903672,
+      "timestamp_iso": "2026-09-08T17:12:05.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 251.24,
+      "detections": []
+    },
+    {
+      "frame_index": 528,
+      "video_time_sec": 17.6,
+      "packet_id": "fc6edfd1-54bd-4109-b1c2-4b2a7148e69e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887525.4570339,
+      "timestamp_iso": "2026-09-08T17:12:05.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 256.38,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2157,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.5,
+            "width": 156.9,
+            "height": 207.5
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 536,
+      "video_time_sec": 17.867,
+      "packet_id": "caff9362-e984-4442-8bbe-6c7b93892b69",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887525.7237005,
+      "timestamp_iso": "2026-09-08T17:12:05.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 237.8,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2037,
+          "bbox": {
+            "x": 315.8,
+            "y": 656.3,
+            "width": 160.7,
+            "height": 207.6
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 544,
+      "video_time_sec": 18.133,
+      "packet_id": "c39d2de6-b0a8-4481-bd9a-dd490cec60e1",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887525.9903674,
+      "timestamp_iso": "2026-09-08T17:12:05.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 239.98,
+      "detections": []
+    },
+    {
+      "frame_index": 552,
+      "video_time_sec": 18.4,
+      "packet_id": "a42cce51-6ce1-4675-8e84-985bd19387c9",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887526.257034,
+      "timestamp_iso": "2026-09-08T17:12:06.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 996.59,
+      "detections": []
+    },
+    {
+      "frame_index": 560,
+      "video_time_sec": 18.667,
+      "packet_id": "75461ba2-90da-477b-a13f-a384f7fb0522",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887526.5237007,
+      "timestamp_iso": "2026-09-08T17:12:06.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 325.88,
+      "detections": []
+    },
+    {
+      "frame_index": 568,
+      "video_time_sec": 18.933,
+      "packet_id": "c3736e64-d728-4941-acda-104003050f55",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887526.7903674,
+      "timestamp_iso": "2026-09-08T17:12:06.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 292.39,
+      "detections": []
+    },
+    {
+      "frame_index": 576,
+      "video_time_sec": 19.2,
+      "packet_id": "11352e34-1842-453a-ba2d-222a1d847419",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887527.057034,
+      "timestamp_iso": "2026-09-08T17:12:07.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 298.59,
+      "detections": []
+    },
+    {
+      "frame_index": 584,
+      "video_time_sec": 19.467,
+      "packet_id": "2fa554af-a8e5-4656-bea7-745b9e5a1308",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887527.3237007,
+      "timestamp_iso": "2026-09-08T17:12:07.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 272.74,
+      "detections": []
+    },
+    {
+      "frame_index": 592,
+      "video_time_sec": 19.733,
+      "packet_id": "0f9e0deb-7f2f-4c43-a6d9-42dd2c047912",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887527.5903673,
+      "timestamp_iso": "2026-09-08T17:12:07.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 342.05,
+      "detections": []
+    },
+    {
+      "frame_index": 600,
+      "video_time_sec": 20.0,
+      "packet_id": "0d919866-5183-4387-b58b-61cce02e34e7",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887527.857034,
+      "timestamp_iso": "2026-09-08T17:12:07.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 428.58,
+      "detections": []
+    },
+    {
+      "frame_index": 608,
+      "video_time_sec": 20.267,
+      "packet_id": "8bab332e-c95d-4a05-b6c3-f9a7e881e13f",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887528.1237006,
+      "timestamp_iso": "2026-09-08T17:12:08.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 325.55,
+      "detections": []
+    },
+    {
+      "frame_index": 616,
+      "video_time_sec": 20.533,
+      "packet_id": "19ce3084-0799-4afa-b2fb-c56290478991",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887528.3903673,
+      "timestamp_iso": "2026-09-08T17:12:08.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 320.73,
+      "detections": []
+    },
+    {
+      "frame_index": 624,
+      "video_time_sec": 20.8,
+      "packet_id": "1c406f3a-d746-4f6d-bca2-ebda1f835eed",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887528.657034,
+      "timestamp_iso": "2026-09-08T17:12:08.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 367.63,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.22,
+          "bbox": {
+            "x": 323.5,
+            "y": 655.7,
+            "width": 156.6,
+            "height": 208.1
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 632,
+      "video_time_sec": 21.067,
+      "packet_id": "2a034620-2057-46fd-b994-fcfcfb7f5ec0",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887528.9237006,
+      "timestamp_iso": "2026-09-08T17:12:08.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 296.52,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2037,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.3,
+            "width": 157.0,
+            "height": 207.6
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 640,
+      "video_time_sec": 21.333,
+      "packet_id": "5b797e61-81e0-4953-a524-ce10fce006fb",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887529.1903672,
+      "timestamp_iso": "2026-09-08T17:12:09.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 320.32,
+      "detections": []
+    },
+    {
+      "frame_index": 648,
+      "video_time_sec": 21.6,
+      "packet_id": "315d82ba-9dd3-4226-833b-792360c936e3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887529.4570339,
+      "timestamp_iso": "2026-09-08T17:12:09.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 631.96,
+      "detections": []
+    },
+    {
+      "frame_index": 656,
+      "video_time_sec": 21.867,
+      "packet_id": "79e9daf2-7b2f-4e57-914f-b910afb5e9b5",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887529.7237005,
+      "timestamp_iso": "2026-09-08T17:12:09.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 710.99,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2546,
+          "bbox": {
+            "x": 320.5,
+            "y": 656.2,
+            "width": 159.0,
+            "height": 207.7
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 664,
+      "video_time_sec": 22.133,
+      "packet_id": "3c5f96a4-5ffe-4912-8125-a6671d250daf",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887529.9903674,
+      "timestamp_iso": "2026-09-08T17:12:09.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 423.51,
+      "detections": []
+    },
+    {
+      "frame_index": 672,
+      "video_time_sec": 22.4,
+      "packet_id": "ca720e59-9862-43f8-93ef-2fad110e6e12",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887530.257034,
+      "timestamp_iso": "2026-09-08T17:12:10.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 362.9,
+      "detections": []
+    },
+    {
+      "frame_index": 680,
+      "video_time_sec": 22.667,
+      "packet_id": "cc2723a2-f3c3-4ebf-8753-a2dd3981f324",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887530.5237007,
+      "timestamp_iso": "2026-09-08T17:12:10.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 746.34,
+      "detections": []
+    },
+    {
+      "frame_index": 688,
+      "video_time_sec": 22.933,
+      "packet_id": "9f4b49dd-aa33-4019-a267-46059f93e313",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887530.7903674,
+      "timestamp_iso": "2026-09-08T17:12:10.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 295.59,
+      "detections": []
+    },
+    {
+      "frame_index": 696,
+      "video_time_sec": 23.2,
+      "packet_id": "9e31c14e-082c-458f-bc85-4d927d880fc3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887531.057034,
+      "timestamp_iso": "2026-09-08T17:12:11.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 296.69,
+      "detections": []
+    },
+    {
+      "frame_index": 704,
+      "video_time_sec": 23.467,
+      "packet_id": "4a84e8ca-2b9c-417e-99f2-33a5cb8b29bd",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887531.3237007,
+      "timestamp_iso": "2026-09-08T17:12:11.323701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 290.45,
+      "detections": []
+    },
+    {
+      "frame_index": 712,
+      "video_time_sec": 23.733,
+      "packet_id": "4eb7e330-6b4d-43e0-8f19-5ea409d22f8c",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887531.5903673,
+      "timestamp_iso": "2026-09-08T17:12:11.590367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 343.5,
+      "detections": []
+    },
+    {
+      "frame_index": 720,
+      "video_time_sec": 24.0,
+      "packet_id": "4d56205f-8342-4fec-aae5-a89b1e56ebd7",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887531.857034,
+      "timestamp_iso": "2026-09-08T17:12:11.857034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 407.59,
+      "detections": []
+    },
+    {
+      "frame_index": 728,
+      "video_time_sec": 24.267,
+      "packet_id": "c7c5cadc-62ae-4c54-8bee-5ea93b73cbc7",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887532.1237006,
+      "timestamp_iso": "2026-09-08T17:12:12.123701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 260.53,
+      "detections": []
+    },
+    {
+      "frame_index": 736,
+      "video_time_sec": 24.533,
+      "packet_id": "8a2e7a5c-c0d9-41ff-b710-b518d53b717e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887532.3903673,
+      "timestamp_iso": "2026-09-08T17:12:12.390367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 259.37,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.2215,
+          "bbox": {
+            "x": 0.0,
+            "y": 656.6,
+            "width": 158.5,
+            "height": 207.4
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 744,
+      "video_time_sec": 24.8,
+      "packet_id": "9db14389-d934-416e-9083-cb77ed0e9a8e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887532.657034,
+      "timestamp_iso": "2026-09-08T17:12:12.657034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 321.9,
+      "detections": []
+    },
+    {
+      "frame_index": 752,
+      "video_time_sec": 25.067,
+      "packet_id": "dd8cf1b0-9f05-463b-b429-ba6295b84f9b",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887532.9237006,
+      "timestamp_iso": "2026-09-08T17:12:12.923701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 259.09,
+      "detections": []
+    },
+    {
+      "frame_index": 760,
+      "video_time_sec": 25.333,
+      "packet_id": "51d5b49b-f27d-47c0-8dac-e17b924368ee",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887533.1903672,
+      "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 330.07,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.6615,
+          "bbox": {
+            "x": 215.1,
+            "y": 204.7,
+            "width": 48.7,
+            "height": 70.8
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.4875,
+          "bbox": {
+            "x": 257.0,
+            "y": 209.9,
+            "width": 48.6,
+            "height": 69.3
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.429,
+          "bbox": {
+            "x": 232.5,
+            "y": 201.6,
+            "width": 49.1,
+            "height": 71.3
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.3605,
+          "bbox": {
+            "x": 196.3,
+            "y": 211.3,
+            "width": 49.5,
+            "height": 70.7
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class_name": "pothole",
+          "confidence": 0.235,
+          "bbox": {
+            "x": 274.7,
+            "y": 211.8,
+            "width": 48.9,
+            "height": 69.5
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 768,
+      "video_time_sec": 25.6,
+      "packet_id": "a862768b-af2d-4b55-8688-864e3d37689d",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887533.4570339,
+      "timestamp_iso": "2026-09-08T17:12:13.457034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 294.95,
+      "detections": [
+        {
+          "class_name": "pothole",
+          "confidence": 0.3382,
+          "bbox": {
+            "x": 215.0,
+            "y": 211.4,
+            "width": 48.7,
+            "height": 69.1
+          },
+          "model_version": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    },
+    {
+      "frame_index": 776,
+      "video_time_sec": 25.867,
+      "packet_id": "22a712de-6849-44b8-bd54-fa12aa74ea18",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887533.7237005,
+      "timestamp_iso": "2026-09-08T17:12:13.723701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 257.09,
+      "detections": []
+    },
+    {
+      "frame_index": 784,
+      "video_time_sec": 26.133,
+      "packet_id": "9e628f60-8847-4e99-bad5-433c1fdb3b3e",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887533.9903674,
+      "timestamp_iso": "2026-09-08T17:12:13.990367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 240.91,
+      "detections": []
+    },
+    {
+      "frame_index": 792,
+      "video_time_sec": 26.4,
+      "packet_id": "f84f8210-c41b-4ee2-9e22-eedb59efbfb3",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887534.257034,
+      "timestamp_iso": "2026-09-08T17:12:14.257034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 238.08,
+      "detections": []
+    },
+    {
+      "frame_index": 800,
+      "video_time_sec": 26.667,
+      "packet_id": "e8930fc3-dbae-4ac1-9028-81df2dbb9f07",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887534.5237007,
+      "timestamp_iso": "2026-09-08T17:12:14.523701+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 221.57,
+      "detections": []
+    },
+    {
+      "frame_index": 808,
+      "video_time_sec": 26.933,
+      "packet_id": "76dc8c3d-109a-4e34-b0c6-dba4a27d95ea",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887534.7903674,
+      "timestamp_iso": "2026-09-08T17:12:14.790367+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 227.43,
+      "detections": []
+    },
+    {
+      "frame_index": 816,
+      "video_time_sec": 27.2,
+      "packet_id": "7c407497-9728-4d07-9e2a-c450c03d99e8",
+      "device_id": "GITA_CAM",
+      "timestamp": 1788887535.057034,
+      "timestamp_iso": "2026-09-08T17:12:15.057034+00:00",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "inference_time_ms": 256.66,
+      "detections": []
+    }
+  ],
+  "events": [
+    {
+      "event_id": "eaa6643f-1d11-488f-ac13-00f8678bee0b",
+      "type": "ROAD_DAMAGE",
+      "subtype": "POTHOLE",
+      "latitude": 20.18,
+      "longitude": 85.74,
+      "status": "CANDIDATE",
+      "severity": "LOW",
+      "model_confidence": 0.326,
+      "event_confidence": 0.326,
+      "unique_sources": 1,
+      "observation_count": 22,
+      "source_vehicle_ids": [
+        "GITA_CAM"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.465,
+      "created_at": 1788887512.657034,
+      "updated_at": 1788887533.4570339,
+      "observations": [
+        {
+          "observation_id": "46dc8156-ca3a-426e-8645-fc95bca5f0a0",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887512.657034,
+          "timestamp_iso": "2026-09-08T17:11:52.657034+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2289
+        },
+        {
+          "observation_id": "4f02f6b1-9447-4759-a795-b4cd52559abe",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887514.7903674,
+          "timestamp_iso": "2026-09-08T17:11:54.790367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3308
+        },
+        {
+          "observation_id": "33da869e-e870-4705-94a0-8fe470c8e8fe",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887514.7903674,
+          "timestamp_iso": "2026-09-08T17:11:54.790367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2628
+        },
+        {
+          "observation_id": "a39371b9-8805-4dd2-9d9f-6210861a45fd",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887515.057034,
+          "timestamp_iso": "2026-09-08T17:11:55.057034+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.4352
+        },
+        {
+          "observation_id": "5bc3a491-7000-4f89-96ff-ceca6a59197a",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887515.3237007,
+          "timestamp_iso": "2026-09-08T17:11:55.323701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3834
+        },
+        {
+          "observation_id": "b700372f-64eb-4b90-a0bf-9528cd4f087e",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887515.3237007,
+          "timestamp_iso": "2026-09-08T17:11:55.323701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2224
+        },
+        {
+          "observation_id": "43c2ac33-5e1d-4089-b58e-ace01b830e43",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887515.5903673,
+          "timestamp_iso": "2026-09-08T17:11:55.590367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3467
+        },
+        {
+          "observation_id": "6f177c29-102f-4098-87d4-33e8eac0183b",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887518.5237007,
+          "timestamp_iso": "2026-09-08T17:11:58.523701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.6048
+        },
+        {
+          "observation_id": "bad7aca0-b8af-4f47-900c-5c24bfa915e5",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887518.5237007,
+          "timestamp_iso": "2026-09-08T17:11:58.523701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3067
+        },
+        {
+          "observation_id": "eb24c92e-abac-4999-b472-4f78a5f97871",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887520.3903673,
+          "timestamp_iso": "2026-09-08T17:12:00.390367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.211
+        },
+        {
+          "observation_id": "cf8fd9cf-0990-4d32-889c-02bc7b310ac0",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887525.4570339,
+          "timestamp_iso": "2026-09-08T17:12:05.457034+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2157
+        },
+        {
+          "observation_id": "c6547142-1cb6-4412-bb77-1ee4b20afd84",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887525.7237005,
+          "timestamp_iso": "2026-09-08T17:12:05.723701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2037
+        },
+        {
+          "observation_id": "a8015183-6126-4e8d-8a75-aae9647b6f5a",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887528.657034,
+          "timestamp_iso": "2026-09-08T17:12:08.657034+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.22
+        },
+        {
+          "observation_id": "56600ec9-9083-47c7-b4c1-447ebc9f240b",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887528.9237006,
+          "timestamp_iso": "2026-09-08T17:12:08.923701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2037
+        },
+        {
+          "observation_id": "c778a449-7912-4e4c-9c48-bfc4b2bae5dc",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887529.7237005,
+          "timestamp_iso": "2026-09-08T17:12:09.723701+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2546
+        },
+        {
+          "observation_id": "7d362062-9322-4490-b213-07e933662817",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887532.3903673,
+          "timestamp_iso": "2026-09-08T17:12:12.390367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.2215
+        },
+        {
+          "observation_id": "4129c440-d7d7-48ab-ac28-6d9a63405d7a",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.1903672,
+          "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.6615
+        },
+        {
+          "observation_id": "e3710790-b30d-4cd6-af4b-89f932f03b02",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.1903672,
+          "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.4875
+        },
+        {
+          "observation_id": "e5c9ee3f-2b75-4e3a-8d5e-70f2bd1592f4",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.1903672,
+          "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.429
+        },
+        {
+          "observation_id": "c0c19eeb-8e68-475e-8516-e17155606ea1",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.1903672,
+          "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3605
+        },
+        {
+          "observation_id": "b2ab913a-2a73-4b64-a28a-8ed61f6d014f",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.1903672,
+          "timestamp_iso": "2026-09-08T17:12:13.190367+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.235
+        },
+        {
+          "observation_id": "afa0c224-b872-4c2f-a9d8-fea983b702b0",
+          "device_id": "GITA_CAM",
+          "timestamp": 1788887533.4570339,
+          "timestamp_iso": "2026-09-08T17:12:13.457034+00:00",
+          "latitude": 20.18,
+          "longitude": 85.74,
+          "defect_type": "pothole",
+          "model_confidence": 0.3382
+        }
+      ]
+    }
+  ]
+}

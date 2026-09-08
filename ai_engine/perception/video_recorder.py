@@ -67,10 +67,11 @@ class VideoRecorder:
     and logs defect occurrences into the central DefectLedger.
     """
 
-    def __init__(self, fps: float = 2.5, clip_duration_sec: int = 30, annotate_video: bool = True):
+    def __init__(self, fps: float = 2.5, clip_duration_sec: int = 30, annotate_video: bool = True, min_confidence: float = 0.20):
         self.fps = fps
         self.clip_duration_sec = clip_duration_sec
         self.annotate_video = annotate_video
+        self.min_confidence = min_confidence
         self.active_sessions: Dict[str, Dict[str, Any]] = {}
         self._recordings_index: List[Dict[str, Any]] = []
         self._load_index()
@@ -150,6 +151,8 @@ class VideoRecorder:
         for det in detections:
             cls_name = det.get("class_name", "pothole").lower()
             conf = det.get("confidence", 0.8)
+            if conf < self.min_confidence:
+                continue
             bbox = det.get("bbox", {})
 
             # Support dict or object
@@ -409,4 +412,4 @@ class VideoRecorder:
 
 
 # Singleton instance
-global_video_recorder = VideoRecorder(fps=2.5, clip_duration_sec=30, annotate_video=True)
+global_video_recorder = VideoRecorder(fps=2.5, clip_duration_sec=30, annotate_video=True, min_confidence=0.20)

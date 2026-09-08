@@ -31,10 +31,10 @@ export const useStore = create((set, get) => ({
   annotations: [
     {
       id: 'ann_1',
-      latitude: 20.2985,
-      longitude: 85.8262,
+      latitude: 20.1840,
+      longitude: 85.7420,
       category: 'ROADWORK',
-      note: 'Janpath Drainage excavation in progress - lane reduction',
+      note: 'GITA Autonomous College Road — surface repair in progress, lane reduction',
       created_at: Date.now() / 1000 - 3600
     }
   ],
@@ -65,7 +65,7 @@ export const useStore = create((set, get) => ({
   isMapKeyModalOpen: false,
 
   // Live Map Cursor Coordinates Inspector
-  cursorCoords: { lat: 20.2961, lng: 85.8245 },
+  cursorCoords: { lat: 20.18, lng: 85.74 },
 
   // Actions
   setBasemap: (basemap) => set({ basemap }),
@@ -96,7 +96,7 @@ export const useStore = create((set, get) => ({
   handleWsMessage: (msg) => {
     if (msg.type === 'TELEMETRY_UPDATE') {
       const { device_id, latitude, longitude, speed, heading, timestamp, fused_events,
-              frame_base64, source_type, status, detections_reported } = msg;
+              frame_base64, source_type, status, detections_reported, detections } = msg;
 
       set((state) => {
         const existing = state.fleet[device_id] || { trail: [] };
@@ -123,6 +123,7 @@ export const useStore = create((set, get) => ({
             detections_reported: detections_reported !== undefined
               ? Number(detections_reported)
               : (existing.detections_reported || 0),
+            detections: detections || existing.detections || [],
             // Store latest camera frame for cockpit panel
             latestFrame: frame_base64 || existing.latestFrame,
             trail

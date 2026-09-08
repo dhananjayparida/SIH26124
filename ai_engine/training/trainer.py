@@ -121,10 +121,19 @@ class ModelTrainer:
 
             if best_weight.exists():
                 shutil.copy(best_weight, target_best)
-                shutil.copy(best_weight, target_dfine)
             else:
                 model.save(str(target_best))
-                shutil.copy(target_best, target_dfine)
+
+            # Export native TorchScript D-FINE model
+            try:
+                best_yolo = YOLO(str(target_best))
+                ts_exported = best_yolo.export(format="torchscript", imgsz=img_size, verbose=False)
+                shutil.copy(ts_exported, target_dfine)
+                print(f"[ModelTrainer] Successfully exported native TorchScript D-FINE model: {target_dfine}")
+            except Exception as export_e:
+                print(f"[ModelTrainer] TorchScript export warning: {export_e}")
+                if best_weight.exists():
+                    shutil.copy(best_weight, target_dfine)
 
             # Extract metrics if available from training results
             metrics = {

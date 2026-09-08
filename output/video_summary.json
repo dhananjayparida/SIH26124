@@ -1,0 +1,117 @@
+{
+  "video": "video1.mp4",
+  "duration_sec": 28.53,
+  "frames_sampled": 57,
+  "total_detections": 15,
+  "fused_events": 1,
+  "defect_types": [
+    "pothole"
+  ],
+  "detections": [
+    {
+      "frame_index": 150,
+      "time_sec": 5.005,
+      "type": "pothole",
+      "confidence": 0.503,
+      "snapshot_path": "output/snapshots/pothole_frame_00150.jpg"
+    },
+    {
+      "frame_index": 165,
+      "time_sec": 5.506,
+      "type": "pothole",
+      "confidence": 0.739,
+      "snapshot_path": "output/snapshots/pothole_frame_00165.jpg"
+    },
+    {
+      "frame_index": 195,
+      "time_sec": 6.506,
+      "type": "pothole",
+      "confidence": 0.798,
+      "snapshot_path": "output/snapshots/pothole_frame_00195.jpg"
+    },
+    {
+      "frame_index": 210,
+      "time_sec": 7.007,
+      "type": "pothole",
+      "confidence": 0.738,
+      "snapshot_path": "output/snapshots/pothole_frame_00210.jpg"
+    },
+    {
+      "frame_index": 225,
+      "time_sec": 7.508,
+      "type": "pothole",
+      "confidence": 0.405,
+      "snapshot_path": "output/snapshots/pothole_frame_00225.jpg"
+    },
+    {
+      "frame_index": 270,
+      "time_sec": 9.009,
+      "type": "pothole",
+      "confidence": 0.415,
+      "snapshot_path": "output/snapshots/pothole_frame_00270.jpg"
+    },
+    {
+      "frame_index": 300,
+      "time_sec": 10.01,
+      "type": "pothole",
+      "confidence": 0.584,
+      "snapshot_path": "output/snapshots/pothole_frame_00300.jpg"
+    },
+    {
+      "frame_index": 450,
+      "time_sec": 15.015,
+      "type": "pothole",
+      "confidence": 0.444,
+      "snapshot_path": "output/snapshots/pothole_frame_00450.jpg"
+    },
+    {
+      "frame_index": 600,
+      "time_sec": 20.02,
+      "type": "pothole",
+      "confidence": 0.509,
+      "snapshot_path": "output/snapshots/pothole_frame_00600.jpg"
+    },
+    {
+      "frame_index": 645,
+      "time_sec": 21.521,
+      "type": "pothole",
+      "confidence": 0.681,
+      "snapshot_path": "output/snapshots/pothole_frame_00645.jpg"
+    },
+    {
+      "frame_index": 675,
+      "time_sec": 22.523,
+      "type": "pothole",
+      "confidence": 0.51,
+      "snapshot_path": "output/snapshots/pothole_frame_00675.jpg"
+    },
+    {
+      "frame_index": 750,
+      "time_sec": 25.025,
+      "type": "pothole",
+      "confidence": 0.579,
+      "snapshot_path": "output/snapshots/pothole_frame_00750.jpg"
+    },
+    {
+      "frame_index": 765,
+      "time_sec": 25.526,
+      "type": "pothole",
+      "confidence": 0.603,
+      "snapshot_path": "output/snapshots/pothole_frame_00765.jpg"
+    },
+    {
+      "frame_index": 795,
+      "time_sec": 26.527,
+      "type": "pothole",
+      "confidence": 0.504,
+      "snapshot_path": "output/snapshots/pothole_frame_00795.jpg"
+    },
+    {
+      "frame_index": 810,
+      "time_sec": 27.027,
+      "type": "pothole",
+      "confidence": 0.564,
+      "snapshot_path": "output/snapshots/pothole_frame_00810.jpg"
+    }
+  ]
+}

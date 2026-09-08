@@ -1,18 +1,123 @@
 {
   "meta": {
-    "generated_at": "2026-09-05T14:35:10.947682+00:00",
+    "platform": "SIH26124 — Urban Intelligence Platform",
+    "generated_at": "2026-09-07T05:42:58.395093+00:00",
     "buses_processed": [
       "BUS_01",
       "BUS_02",
       "BUS_03"
     ],
     "total_packets": 36,
-    "total_detections": 3,
-    "total_events": 1
+    "total_detections": 19,
+    "total_events": 10,
+    "sih_defect_classes_covered": [
+      "pothole",
+      "longitudinal_crack",
+      "transverse_crack",
+      "alligator_crack",
+      "damaged_road",
+      "missing_divider",
+      "no_zebracrossing",
+      "damaged_signboard",
+      "waterlogging",
+      "debris"
+    ]
   },
+  "class_summary": [
+    {
+      "class_name": "longitudinal_crack",
+      "event_type": "ROAD_DAMAGE",
+      "event_subtype": "LONGITUDINAL_CRACK",
+      "detection_count": 2,
+      "max_confidence": 0.84,
+      "min_confidence": 0.84,
+      "avg_confidence": 0.84
+    },
+    {
+      "class_name": "damaged_road",
+      "event_type": "ROAD_DAMAGE",
+      "event_subtype": "DAMAGED_ROAD",
+      "detection_count": 1,
+      "max_confidence": 0.79,
+      "min_confidence": 0.79,
+      "avg_confidence": 0.79
+    },
+    {
+      "class_name": "missing_divider",
+      "event_type": "INFRASTRUCTURE",
+      "event_subtype": "MISSING_DIVIDER",
+      "detection_count": 2,
+      "max_confidence": 0.76,
+      "min_confidence": 0.76,
+      "avg_confidence": 0.76
+    },
+    {
+      "class_name": "pothole",
+      "event_type": "ROAD_DAMAGE",
+      "event_subtype": "POTHOLE",
+      "detection_count": 3,
+      "max_confidence": 0.91,
+      "min_confidence": 0.91,
+      "avg_confidence": 0.91
+    },
+    {
+      "class_name": "alligator_crack",
+      "event_type": "ROAD_DAMAGE",
+      "event_subtype": "ALLIGATOR_CRACK",
+      "detection_count": 2,
+      "max_confidence": 0.87,
+      "min_confidence": 0.87,
+      "avg_confidence": 0.87
+    },
+    {
+      "class_name": "waterlogging",
+      "event_type": "WATERLOGGING",
+      "event_subtype": "ROAD_WATERLOGGING",
+      "detection_count": 3,
+      "max_confidence": 0.88,
+      "min_confidence": 0.88,
+      "avg_confidence": 0.88
+    },
+    {
+      "class_name": "debris",
+      "event_type": "ROAD_HAZARD",
+      "event_subtype": "DEBRIS",
+      "detection_count": 2,
+      "max_confidence": 0.81,
+      "min_confidence": 0.81,
+      "avg_confidence": 0.81
+    },
+    {
+      "class_name": "transverse_crack",
+      "event_type": "ROAD_DAMAGE",
+      "event_subtype": "TRANSVERSE_CRACK",
+      "detection_count": 2,
+      "max_confidence": 0.82,
+      "min_confidence": 0.82,
+      "avg_confidence": 0.82
+    },
+    {
+      "class_name": "no_zebracrossing",
+      "event_type": "INFRASTRUCTURE",
+      "event_subtype": "MISSING_ZEBRA",
+      "detection_count": 1,
+      "max_confidence": 0.85,
+      "min_confidence": 0.85,
+      "avg_confidence": 0.85
+    },
+    {
+      "class_name": "damaged_signboard",
+      "event_type": "INFRASTRUCTURE",
+      "event_subtype": "DAMAGED_SIGNBOARD",
+      "detection_count": 1,
+      "max_confidence": 0.78,
+      "min_confidence": 0.78,
+      "avg_confidence": 0.78
+    }
+  ],
   "detections": [
     {
-      "packet_id": "ce43ef61-04ee-4320-b768-6cf6ac6e5ad8",
+      "packet_id": "02c362cb-6ef1-4f67-ad7c-db3ee3c5c535",
       "device_id": "BUS_01",
       "timestamp": 1788413672.42,
       "timestamp_iso": "2026-09-03T05:34:32.420000+00:00",
@@ -23,18 +128,30 @@
       "detections": []
     },
     {
-      "packet_id": "2e32daa0-b51e-46f1-8fbf-ad6ef8abdfbf",
+      "packet_id": "4b8d131a-c356-48f3-9b76-1dc3788044a2",
       "device_id": "BUS_01",
       "timestamp": 1788413674.42,
       "timestamp_iso": "2026-09-03T05:34:34.420000+00:00",
       "latitude": 20.2928,
       "longitude": 85.8217,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.01,
-      "detections": []
+      "inference_time_ms": 0.04,
+      "detections": [
+        {
+          "class_name": "longitudinal_crack",
+          "confidence": 0.84,
+          "bbox": {
+            "x": 310.0,
+            "y": 300.0,
+            "width": 200.0,
+            "height": 18.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "526a7b80-7b37-43b7-a84f-0d133cb67a81",
+      "packet_id": "a3fd9319-dc39-4152-939e-ba77c658fd31",
       "device_id": "BUS_01",
       "timestamp": 1788413676.42,
       "timestamp_iso": "2026-09-03T05:34:36.420000+00:00",
@@ -45,43 +162,67 @@
       "detections": []
     },
     {
-      "packet_id": "71b1572b-1551-42c4-a1ca-d914a16284d7",
+      "packet_id": "5a6021d3-7da7-402d-bac1-3f2758f7f539",
       "device_id": "BUS_01",
       "timestamp": 1788413678.42,
       "timestamp_iso": "2026-09-03T05:34:38.420000+00:00",
       "latitude": 20.2944,
       "longitude": 85.8231,
       "speed_kmh": 24.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.03,
+      "detections": [
+        {
+          "class_name": "damaged_road",
+          "confidence": 0.79,
+          "bbox": {
+            "x": 280.0,
+            "y": 330.0,
+            "width": 220.0,
+            "height": 140.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "d42213f3-76e0-47e1-84bf-122584da2356",
+      "packet_id": "cf3b75d1-c663-49ea-a42a-78f4cdbded33",
       "device_id": "BUS_01",
       "timestamp": 1788413680.42,
       "timestamp_iso": "2026-09-03T05:34:40.420000+00:00",
       "latitude": 20.2952,
       "longitude": 85.8238,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "missing_divider",
+          "confidence": 0.76,
+          "bbox": {
+            "x": 320.0,
+            "y": 240.0,
+            "width": 60.0,
+            "height": 200.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "1f32793a-d1ae-47d1-8774-e93cc437752b",
+      "packet_id": "673735c2-2bd5-4b23-82ef-c9bea7070959",
       "device_id": "BUS_01",
       "timestamp": 1788413682.42,
       "timestamp_iso": "2026-09-03T05:34:42.420000+00:00",
       "latitude": 20.29615,
       "longitude": 85.82455,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.04,
+      "inference_time_ms": 0.02,
       "detections": [
         {
           "class_name": "pothole",
-          "confidence": 0.87,
+          "confidence": 0.91,
           "bbox": {
             "x": 320.0,
-            "y": 300.0,
+            "y": 380.0,
             "width": 130.0,
             "height": 95.0
           },
@@ -90,7 +231,7 @@
       ]
     },
     {
-      "packet_id": "d980d46c-942e-450f-bcdb-1146ae674b7f",
+      "packet_id": "2c80bd60-b8b9-43d9-ac8f-51d62b80ca3b",
       "device_id": "BUS_01",
       "timestamp": 1788413684.42,
       "timestamp_iso": "2026-09-03T05:34:44.420000+00:00",
@@ -101,18 +242,30 @@
       "detections": []
     },
     {
-      "packet_id": "5756705b-b7b7-45d6-93ac-d530fef0e763",
+      "packet_id": "b57f98df-8021-42a2-99d2-d66bdbec2627",
       "device_id": "BUS_01",
       "timestamp": 1788413686.42,
       "timestamp_iso": "2026-09-03T05:34:46.420000+00:00",
       "latitude": 20.2976,
       "longitude": 85.8259,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "alligator_crack",
+          "confidence": 0.87,
+          "bbox": {
+            "x": 300.0,
+            "y": 350.0,
+            "width": 160.0,
+            "height": 110.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "9cada7f9-529f-4ae2-80dc-c949efa5cfca",
+      "packet_id": "23784c7d-831b-4f33-ba7c-f063ec121ba0",
       "device_id": "BUS_01",
       "timestamp": 1788413688.42,
       "timestamp_iso": "2026-09-03T05:34:48.420000+00:00",
@@ -123,29 +276,53 @@
       "detections": []
     },
     {
-      "packet_id": "a0734ce6-a688-4f97-9788-a6f908710a7d",
+      "packet_id": "f7e4836c-727c-4054-937c-c6626965f7ad",
       "device_id": "BUS_01",
       "timestamp": 1788413690.42,
       "timestamp_iso": "2026-09-03T05:34:50.420000+00:00",
       "latitude": 20.2992,
       "longitude": 85.8273,
       "speed_kmh": 24.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "waterlogging",
+          "confidence": 0.88,
+          "bbox": {
+            "x": 320.0,
+            "y": 360.0,
+            "width": 300.0,
+            "height": 160.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "1069c001-ba52-4c8e-870d-8efc3e4adca3",
+      "packet_id": "ca16eb8f-4936-40a5-9e9e-1f1339c8ac39",
       "device_id": "BUS_01",
       "timestamp": 1788413692.42,
       "timestamp_iso": "2026-09-03T05:34:52.420000+00:00",
       "latitude": 20.3,
       "longitude": 85.828,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "debris",
+          "confidence": 0.81,
+          "bbox": {
+            "x": 250.0,
+            "y": 370.0,
+            "width": 110.0,
+            "height": 80.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "5d28333b-c501-474a-b811-16bf9573ff2b",
+      "packet_id": "3661d08f-f1dd-430e-a6f6-cb5c9ac32994",
       "device_id": "BUS_01",
       "timestamp": 1788413694.42,
       "timestamp_iso": "2026-09-03T05:34:54.420000+00:00",
@@ -156,7 +333,7 @@
       "detections": []
     },
     {
-      "packet_id": "584b03bf-b1ff-4360-b12b-f3356cf60a90",
+      "packet_id": "9e70c9c9-03c2-4e01-9804-017f8146953c",
       "device_id": "BUS_02",
       "timestamp": 1788413672.421,
       "timestamp_iso": "2026-09-03T05:34:32.421000+00:00",
@@ -167,29 +344,53 @@
       "detections": []
     },
     {
-      "packet_id": "c518b7b4-4738-4fff-9635-7f1d0cfd6dfc",
+      "packet_id": "e9e4bda6-ca4c-4866-9d81-173d330af28f",
       "device_id": "BUS_02",
       "timestamp": 1788413674.421,
       "timestamp_iso": "2026-09-03T05:34:34.421000+00:00",
       "latitude": 20.2928,
       "longitude": 85.8217,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "longitudinal_crack",
+          "confidence": 0.84,
+          "bbox": {
+            "x": 310.0,
+            "y": 300.0,
+            "width": 200.0,
+            "height": 18.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "8e7c8c91-6e52-44ff-acf6-a0e80d14e740",
+      "packet_id": "cb5f6d9e-e410-451a-a200-c080d7fb65ad",
       "device_id": "BUS_02",
       "timestamp": 1788413676.421,
       "timestamp_iso": "2026-09-03T05:34:36.421000+00:00",
       "latitude": 20.2936,
       "longitude": 85.8224,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "transverse_crack",
+          "confidence": 0.82,
+          "bbox": {
+            "x": 320.0,
+            "y": 310.0,
+            "width": 18.0,
+            "height": 180.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "72ffd446-0ba1-4581-99cf-3c6d64e13227",
+      "packet_id": "1d5a14e9-e186-4feb-9cba-532c5540e4fe",
       "device_id": "BUS_02",
       "timestamp": 1788413678.421,
       "timestamp_iso": "2026-09-03T05:34:38.421000+00:00",
@@ -200,7 +401,7 @@
       "detections": []
     },
     {
-      "packet_id": "469e34dd-7f99-4292-a5d6-7f005883d6e1",
+      "packet_id": "1e7c6ddf-5437-4450-bfe5-953e21cca8ee",
       "device_id": "BUS_02",
       "timestamp": 1788413680.421,
       "timestamp_iso": "2026-09-03T05:34:40.421000+00:00",
@@ -211,21 +412,21 @@
       "detections": []
     },
     {
-      "packet_id": "4347cd61-6f8c-44f7-b552-07909b1654c5",
+      "packet_id": "94c6d340-9b51-4256-aebb-616dbceb3497",
       "device_id": "BUS_02",
       "timestamp": 1788413682.421,
       "timestamp_iso": "2026-09-03T05:34:42.421000+00:00",
       "latitude": 20.2962,
       "longitude": 85.82459,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.03,
+      "inference_time_ms": 0.02,
       "detections": [
         {
           "class_name": "pothole",
-          "confidence": 0.87,
+          "confidence": 0.91,
           "bbox": {
             "x": 320.0,
-            "y": 300.0,
+            "y": 380.0,
             "width": 130.0,
             "height": 95.0
           },
@@ -234,29 +435,53 @@
       ]
     },
     {
-      "packet_id": "c6a7243e-b51b-4b82-9a93-d3ff943847ea",
+      "packet_id": "95166216-bfe7-4eb9-ae70-6b0e795c7f83",
       "device_id": "BUS_02",
       "timestamp": 1788413684.421,
       "timestamp_iso": "2026-09-03T05:34:44.421000+00:00",
       "latitude": 20.2968,
       "longitude": 85.8252,
       "speed_kmh": 24.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.03,
+      "detections": [
+        {
+          "class_name": "no_zebracrossing",
+          "confidence": 0.85,
+          "bbox": {
+            "x": 320.0,
+            "y": 340.0,
+            "width": 450.0,
+            "height": 120.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "61572ff5-24a7-4b8c-8a84-bf27a8281fea",
+      "packet_id": "986a785b-94a3-42cd-a334-74b798084218",
       "device_id": "BUS_02",
       "timestamp": 1788413686.421,
       "timestamp_iso": "2026-09-03T05:34:46.421000+00:00",
       "latitude": 20.2976,
       "longitude": 85.8259,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "alligator_crack",
+          "confidence": 0.87,
+          "bbox": {
+            "x": 300.0,
+            "y": 350.0,
+            "width": 160.0,
+            "height": 110.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "02af3170-3962-4f14-a81e-b2f60b81c5a6",
+      "packet_id": "8e0482d9-8a85-46fb-a553-f2cc772c66ea",
       "device_id": "BUS_02",
       "timestamp": 1788413688.421,
       "timestamp_iso": "2026-09-03T05:34:48.421000+00:00",
@@ -267,18 +492,30 @@
       "detections": []
     },
     {
-      "packet_id": "f653a892-91d6-47f2-a1ee-19242e34a5c4",
+      "packet_id": "6da02afa-1681-4a89-a4c2-33fb9a78633e",
       "device_id": "BUS_02",
       "timestamp": 1788413690.421,
       "timestamp_iso": "2026-09-03T05:34:50.421000+00:00",
       "latitude": 20.2992,
       "longitude": 85.8273,
       "speed_kmh": 24.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "waterlogging",
+          "confidence": 0.88,
+          "bbox": {
+            "x": 320.0,
+            "y": 360.0,
+            "width": 300.0,
+            "height": 160.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "cbeb90b2-3681-4754-8f68-ade8e8bb3951",
+      "packet_id": "69eb9ef7-d7ec-4683-9016-b2e5403d2ea3",
       "device_id": "BUS_02",
       "timestamp": 1788413692.421,
       "timestamp_iso": "2026-09-03T05:34:52.421000+00:00",
@@ -289,7 +526,7 @@
       "detections": []
     },
     {
-      "packet_id": "6902e641-95b7-45aa-9994-e30056108ddb",
+      "packet_id": "be721542-35ae-4b26-aa7e-febfa982679b",
       "device_id": "BUS_02",
       "timestamp": 1788413694.421,
       "timestamp_iso": "2026-09-03T05:34:54.421000+00:00",
@@ -300,7 +537,7 @@
       "detections": []
     },
     {
-      "packet_id": "d7d8ec75-f5c5-4ed6-ba0e-53d1301ace41",
+      "packet_id": "06493047-b427-47df-9249-5322402aa424",
       "device_id": "BUS_03",
       "timestamp": 1788413672.422,
       "timestamp_iso": "2026-09-03T05:34:32.422000+00:00",
@@ -311,7 +548,7 @@
       "detections": []
     },
     {
-      "packet_id": "51a7d4f8-1880-4842-92e0-01db8fcc21cf",
+      "packet_id": "d165379a-7bc5-43b7-8670-e73042dc95be",
       "device_id": "BUS_03",
       "timestamp": 1788413674.422,
       "timestamp_iso": "2026-09-03T05:34:34.422000+00:00",
@@ -322,18 +559,30 @@
       "detections": []
     },
     {
-      "packet_id": "6719fa23-bc72-440c-8b6e-8057bf45f8fb",
+      "packet_id": "23cbff81-28ed-486a-983c-3bbd3a90945c",
       "device_id": "BUS_03",
       "timestamp": 1788413676.422,
       "timestamp_iso": "2026-09-03T05:34:36.422000+00:00",
       "latitude": 20.2936,
       "longitude": 85.8224,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.01,
+      "detections": [
+        {
+          "class_name": "transverse_crack",
+          "confidence": 0.82,
+          "bbox": {
+            "x": 320.0,
+            "y": 310.0,
+            "width": 18.0,
+            "height": 180.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "4b86e691-c64e-494b-be30-b7e46cde886f",
+      "packet_id": "b6e17be3-ede2-449d-b2f9-0aea814fbadd",
       "device_id": "BUS_03",
       "timestamp": 1788413678.422,
       "timestamp_iso": "2026-09-03T05:34:38.422000+00:00",
@@ -344,32 +593,44 @@
       "detections": []
     },
     {
-      "packet_id": "bf566c22-cf42-44f4-b551-2af6252c3348",
+      "packet_id": "d12949f8-4b91-4453-ad9b-7817c4849de3",
       "device_id": "BUS_03",
       "timestamp": 1788413680.422,
       "timestamp_iso": "2026-09-03T05:34:40.422000+00:00",
       "latitude": 20.2952,
       "longitude": 85.8238,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "missing_divider",
+          "confidence": 0.76,
+          "bbox": {
+            "x": 320.0,
+            "y": 240.0,
+            "width": 60.0,
+            "height": 200.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "35fb366c-2683-4fa7-9915-da8f2ccab960",
+      "packet_id": "6ca469a1-d8a2-4a3e-ae58-9d239cd5ac28",
       "device_id": "BUS_03",
       "timestamp": 1788413682.422,
       "timestamp_iso": "2026-09-03T05:34:42.422000+00:00",
       "latitude": 20.29615,
       "longitude": 85.82455,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.03,
+      "inference_time_ms": 0.01,
       "detections": [
         {
           "class_name": "pothole",
-          "confidence": 0.87,
+          "confidence": 0.91,
           "bbox": {
             "x": 320.0,
-            "y": 300.0,
+            "y": 380.0,
             "width": 130.0,
             "height": 95.0
           },
@@ -378,7 +639,7 @@
       ]
     },
     {
-      "packet_id": "e807d1d1-9200-435d-90e5-a7ac11822756",
+      "packet_id": "a99f036d-0c30-42ec-a160-d9546a1721f4",
       "device_id": "BUS_03",
       "timestamp": 1788413684.422,
       "timestamp_iso": "2026-09-03T05:34:44.422000+00:00",
@@ -389,7 +650,7 @@
       "detections": []
     },
     {
-      "packet_id": "c9dc606c-046a-4f7e-8eaf-7746d461303b",
+      "packet_id": "9772601f-e8cf-4f91-bdeb-0e0a0febf3b3",
       "device_id": "BUS_03",
       "timestamp": 1788413686.422,
       "timestamp_iso": "2026-09-03T05:34:46.422000+00:00",
@@ -400,40 +661,76 @@
       "detections": []
     },
     {
-      "packet_id": "6bd90eed-49fb-479e-886b-4bfb0a96c64a",
+      "packet_id": "52c7a0a0-1564-4862-a700-dd5be50f61d5",
       "device_id": "BUS_03",
       "timestamp": 1788413688.422,
       "timestamp_iso": "2026-09-03T05:34:48.422000+00:00",
       "latitude": 20.2984,
       "longitude": 85.8266,
       "speed_kmh": 26.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.02,
+      "detections": [
+        {
+          "class_name": "damaged_signboard",
+          "confidence": 0.78,
+          "bbox": {
+            "x": 100.0,
+            "y": 150.0,
+            "width": 90.0,
+            "height": 110.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "4e64c102-be60-4430-b210-72dac22b4d67",
+      "packet_id": "ea3966d5-e354-4d11-a7e1-13d74ad33b03",
       "device_id": "BUS_03",
       "timestamp": 1788413690.422,
       "timestamp_iso": "2026-09-03T05:34:50.422000+00:00",
       "latitude": 20.2992,
       "longitude": 85.8273,
       "speed_kmh": 24.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.01,
+      "detections": [
+        {
+          "class_name": "waterlogging",
+          "confidence": 0.88,
+          "bbox": {
+            "x": 320.0,
+            "y": 360.0,
+            "width": 300.0,
+            "height": 160.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "59130c34-c146-4aec-a73a-3928c03e0b7b",
+      "packet_id": "04c79f08-81fc-4649-a651-dfa82c63c230",
       "device_id": "BUS_03",
       "timestamp": 1788413692.422,
       "timestamp_iso": "2026-09-03T05:34:52.422000+00:00",
       "latitude": 20.3,
       "longitude": 85.828,
       "speed_kmh": 25.5,
-      "inference_time_ms": 0.0,
-      "detections": []
+      "inference_time_ms": 0.01,
+      "detections": [
+        {
+          "class_name": "debris",
+          "confidence": 0.81,
+          "bbox": {
+            "x": 250.0,
+            "y": 370.0,
+            "width": 110.0,
+            "height": 80.0
+          },
+          "model_version": "best_road_defect_model-sim"
+        }
+      ]
     },
     {
-      "packet_id": "0e0dfd7f-c755-4336-8f10-d7e1d69ee7de",
+      "packet_id": "a3fc5663-8c93-4436-9415-4cec3175c56d",
       "device_id": "BUS_03",
       "timestamp": 1788413694.422,
       "timestamp_iso": "2026-09-03T05:34:54.422000+00:00",
@@ -446,14 +743,145 @@
   ],
   "events": [
     {
-      "event_id": "8ba11c02-18ad-44f6-bab7-a4acf1d390ee",
-      "type": "road_defect",
-      "subtype": "pothole",
+      "event_id": "7f3ef5f1-d22e-4563-99d3-a99eda5e8246",
+      "type": "ROAD_DAMAGE",
+      "subtype": "LONGITUDINAL_CRACK",
+      "latitude": 20.2928,
+      "longitude": 85.8217,
+      "status": "CORROBORATED",
+      "severity": "MEDIUM",
+      "model_confidence": 0.84,
+      "event_confidence": 0.94,
+      "unique_sources": 2,
+      "observation_count": 2,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_02"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.731,
+      "created_at": 1788413674.42,
+      "updated_at": 1788413674.421,
+      "observations": [
+        {
+          "observation_id": "e4b6fb52-c1e0-4c95-ae39-5f5a2799bf88",
+          "device_id": "BUS_01",
+          "timestamp": 1788413674.42,
+          "timestamp_iso": "2026-09-03T05:34:34.420000+00:00",
+          "latitude": 20.2928,
+          "longitude": 85.8217,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "LONGITUDINAL_CRACK",
+          "defect_type": "LONGITUDINAL_CRACK",
+          "model_confidence": 0.84
+        },
+        {
+          "observation_id": "0d92e8e5-70c1-4ea9-88cb-d040fe96d0e7",
+          "device_id": "BUS_02",
+          "timestamp": 1788413674.421,
+          "timestamp_iso": "2026-09-03T05:34:34.421000+00:00",
+          "latitude": 20.2928,
+          "longitude": 85.8217,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "LONGITUDINAL_CRACK",
+          "defect_type": "LONGITUDINAL_CRACK",
+          "model_confidence": 0.84
+        }
+      ]
+    },
+    {
+      "event_id": "5cc1f1cc-ff35-4882-b3ca-a6fbc2ec958c",
+      "type": "ROAD_DAMAGE",
+      "subtype": "DAMAGED_ROAD",
+      "latitude": 20.2944,
+      "longitude": 85.8231,
+      "status": "CANDIDATE",
+      "severity": "HIGH",
+      "model_confidence": 0.79,
+      "event_confidence": 0.79,
+      "unique_sources": 1,
+      "observation_count": 1,
+      "source_vehicle_ids": [
+        "BUS_01"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.733,
+      "created_at": 1788413678.42,
+      "updated_at": 1788413678.42,
+      "observations": [
+        {
+          "observation_id": "21c59cbe-ebdc-4078-82eb-0168d6ceba54",
+          "device_id": "BUS_01",
+          "timestamp": 1788413678.42,
+          "timestamp_iso": "2026-09-03T05:34:38.420000+00:00",
+          "latitude": 20.2944,
+          "longitude": 85.8231,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "DAMAGED_ROAD",
+          "defect_type": "DAMAGED_ROAD",
+          "model_confidence": 0.79
+        }
+      ]
+    },
+    {
+      "event_id": "f30f02b2-0d57-48f1-ba41-5d441311eac4",
+      "type": "INFRASTRUCTURE",
+      "subtype": "MISSING_DIVIDER",
+      "latitude": 20.2952,
+      "longitude": 85.8238,
+      "status": "CORROBORATED",
+      "severity": "MEDIUM",
+      "model_confidence": 0.76,
+      "event_confidence": 0.86,
+      "unique_sources": 2,
+      "observation_count": 2,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.731,
+      "created_at": 1788413680.42,
+      "updated_at": 1788413680.422,
+      "observations": [
+        {
+          "observation_id": "4c2436ba-45bb-4272-8509-84253d7f807f",
+          "device_id": "BUS_01",
+          "timestamp": 1788413680.42,
+          "timestamp_iso": "2026-09-03T05:34:40.420000+00:00",
+          "latitude": 20.2952,
+          "longitude": 85.8238,
+          "observation_type": "INFRASTRUCTURE",
+          "observation_subtype": "MISSING_DIVIDER",
+          "defect_type": "MISSING_DIVIDER",
+          "model_confidence": 0.76
+        },
+        {
+          "observation_id": "3dfa4190-834c-42f7-ad1c-7728f0019c79",
+          "device_id": "BUS_03",
+          "timestamp": 1788413680.422,
+          "timestamp_iso": "2026-09-03T05:34:40.422000+00:00",
+          "latitude": 20.2952,
+          "longitude": 85.8238,
+          "observation_type": "INFRASTRUCTURE",
+          "observation_subtype": "MISSING_DIVIDER",
+          "defect_type": "MISSING_DIVIDER",
+          "model_confidence": 0.76
+        }
+      ]
+    },
+    {
+      "event_id": "861ba9ce-0454-4967-87c8-c7cfb7f26f40",
+      "type": "ROAD_DAMAGE",
+      "subtype": "POTHOLE",
       "latitude": 20.296167,
       "longitude": 85.824563,
       "status": "HIGH_PRIORITY",
       "severity": "MEDIUM",
-      "model_confidence": 0.87,
+      "model_confidence": 0.91,
       "event_confidence": 1.0,
       "unique_sources": 3,
       "observation_count": 3,
@@ -464,39 +892,320 @@
       ],
       "evidence_uris": [],
       "road_segment_id": null,
-      "priority_score": 0.0,
+      "priority_score": 0.864,
       "created_at": 1788413682.42,
       "updated_at": 1788413682.422,
       "observations": [
         {
-          "observation_id": "ccb4cbdc-2eb4-416d-92f5-e2e7d085a26b",
+          "observation_id": "5e526d9f-db31-4bfe-8549-ec7d8bdbcf3f",
           "device_id": "BUS_01",
           "timestamp": 1788413682.42,
           "timestamp_iso": "2026-09-03T05:34:42.420000+00:00",
           "latitude": 20.29615,
           "longitude": 85.82455,
-          "defect_type": "pothole",
-          "model_confidence": 0.87
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "POTHOLE",
+          "defect_type": "POTHOLE",
+          "model_confidence": 0.91
         },
         {
-          "observation_id": "36238be4-9cbb-4c73-8752-da045a02961d",
+          "observation_id": "a82345fe-6115-4b09-a77f-bbcbb7fc0960",
           "device_id": "BUS_02",
           "timestamp": 1788413682.421,
           "timestamp_iso": "2026-09-03T05:34:42.421000+00:00",
           "latitude": 20.2962,
           "longitude": 85.82459,
-          "defect_type": "pothole",
-          "model_confidence": 0.87
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "POTHOLE",
+          "defect_type": "POTHOLE",
+          "model_confidence": 0.91
         },
         {
-          "observation_id": "4f50c6b0-2199-4c5b-a705-af773dca40bc",
+          "observation_id": "aed9cdf6-9ea5-4913-95a3-8399b6aafc8b",
           "device_id": "BUS_03",
           "timestamp": 1788413682.422,
           "timestamp_iso": "2026-09-03T05:34:42.422000+00:00",
           "latitude": 20.29615,
           "longitude": 85.82455,
-          "defect_type": "pothole",
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "POTHOLE",
+          "defect_type": "POTHOLE",
+          "model_confidence": 0.91
+        }
+      ]
+    },
+    {
+      "event_id": "2c96604c-1407-4b29-a339-116564554ab6",
+      "type": "ROAD_DAMAGE",
+      "subtype": "ALLIGATOR_CRACK",
+      "latitude": 20.2976,
+      "longitude": 85.8259,
+      "status": "CORROBORATED",
+      "severity": "HIGH",
+      "model_confidence": 0.87,
+      "event_confidence": 0.97,
+      "unique_sources": 2,
+      "observation_count": 2,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_02"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.867,
+      "created_at": 1788413686.42,
+      "updated_at": 1788413686.421,
+      "observations": [
+        {
+          "observation_id": "6d1740f3-4eef-47cd-9dbd-147402b14cd3",
+          "device_id": "BUS_01",
+          "timestamp": 1788413686.42,
+          "timestamp_iso": "2026-09-03T05:34:46.420000+00:00",
+          "latitude": 20.2976,
+          "longitude": 85.8259,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "ALLIGATOR_CRACK",
+          "defect_type": "ALLIGATOR_CRACK",
           "model_confidence": 0.87
+        },
+        {
+          "observation_id": "15247d0a-165e-4eef-b9c3-89359b432fa0",
+          "device_id": "BUS_02",
+          "timestamp": 1788413686.421,
+          "timestamp_iso": "2026-09-03T05:34:46.421000+00:00",
+          "latitude": 20.2976,
+          "longitude": 85.8259,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "ALLIGATOR_CRACK",
+          "defect_type": "ALLIGATOR_CRACK",
+          "model_confidence": 0.87
+        }
+      ]
+    },
+    {
+      "event_id": "8fde9449-4702-4ba4-b5bc-3f8ca3f51bad",
+      "type": "ROAD_DAMAGE",
+      "subtype": "UNKNOWN",
+      "latitude": 20.2992,
+      "longitude": 85.8273,
+      "status": "HIGH_PRIORITY",
+      "severity": "HIGH",
+      "model_confidence": 0.88,
+      "event_confidence": 1.0,
+      "unique_sources": 3,
+      "observation_count": 3,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_02",
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 1.0,
+      "created_at": 1788413690.42,
+      "updated_at": 1788413690.422,
+      "observations": [
+        {
+          "observation_id": "c3ab46ec-ced7-4252-8e2e-31d886e23d5e",
+          "device_id": "BUS_01",
+          "timestamp": 1788413690.42,
+          "timestamp_iso": "2026-09-03T05:34:50.420000+00:00",
+          "latitude": 20.2992,
+          "longitude": 85.8273,
+          "observation_type": "WATERLOGGING",
+          "observation_subtype": "ROAD_WATERLOGGING",
+          "defect_type": "ROAD_WATERLOGGING",
+          "model_confidence": 0.88
+        },
+        {
+          "observation_id": "01e818cd-d262-405e-918f-c2368942b8ef",
+          "device_id": "BUS_02",
+          "timestamp": 1788413690.421,
+          "timestamp_iso": "2026-09-03T05:34:50.421000+00:00",
+          "latitude": 20.2992,
+          "longitude": 85.8273,
+          "observation_type": "WATERLOGGING",
+          "observation_subtype": "ROAD_WATERLOGGING",
+          "defect_type": "ROAD_WATERLOGGING",
+          "model_confidence": 0.88
+        },
+        {
+          "observation_id": "3e64b76d-269d-41a4-b0d1-ff3ee496baa0",
+          "device_id": "BUS_03",
+          "timestamp": 1788413690.422,
+          "timestamp_iso": "2026-09-03T05:34:50.422000+00:00",
+          "latitude": 20.2992,
+          "longitude": 85.8273,
+          "observation_type": "WATERLOGGING",
+          "observation_subtype": "ROAD_WATERLOGGING",
+          "defect_type": "ROAD_WATERLOGGING",
+          "model_confidence": 0.88
+        }
+      ]
+    },
+    {
+      "event_id": "8371109a-e8c3-4ec5-a696-93bb10d55b59",
+      "type": "ROAD_HAZARD",
+      "subtype": "DEBRIS",
+      "latitude": 20.3,
+      "longitude": 85.828,
+      "status": "CORROBORATED",
+      "severity": "HIGH",
+      "model_confidence": 0.81,
+      "event_confidence": 0.91,
+      "unique_sources": 2,
+      "observation_count": 2,
+      "source_vehicle_ids": [
+        "BUS_01",
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.867,
+      "created_at": 1788413692.42,
+      "updated_at": 1788413692.422,
+      "observations": [
+        {
+          "observation_id": "993e9a97-0600-4590-80a6-4e6af028f73b",
+          "device_id": "BUS_01",
+          "timestamp": 1788413692.42,
+          "timestamp_iso": "2026-09-03T05:34:52.420000+00:00",
+          "latitude": 20.3,
+          "longitude": 85.828,
+          "observation_type": "ROAD_HAZARD",
+          "observation_subtype": "DEBRIS",
+          "defect_type": "DEBRIS",
+          "model_confidence": 0.81
+        },
+        {
+          "observation_id": "77ce84e8-25c9-4898-b204-1b0cd537a351",
+          "device_id": "BUS_03",
+          "timestamp": 1788413692.422,
+          "timestamp_iso": "2026-09-03T05:34:52.422000+00:00",
+          "latitude": 20.3,
+          "longitude": 85.828,
+          "observation_type": "ROAD_HAZARD",
+          "observation_subtype": "DEBRIS",
+          "defect_type": "DEBRIS",
+          "model_confidence": 0.81
+        }
+      ]
+    },
+    {
+      "event_id": "18f37d13-0cb8-4afd-b67d-713b4477dc6e",
+      "type": "ROAD_DAMAGE",
+      "subtype": "TRANSVERSE_CRACK",
+      "latitude": 20.2936,
+      "longitude": 85.8224,
+      "status": "CORROBORATED",
+      "severity": "MEDIUM",
+      "model_confidence": 0.82,
+      "event_confidence": 0.92,
+      "unique_sources": 2,
+      "observation_count": 2,
+      "source_vehicle_ids": [
+        "BUS_02",
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.731,
+      "created_at": 1788413676.421,
+      "updated_at": 1788413676.422,
+      "observations": [
+        {
+          "observation_id": "6c2f0359-cea2-4338-9b9e-4e2277f0d399",
+          "device_id": "BUS_02",
+          "timestamp": 1788413676.421,
+          "timestamp_iso": "2026-09-03T05:34:36.421000+00:00",
+          "latitude": 20.2936,
+          "longitude": 85.8224,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "TRANSVERSE_CRACK",
+          "defect_type": "TRANSVERSE_CRACK",
+          "model_confidence": 0.82
+        },
+        {
+          "observation_id": "04fd5cbd-de3c-41e8-9852-47ee61a0dab5",
+          "device_id": "BUS_03",
+          "timestamp": 1788413676.422,
+          "timestamp_iso": "2026-09-03T05:34:36.422000+00:00",
+          "latitude": 20.2936,
+          "longitude": 85.8224,
+          "observation_type": "ROAD_DAMAGE",
+          "observation_subtype": "TRANSVERSE_CRACK",
+          "defect_type": "TRANSVERSE_CRACK",
+          "model_confidence": 0.82
+        }
+      ]
+    },
+    {
+      "event_id": "62bb60cb-9c55-4dc7-a14c-0d24b8ddafca",
+      "type": "INFRASTRUCTURE",
+      "subtype": "MISSING_ZEBRA",
+      "latitude": 20.2968,
+      "longitude": 85.8252,
+      "status": "CANDIDATE",
+      "severity": "HIGH",
+      "model_confidence": 0.85,
+      "event_confidence": 0.85,
+      "unique_sources": 1,
+      "observation_count": 1,
+      "source_vehicle_ids": [
+        "BUS_02"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.733,
+      "created_at": 1788413684.421,
+      "updated_at": 1788413684.421,
+      "observations": [
+        {
+          "observation_id": "acc7dff4-baaa-4665-9d65-f45b96f427ab",
+          "device_id": "BUS_02",
+          "timestamp": 1788413684.421,
+          "timestamp_iso": "2026-09-03T05:34:44.421000+00:00",
+          "latitude": 20.2968,
+          "longitude": 85.8252,
+          "observation_type": "INFRASTRUCTURE",
+          "observation_subtype": "MISSING_ZEBRA",
+          "defect_type": "MISSING_ZEBRA",
+          "model_confidence": 0.85
+        }
+      ]
+    },
+    {
+      "event_id": "130ea92b-5393-4495-9d81-a2eab1db5bdf",
+      "type": "INFRASTRUCTURE",
+      "subtype": "DAMAGED_SIGNBOARD",
+      "latitude": 20.2984,
+      "longitude": 85.8266,
+      "status": "CANDIDATE",
+      "severity": "MEDIUM",
+      "model_confidence": 0.78,
+      "event_confidence": 0.78,
+      "unique_sources": 1,
+      "observation_count": 1,
+      "source_vehicle_ids": [
+        "BUS_03"
+      ],
+      "evidence_uris": [],
+      "road_segment_id": null,
+      "priority_score": 0.597,
+      "created_at": 1788413688.422,
+      "updated_at": 1788413688.422,
+      "observations": [
+        {
+          "observation_id": "95b98e22-c80e-49aa-9b53-55daf1a56c8f",
+          "device_id": "BUS_03",
+          "timestamp": 1788413688.422,
+          "timestamp_iso": "2026-09-03T05:34:48.422000+00:00",
+          "latitude": 20.2984,
+          "longitude": 85.8266,
+          "observation_type": "INFRASTRUCTURE",
+          "observation_subtype": "DAMAGED_SIGNBOARD",
+          "defect_type": "DAMAGED_SIGNBOARD",
+          "model_confidence": 0.78
         }
       ]
     }

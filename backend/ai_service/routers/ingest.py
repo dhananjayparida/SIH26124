@@ -24,7 +24,7 @@ from ai_engine.specialized.traffic_intelligence import global_traffic_intelligen
 router = APIRouter(prefix="/ingest", tags=["Ingest"])
 
 # Shared engine instances
-detector = RoadDefectDetector(confidence_threshold=0.5)
+detector = RoadDefectDetector(confidence_threshold=0.45)
 fusion_engine = SpatioTemporalFusionEngine(spatial_radius_meters=25.0)
 evidence_manager = EvidenceManager(storage_dir="data/evidence")
 registry = DeviceRegistry()
@@ -215,6 +215,15 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
         "packet_id": packet.packet_id,
         "device_id": packet.device_id,
         "detections_count": len(detection_res.detections),
+        "detections": [
+            {
+                "class_name": d.class_name,
+                "confidence": round(d.confidence, 4),
+                "bbox": d.bbox.model_dump() if hasattr(d.bbox, "model_dump") else d.bbox.dict(),
+                "model_version": d.model_version
+            }
+            for d in detection_res.detections
+        ],
         "detections_reported": registry.get_device(packet.device_id).detections_reported,
         "fused_events": fused_results,
         "inference_time_ms": detection_res.inference_time_ms

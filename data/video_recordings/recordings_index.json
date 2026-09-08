@@ -1,5 +1,1382 @@
 [
   {
+    "filename": "BUS_LIVE_01_1788884112.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788884112.mp4",
+    "frame_count": 29,
+    "duration_sec": 142.67,
+    "fps": 2.5,
+    "size_bytes": 750637,
+    "defect_counts": {
+      "pothole": 4,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788884112.2320569,
+    "created_at_iso": "2026-09-08T16:15:12Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788884045.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788884045.mp4",
+    "frame_count": 25,
+    "duration_sec": 66.76,
+    "fps": 2.5,
+    "size_bytes": 562047,
+    "defect_counts": {
+      "pothole": 10,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788884045.3406,
+    "created_at_iso": "2026-09-08T16:14:05Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788884009.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788884009.mp4",
+    "frame_count": 14,
+    "duration_sec": 35.51,
+    "fps": 2.5,
+    "size_bytes": 496610,
+    "defect_counts": {
+      "pothole": 23,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788884009.5276635,
+    "created_at_iso": "2026-09-08T16:13:29Z"
+  },
+  {
+    "filename": "BUS_03_1788882505.mp4",
+    "device_id": "BUS_03",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_03_1788882505.mp4",
+    "frame_count": 1,
+    "duration_sec": 6.27,
+    "fps": 2.5,
+    "size_bytes": 25460,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788882505.16004,
+    "created_at_iso": "2026-09-08T15:48:25Z"
+  },
+  {
+    "filename": "BUS_02_1788882503.mp4",
+    "device_id": "BUS_02",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_02_1788882503.mp4",
+    "frame_count": 1,
+    "duration_sec": 7.53,
+    "fps": 2.5,
+    "size_bytes": 25466,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788882503.890337,
+    "created_at_iso": "2026-09-08T15:48:23Z"
+  },
+  {
+    "filename": "BUS_01_1788882502.mp4",
+    "device_id": "BUS_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_01_1788882502.mp4",
+    "frame_count": 1,
+    "duration_sec": 8.89,
+    "fps": 2.5,
+    "size_bytes": 25452,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788882502.5134,
+    "created_at_iso": "2026-09-08T15:48:22Z"
+  },
+  {
+    "filename": "BUS_03_1788881664.mp4",
+    "device_id": "BUS_03",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_03_1788881664.mp4",
+    "frame_count": 1,
+    "duration_sec": 3.29,
+    "fps": 2.5,
+    "size_bytes": 25420,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788881664.3809013,
+    "created_at_iso": "2026-09-08T15:34:24Z"
+  },
+  {
+    "filename": "BUS_01_1788881664.mp4",
+    "device_id": "BUS_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_01_1788881664.mp4",
+    "frame_count": 1,
+    "duration_sec": 3.61,
+    "fps": 2.5,
+    "size_bytes": 25412,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788881664.0504947,
+    "created_at_iso": "2026-09-08T15:34:24Z"
+  },
+  {
+    "filename": "BUS_02_1788881663.mp4",
+    "device_id": "BUS_02",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_02_1788881663.mp4",
+    "frame_count": 1,
+    "duration_sec": 4.17,
+    "fps": 2.5,
+    "size_bytes": 25465,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788881663.4788435,
+    "created_at_iso": "2026-09-08T15:34:23Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788879884.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788879884.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.34,
+    "fps": 5.0,
+    "size_bytes": 24318,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788879884.6548457,
+    "created_at_iso": "2026-09-08T15:04:44Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788877831.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788877831.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 269062,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788877831.6094995,
+    "created_at_iso": "2026-09-08T14:30:31Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788877795.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788877795.mp4",
+    "frame_count": 8,
+    "duration_sec": 33.54,
+    "fps": 2.5,
+    "size_bytes": 198659,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788877795.8449523,
+    "created_at_iso": "2026-09-08T14:29:55Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788877762.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788877762.mp4",
+    "frame_count": 10,
+    "duration_sec": 30.88,
+    "fps": 2.5,
+    "size_bytes": 244436,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788877762.0744028,
+    "created_at_iso": "2026-09-08T14:29:22Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788877728.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788877728.mp4",
+    "frame_count": 14,
+    "duration_sec": 33.4,
+    "fps": 2.5,
+    "size_bytes": 318794,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788877728.1664958,
+    "created_at_iso": "2026-09-08T14:28:48Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788843427.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788843427.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 908066,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788843427.700953,
+    "created_at_iso": "2026-09-08T04:57:07Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788843397.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788843397.mp4",
+    "frame_count": 51,
+    "duration_sec": 30.14,
+    "fps": 2.5,
+    "size_bytes": 1613925,
+    "defect_counts": {
+      "pothole": 4,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788843397.0071301,
+    "created_at_iso": "2026-09-08T04:56:37Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788843366.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788843366.mp4",
+    "frame_count": 31,
+    "duration_sec": 30.33,
+    "fps": 2.5,
+    "size_bytes": 859864,
+    "defect_counts": {
+      "pothole": 1,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788843366.1485214,
+    "created_at_iso": "2026-09-08T04:56:06Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788805071.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788805071.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.29,
+    "fps": 5.0,
+    "size_bytes": 24432,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788805071.855599,
+    "created_at_iso": "2026-09-07T18:17:51Z"
+  },
+  {
+    "filename": "BUS_01_1788794930.mp4",
+    "device_id": "BUS_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_01_1788794930.mp4",
+    "frame_count": 1,
+    "duration_sec": 1.01,
+    "fps": 2.5,
+    "size_bytes": 25460,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788794930.1811936,
+    "created_at_iso": "2026-09-07T15:28:50Z"
+  },
+  {
+    "filename": "BUS_01_1788794838.mp4",
+    "device_id": "BUS_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_01_1788794838.mp4",
+    "frame_count": 1,
+    "duration_sec": 0.99,
+    "fps": 2.5,
+    "size_bytes": 25447,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788794838.4011233,
+    "created_at_iso": "2026-09-07T15:27:18Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788794379.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788794379.mp4",
+    "frame_count": 12,
+    "duration_sec": 459.67,
+    "fps": 2.5,
+    "size_bytes": 304029,
+    "defect_counts": {
+      "pothole": 4,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788794379.7068157,
+    "created_at_iso": "2026-09-07T15:19:39Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788794267.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788794267.mp4",
+    "frame_count": 8,
+    "duration_sec": 85.89,
+    "fps": 2.5,
+    "size_bytes": 199440,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788794267.2438834,
+    "created_at_iso": "2026-09-07T15:17:47Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788794232.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788794232.mp4",
+    "frame_count": 12,
+    "duration_sec": 31.5,
+    "fps": 2.5,
+    "size_bytes": 272949,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788794232.0471802,
+    "created_at_iso": "2026-09-07T15:17:12Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788793812.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788793812.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 524332,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788793812.6711233,
+    "created_at_iso": "2026-09-07T15:10:12Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788793144.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788793144.mp4",
+    "frame_count": 20,
+    "duration_sec": 666.17,
+    "fps": 2.5,
+    "size_bytes": 492155,
+    "defect_counts": {
+      "pothole": 10,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788793144.4874372,
+    "created_at_iso": "2026-09-07T14:59:04Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788793100.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788793100.mp4",
+    "frame_count": 4,
+    "duration_sec": 44.04,
+    "fps": 2.5,
+    "size_bytes": 163917,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788793100.0749238,
+    "created_at_iso": "2026-09-07T14:58:20Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788793069.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788793069.mp4",
+    "frame_count": 39,
+    "duration_sec": 30.12,
+    "fps": 2.5,
+    "size_bytes": 1618024,
+    "defect_counts": {
+      "pothole": 22,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788793069.0340724,
+    "created_at_iso": "2026-09-07T14:57:49Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788792551.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788792551.mp4",
+    "frame_count": 28,
+    "duration_sec": 508.58,
+    "fps": 2.5,
+    "size_bytes": 707190,
+    "defect_counts": {
+      "pothole": 5,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788792551.4912167,
+    "created_at_iso": "2026-09-07T14:49:11Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788792521.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788792521.mp4",
+    "frame_count": 64,
+    "duration_sec": 30.07,
+    "fps": 2.5,
+    "size_bytes": 1678138,
+    "defect_counts": {
+      "pothole": 25,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788792521.1804128,
+    "created_at_iso": "2026-09-07T14:48:41Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788792489.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788792489.mp4",
+    "frame_count": 36,
+    "duration_sec": 31.42,
+    "fps": 2.5,
+    "size_bytes": 836211,
+    "defect_counts": {
+      "pothole": 28,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788792489.0684788,
+    "created_at_iso": "2026-09-07T14:48:09Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788772362.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788772362.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 1048620,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788772362.7397418,
+    "created_at_iso": "2026-09-07T09:12:42Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788772332.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788772332.mp4",
+    "frame_count": 39,
+    "duration_sec": 30.05,
+    "fps": 2.5,
+    "size_bytes": 641341,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788772332.462337,
+    "created_at_iso": "2026-09-07T09:12:12Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788772302.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788772302.mp4",
+    "frame_count": 75,
+    "duration_sec": 30.1,
+    "fps": 2.5,
+    "size_bytes": 1343963,
+    "defect_counts": {
+      "pothole": 9,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788772302.1631377,
+    "created_at_iso": "2026-09-07T09:11:42Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788772269.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788772269.mp4",
+    "frame_count": 32,
+    "duration_sec": 32.07,
+    "fps": 2.5,
+    "size_bytes": 154568,
+    "defect_counts": {
+      "pothole": 2,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788772269.7728765,
+    "created_at_iso": "2026-09-07T09:11:09Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788767232.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788767232.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 1572908,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788767232.6949747,
+    "created_at_iso": "2026-09-07T07:47:12Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788766534.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788766534.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.45,
+    "fps": 5.0,
+    "size_bytes": 24324,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788766534.2215965,
+    "created_at_iso": "2026-09-07T07:35:34Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788766491.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788766491.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.26,
+    "fps": 5.0,
+    "size_bytes": 24325,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788766491.7542408,
+    "created_at_iso": "2026-09-07T07:34:51Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788766449.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788766449.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.42,
+    "fps": 5.0,
+    "size_bytes": 24321,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788766449.5940182,
+    "created_at_iso": "2026-09-07T07:34:09Z"
+  },
+  {
+    "filename": "BUS_TEST_REC_1788766359.mp4",
+    "device_id": "BUS_TEST_REC",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788766359.mp4",
+    "frame_count": 3,
+    "duration_sec": 0.39,
+    "fps": 5.0,
+    "size_bytes": 22965,
+    "defect_counts": {
+      "pothole": 3,
+      "no_zebracrossing": 3,
+      "vehicle": 3,
+      "other": 0
+    },
+    "created_at": 1788766359.2797337,
+    "created_at_iso": "2026-09-07T07:32:39Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788764943.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788764943.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 44,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788764943.1869895,
+    "created_at_iso": "2026-09-07T07:09:03Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788764912.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788764912.mp4",
+    "frame_count": 83,
+    "duration_sec": 30.12,
+    "fps": 2.5,
+    "size_bytes": 2819616,
+    "defect_counts": {
+      "pothole": 52,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788764912.598929,
+    "created_at_iso": "2026-09-07T07:08:32Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788764881.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788764881.mp4",
+    "frame_count": 73,
+    "duration_sec": 30.26,
+    "fps": 2.5,
+    "size_bytes": 2037279,
+    "defect_counts": {
+      "pothole": 51,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788764881.863284,
+    "created_at_iso": "2026-09-07T07:08:01Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788764664.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788764664.mp4",
+    "frame_count": 49,
+    "duration_sec": 216.15,
+    "fps": 2.5,
+    "size_bytes": 1325538,
+    "defect_counts": {
+      "pothole": 43,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788764664.964176,
+    "created_at_iso": "2026-09-07T07:04:24Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788764634.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788764634.mp4",
+    "frame_count": 83,
+    "duration_sec": 30.23,
+    "fps": 2.5,
+    "size_bytes": 1996914,
+    "defect_counts": {
+      "pothole": 70,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788764634.4550517,
+    "created_at_iso": "2026-09-07T07:03:54Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763497.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763497.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 44,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763497.2296233,
+    "created_at_iso": "2026-09-07T06:44:57Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763466.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763466.mp4",
+    "frame_count": 78,
+    "duration_sec": 30.27,
+    "fps": 2.5,
+    "size_bytes": 179939,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763466.4881423,
+    "created_at_iso": "2026-09-07T06:44:26Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763435.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763435.mp4",
+    "frame_count": 46,
+    "duration_sec": 30.41,
+    "fps": 2.5,
+    "size_bytes": 917901,
+    "defect_counts": {
+      "pothole": 24,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763435.8868718,
+    "created_at_iso": "2026-09-07T06:43:55Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763405.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763405.mp4",
+    "frame_count": 75,
+    "duration_sec": 30.09,
+    "fps": 2.5,
+    "size_bytes": 1101981,
+    "defect_counts": {
+      "pothole": 34,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763405.2957304,
+    "created_at_iso": "2026-09-07T06:43:25Z"
+  },
+  {
+    "filename": "BUS_LIVE_02_1788763302.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_02_1788763302.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 44,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763302.572418,
+    "created_at_iso": "2026-09-07T06:41:42Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763280.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763280.mp4",
+    "frame_count": 10,
+    "duration_sec": 123.98,
+    "fps": 2.5,
+    "size_bytes": 57591,
+    "defect_counts": {
+      "pothole": 1,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763280.7056184,
+    "created_at_iso": "2026-09-07T06:41:20Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788763250.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788763250.mp4",
+    "frame_count": 83,
+    "duration_sec": 30.01,
+    "fps": 2.5,
+    "size_bytes": 308390,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788763250.0522418,
+    "created_at_iso": "2026-09-07T06:40:50Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788761467.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788761467.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 1159330,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788761467.614218,
+    "created_at_iso": "2026-09-07T06:11:07Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788761436.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788761436.mp4",
+    "frame_count": 63,
+    "duration_sec": 30.1,
+    "fps": 2.5,
+    "size_bytes": 1680113,
+    "defect_counts": {
+      "pothole": 54,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788761436.7788618,
+    "created_at_iso": "2026-09-07T06:10:36Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788761405.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788761405.mp4",
+    "frame_count": 26,
+    "duration_sec": 30.67,
+    "fps": 2.5,
+    "size_bytes": 518068,
+    "defect_counts": {
+      "pothole": 15,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788761405.6869345,
+    "created_at_iso": "2026-09-07T06:10:05Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760924.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760924.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 1476042,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760924.5406337,
+    "created_at_iso": "2026-09-07T06:02:04Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760894.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760894.mp4",
+    "frame_count": 46,
+    "duration_sec": 30.15,
+    "fps": 2.5,
+    "size_bytes": 1054220,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760894.1073678,
+    "created_at_iso": "2026-09-07T06:01:34Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760735.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760735.mp4",
+    "frame_count": 6,
+    "duration_sec": 158.2,
+    "fps": 2.5,
+    "size_bytes": 74053,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760735.3368754,
+    "created_at_iso": "2026-09-07T05:58:55Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760639.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760639.mp4",
+    "frame_count": 37,
+    "duration_sec": 95.18,
+    "fps": 2.5,
+    "size_bytes": 337011,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760639.8850863,
+    "created_at_iso": "2026-09-07T05:57:19Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760609.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760609.mp4",
+    "frame_count": 74,
+    "duration_sec": 30.34,
+    "fps": 2.5,
+    "size_bytes": 1143043,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760609.1506877,
+    "created_at_iso": "2026-09-07T05:56:49Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760578.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760578.mp4",
+    "frame_count": 60,
+    "duration_sec": 30.35,
+    "fps": 2.5,
+    "size_bytes": 1070487,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760578.607837,
+    "created_at_iso": "2026-09-07T05:56:18Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760544.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760544.mp4",
+    "frame_count": 56,
+    "duration_sec": 32.39,
+    "fps": 2.5,
+    "size_bytes": 1053813,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760544.2806113,
+    "created_at_iso": "2026-09-07T05:55:44Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760513.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760513.mp4",
+    "frame_count": 30,
+    "duration_sec": 30.03,
+    "fps": 2.5,
+    "size_bytes": 648844,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760513.673919,
+    "created_at_iso": "2026-09-07T05:55:13Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760483.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760483.mp4",
+    "frame_count": 33,
+    "duration_sec": 30.02,
+    "fps": 2.5,
+    "size_bytes": 539092,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760483.1676075,
+    "created_at_iso": "2026-09-07T05:54:43Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760452.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760452.mp4",
+    "frame_count": 27,
+    "duration_sec": 30.74,
+    "fps": 2.5,
+    "size_bytes": 485543,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760452.034612,
+    "created_at_iso": "2026-09-07T05:54:12Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760320.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760320.mp4",
+    "frame_count": 28,
+    "duration_sec": 130.48,
+    "fps": 2.5,
+    "size_bytes": 821128,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760320.7605636,
+    "created_at_iso": "2026-09-07T05:52:00Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760290.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760290.mp4",
+    "frame_count": 75,
+    "duration_sec": 30.11,
+    "fps": 2.5,
+    "size_bytes": 3934344,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760290.3180475,
+    "created_at_iso": "2026-09-07T05:51:30Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760259.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760259.mp4",
+    "frame_count": 53,
+    "duration_sec": 30.28,
+    "fps": 2.5,
+    "size_bytes": 2682675,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760259.4696844,
+    "created_at_iso": "2026-09-07T05:50:59Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760228.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760228.mp4",
+    "frame_count": 61,
+    "duration_sec": 30.29,
+    "fps": 2.5,
+    "size_bytes": 2581935,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760228.7262366,
+    "created_at_iso": "2026-09-07T05:50:28Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760197.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760197.mp4",
+    "frame_count": 68,
+    "duration_sec": 30.95,
+    "fps": 2.5,
+    "size_bytes": 3075753,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760197.3193295,
+    "created_at_iso": "2026-09-07T05:49:57Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760166.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760166.mp4",
+    "frame_count": 66,
+    "duration_sec": 30.29,
+    "fps": 2.5,
+    "size_bytes": 2329305,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760166.362324,
+    "created_at_iso": "2026-09-07T05:49:26Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760135.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760135.mp4",
+    "frame_count": 56,
+    "duration_sec": 30.48,
+    "fps": 2.5,
+    "size_bytes": 1689671,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760135.4333189,
+    "created_at_iso": "2026-09-07T05:48:55Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760102.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760102.mp4",
+    "frame_count": 23,
+    "duration_sec": 31.22,
+    "fps": 2.5,
+    "size_bytes": 871867,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760102.4699054,
+    "created_at_iso": "2026-09-07T05:48:22Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788760070.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788760070.mp4",
+    "frame_count": 50,
+    "duration_sec": 30.68,
+    "fps": 2.5,
+    "size_bytes": 1915219,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788760070.9832284,
+    "created_at_iso": "2026-09-07T05:47:50Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788754603.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788754603.mp4",
+    "frame_count": 48,
+    "duration_sec": 5462.1,
+    "fps": 2.5,
+    "size_bytes": 1119490,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788754603.9528534,
+    "created_at_iso": "2026-09-07T04:16:43Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788754573.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788754573.mp4",
+    "frame_count": 39,
+    "duration_sec": 30.43,
+    "fps": 2.5,
+    "size_bytes": 1019322,
+    "defect_counts": {
+      "pothole": 4,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788754573.1443377,
+    "created_at_iso": "2026-09-07T04:16:13Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788754542.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788754542.mp4",
+    "frame_count": 47,
+    "duration_sec": 30.21,
+    "fps": 2.5,
+    "size_bytes": 1276345,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788754542.3817348,
+    "created_at_iso": "2026-09-07T04:15:42Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788754511.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788754511.mp4",
+    "frame_count": 87,
+    "duration_sec": 30.8,
+    "fps": 2.5,
+    "size_bytes": 1743665,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788754511.2888174,
+    "created_at_iso": "2026-09-07T04:15:11Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788754002.mp4",
+    "device_id": "BUS",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788754002.mp4",
+    "frame_count": 0,
+    "duration_sec": 0,
+    "fps": 2.5,
+    "size_bytes": 2747444,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788754002.1584647,
+    "created_at_iso": "2026-09-07T04:06:42Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788753920.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788753920.mp4",
+    "frame_count": 52,
+    "duration_sec": 81.58,
+    "fps": 2.5,
+    "size_bytes": 1387693,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788753920.2280831,
+    "created_at_iso": "2026-09-07T04:05:20Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788753887.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788753887.mp4",
+    "frame_count": 76,
+    "duration_sec": 30.23,
+    "fps": 2.5,
+    "size_bytes": 1969697,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788753887.520092,
+    "created_at_iso": "2026-09-07T04:04:47Z"
+  },
+  {
+    "filename": "BUS_LIVE_01_1788753857.mp4",
+    "device_id": "BUS_LIVE_01",
+    "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_LIVE_01_1788753857.mp4",
+    "frame_count": 94,
+    "duration_sec": 30.25,
+    "fps": 2.5,
+    "size_bytes": 2514697,
+    "defect_counts": {
+      "pothole": 0,
+      "no_zebracrossing": 0,
+      "vehicle": 0,
+      "other": 0
+    },
+    "created_at": 1788753857.0097642,
+    "created_at_iso": "2026-09-07T04:04:17Z"
+  },
+  {
     "filename": "BUS_TEST_REC_1788635396.mp4",
     "device_id": "BUS_TEST_REC",
     "path": "C:\\Users\\kaalk\\.gemini\\antigravity\\scratch\\SIH26124-Urban-Intelligence\\data\\video_recordings\\BUS_TEST_REC_1788635396.mp4",

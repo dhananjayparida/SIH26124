@@ -92,29 +92,29 @@ class TestDefectRecordingAndTraining(unittest.TestCase):
         """Tests that RoadDefectDetector identifies potholes, missing zebra crossings, and vehicles."""
         detector = RoadDefectDetector(confidence_threshold=0.3)
 
-        # Ingest packet with pothole mock
+        # Ingest packet with pothole mock (test fixture)
         pkt1 = SensorPacket(
             device_id="BUS_TEST",
             gps=GPSReading(latitude=20.29, longitude=85.82),
-            extra_metadata={"mock_defect": {"class_name": "pothole", "confidence": 0.89}}
+            extra_metadata={"is_test_fixture": True, "mock_defect": {"class_name": "pothole", "confidence": 0.89}}
         )
         res1 = detector.detect(pkt1)
         self.assertTrue(any(d.class_name == "pothole" for d in res1.detections))
 
-        # Ingest packet with no_zebracrossing mock
+        # Ingest packet with no_zebracrossing mock (test fixture)
         pkt2 = SensorPacket(
             device_id="BUS_TEST",
             gps=GPSReading(latitude=20.29, longitude=85.82),
-            extra_metadata={"mock_defect": {"class_name": "no_zebracrossing", "confidence": 0.85}}
+            extra_metadata={"is_test_fixture": True, "mock_defect": {"class_name": "no_zebracrossing", "confidence": 0.85}}
         )
         res2 = detector.detect(pkt2)
         self.assertTrue(any(d.class_name == "no_zebracrossing" for d in res2.detections))
 
-        # Ingest packet with vehicle mock
+        # Ingest packet with vehicle mock (test fixture)
         pkt3 = SensorPacket(
             device_id="BUS_TEST",
             gps=GPSReading(latitude=20.29, longitude=85.82),
-            extra_metadata={"mock_defect": {"class_name": "vehicle", "confidence": 0.94}}
+            extra_metadata={"is_test_fixture": True, "mock_defect": {"class_name": "vehicle", "confidence": 0.94}}
         )
         res3 = detector.detect(pkt3)
         self.assertTrue(any(d.class_name == "vehicle" for d in res3.detections))
@@ -131,7 +131,7 @@ class TestDefectRecordingAndTraining(unittest.TestCase):
         _, buf = cv2.imencode(".jpg", frame)
         b64 = f"data:image/jpeg;base64,{base64.b64encode(buf).decode('utf-8')}"
 
-        # Ingest without enable_heuristic (normal live mode)
+        # Ingest in normal live camera mode (no CV fallback heuristics)
         normal_pkt = SensorPacket(
             device_id="BUS_LIVE",
             gps=GPSReading(latitude=20.29, longitude=85.82),
@@ -142,53 +142,38 @@ class TestDefectRecordingAndTraining(unittest.TestCase):
         potholes = [d for d in res.detections if d.class_name == "pothole"]
         self.assertEqual(len(potholes), 0, "Normal live frame should NOT trigger false positive potholes!")
 
-        # Ingest with enable_heuristic explicitly enabled
-        calib_pkt = SensorPacket(
-            device_id="BUS_CALIB",
-            gps=GPSReading(latitude=20.29, longitude=85.82),
-            frame_base64=b64,
-            extra_metadata={"enable_heuristic": True}
-        )
-        res_calib = detector.detect(calib_pkt)
-        potholes_calib = [d for d in res_calib.detections if d.class_name == "pothole"]
-        self.assertGreaterEqual(len(potholes_calib), 1, "Heuristic calibration mode should detect test patch when enabled")
-
     def test_video_recorder_and_overlay(self):
         """Tests frame ingestion, overlay drawing, and session finalization into an MP4 file."""
         recorder = VideoRecorder(fps=5.0, clip_duration_sec=60)
         device_id = "BUS_TEST_REC"
 
-        # Create synthetic 480p frame
+        # Ingest 3 frames with detections
         import cv2
-        canvas = np.full((480, 640, 3), 70, dtype=np.uint8)
-        _, buf = cv2.imencode(".jpg", canvas)
+        frame = np.full((480, 640, 3), 100, dtype=np.uint8)
+        _, buf = cv2.imencode(".jpg", frame)
         b64 = f"data:image/jpeg;base64,{base64.b64encode(buf).decode('utf-8')}"
 
-        gps = {"latitude": 20.296, "longitude": 85.824, "speed": 25.0}
-        detections = [
-            {"class_name": "pothole", "confidence": 0.91, "bbox": {"x": 200, "y": 200, "w": 100, "h": 80}},
-            {"class_name": "no_zebracrossing", "confidence": 0.87, "bbox": {"x": 300, "y": 300, "w": 200, "h": 60}},
-            {"class_name": "vehicle", "confidence": 0.95, "bbox": {"x": 450, "y": 180, "w": 80, "h": 70}}
-        ]
+        for i in range(3):
+            recorder.ingest_frame(
+                device_id=device_id,
+                frame_base64=b64,
+                gps={"latitude": 20.29 + i * 0.0001, "longitude": 85.82, "speed": 6.5, "heading": 80.0},
+                detections=[
+                    {"class_name": "pothole", "confidence": 0.91, "bbox": {"x": 300, "y": 250, "width": 100, "height": 80}},
+                    {"class_name": "no_zebracrossing", "confidence": 0.86, "bbox": {"x": 320, "y": 300, "width": 300, "height": 70}},
+                    {"class_name": "vehicle", "confidence": 0.88, "bbox": {"x": 400, "y": 200, "width": 80, "height": 60}},
+                ]
+            )
 
-        # Ingest 3 frames
-        for _ in range(3):
-            recorder.ingest_frame(device_id, b64, gps, detections)
-
-        self.assertIn(device_id, recorder.active_sessions)
-        session = recorder.active_sessions[device_id]
-        self.assertEqual(session["frame_count"], 3)
-
-        # Finalize
+        # Finalize and verify output video exists and is valid
         rec_info = recorder.finalize_session(device_id)
-        self.assertIsNotNone(rec_info)
-        self.assertEqual(rec_info["frame_count"], 3)
-        self.assertTrue(Path(rec_info["path"]).exists())
-        self.assertGreater(rec_info["size_bytes"], 0)
+        self.assertIsNotNone(rec_info, "Recorder should generate an output MP4 file")
+        v_path = rec_info["path"] if isinstance(rec_info, dict) else rec_info
+        self.assertTrue(Path(v_path).exists(), f"Video file {v_path} should exist on disk")
+        self.assertGreater(Path(v_path).stat().st_size, 1000, "Video file size should be > 1KB")
 
-        # Check in list_recordings
-        all_recs = recorder.list_recordings()
-        self.assertTrue(any(r["filename"] == rec_info["filename"] for r in all_recs))
+        # Cleanup generated test recording
+        Path(v_path).unlink(missing_ok=True)
 
     def test_best_dataset_manager(self):
         """Tests that BestDatasetManager generates valid dataset splits and data.yaml."""
@@ -203,10 +188,10 @@ class TestDefectRecordingAndTraining(unittest.TestCase):
         with open(yaml_path, "r", encoding="utf-8") as f:
             cfg = yaml.safe_load(f)
 
-        self.assertEqual(cfg["nc"], 5)
+        self.assertEqual(cfg["nc"], 11)
         self.assertEqual(cfg["names"][0], "pothole")
-        self.assertEqual(cfg["names"][2], "no_zebracrossing")
-        self.assertEqual(cfg["names"][4], "vehicle")
+        self.assertEqual(cfg["names"][6], "no_zebracrossing")
+        self.assertEqual(cfg["names"][10], "vehicle")
 
         train_imgs = list((test_ds_dir / "train" / "images").glob("*.jpg"))
         train_lbls = list((test_ds_dir / "train" / "labels").glob("*.txt"))

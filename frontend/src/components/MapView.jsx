@@ -37,9 +37,9 @@ export default function MapView() {
   // 1. Initialize Map
   useEffect(() => {
     if (!mapInstanceRef.current && mapContainerRef.current) {
-      // Default center: Janpath, Bhubaneswar
+      // Default center: GITA Autonomous College, Janla, Bhubaneswar
       const map = L.map(mapContainerRef.current, {
-        center: [20.2961, 85.8245],
+        center: [20.18, 85.74],
         zoom: 14,
         zoomControl: false
       });
@@ -382,12 +382,12 @@ export default function MapView() {
 
   const handleCenterBhubaneswar = () => {
     if (!mapInstanceRef.current) return;
-    mapInstanceRef.current.flyTo([20.2961, 85.8245], 14, { duration: 1.2 });
+    mapInstanceRef.current.flyTo([20.18, 85.74], 14, { duration: 1.2 });
   };
 
-  // Detect if any live phone is streaming from outside the primary Bhubaneswar Janpath bounding box
+  // Detect if any live phone is streaming from outside the primary Bhubaneswar bounding box
   const livePhoneOutside = Object.values(fleet).find(
-    (b) => b.status === 'LIVE' && b.latitude && b.longitude && (Math.abs(b.latitude - 20.2961) > 0.08 || Math.abs(b.longitude - 85.8245) > 0.08)
+    (b) => b.status === 'LIVE' && b.latitude && b.longitude && (Math.abs(b.latitude - 20.18) > 0.08 || Math.abs(b.longitude - 85.74) > 0.08)
   );
 
   return (
@@ -512,7 +512,7 @@ export default function MapView() {
         </div>
         <div style={{ width: '1px', height: '12px', background: 'var(--border-color)' }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ color: '#f59e0b', fontWeight: 600 }}>JANPATH CORRIDOR</span>
+          <span style={{ color: '#f59e0b', fontWeight: 600 }}>BHUBANESWAR</span>
         </div>
         <div style={{ width: '1px', height: '12px', background: 'var(--border-color)' }} />
         <span style={{ color: mapApiKey ? '#10b981' : '#38bdf8', fontWeight: 700, fontSize: '10px' }}>

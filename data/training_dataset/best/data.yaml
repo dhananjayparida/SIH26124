@@ -1,10 +1,16 @@
 path: C:/Users/kaalk/.gemini/antigravity/scratch/SIH26124-Urban-Intelligence/data/training_dataset/best
 train: train/images
 val: val/images
-nc: 5
+nc: 11
 names:
   0: pothole
-  1: crack
-  2: no_zebracrossing
-  3: zebra_crossing
-  4: vehicle
+  1: longitudinal_crack
+  2: transverse_crack
+  3: alligator_crack
+  4: damaged_road
+  5: missing_divider
+  6: no_zebracrossing
+  7: damaged_signboard
+  8: waterlogging
+  9: debris
+  10: vehicle

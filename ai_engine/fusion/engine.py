@@ -8,6 +8,9 @@ from datetime import datetime, timezone
 from typing import List, Tuple, Optional, Callable
 from .spatial_index import haversine_distance_meters, bounding_box_for_radius
 from ..sensor_interface.contracts import Observation, Event
+from ..specialized.observation_classifier import classify_detection
+from ..event_intelligence.severity import assess_event_severity
+from ..urban_intelligence.priority import calculate_priority_score
 
 
 class SpatioTemporalFusionEngine:
@@ -67,9 +70,24 @@ class SpatioTemporalFusionEngine:
         best_event = None
         min_dist = float("inf")
 
+        # Derive canonical taxonomy for this observation for robust matching
+        raw_obs_name = obs.observation_subtype or obs.defect_type or ""
+        canon_type, canon_subtype = classify_detection(raw_obs_name)
+        obs_subtypes = {
+            (obs.observation_subtype or "").upper(),
+            (obs.defect_type or "").upper(),
+            (obs.observation_type or "").upper(),
+            canon_subtype.upper(),
+            canon_type.upper(),
+        }
+
         for event in candidates:
-            # Check event subtype/type match
-            if event.subtype != obs.defect_type:
+            # Match on observation subtype (canonical or raw class name, case-insensitive)
+            cand_subtypes = {
+                (event.subtype or "").upper(),
+                (event.type or "").upper(),
+            }
+            if not (cand_subtypes & obs_subtypes):
                 continue
 
             # Check temporal window against latest observation
@@ -100,14 +118,23 @@ class SpatioTemporalFusionEngine:
         matched_event, dist = self.find_best_candidate(obs, existing_events)
 
         if matched_event is None:
+            # Derive canonical taxonomy for this detection
+            raw_name = obs.observation_subtype or obs.defect_type or ""
+            event_type, event_subtype = classify_detection(raw_name)
+            severity = assess_event_severity(
+                event_type=event_type,
+                event_subtype=event_subtype,
+                confidence=obs.model_confidence,
+                bbox=obs.bbox
+            )
             # Create new CANDIDATE event
             new_event = Event(
-                type="road_defect",
-                subtype=obs.defect_type,
+                type=event_type,
+                subtype=event_subtype,
                 latitude=obs.latitude,
                 longitude=obs.longitude,
                 status="CANDIDATE",
-                severity="MEDIUM",
+                severity=severity,
                 model_confidence=round(obs.model_confidence, 3),
                 event_confidence=round(obs.model_confidence, 3),
                 unique_sources=1,
@@ -118,6 +145,7 @@ class SpatioTemporalFusionEngine:
                 updated_at=now,
                 observations=[obs]
             )
+            new_event.priority_score = calculate_priority_score(new_event, current_time=now)
             obs.event_id = new_event.event_id
             if self.on_event_updated:
                 self.on_event_updated(new_event, "CREATED")
@@ -149,7 +177,14 @@ class SpatioTemporalFusionEngine:
             matched_event.event_confidence = self.compute_confidence(matched_event)
             old_status = matched_event.status
             matched_event.status = self.promote_status(matched_event)
+            matched_event.severity = assess_event_severity(
+                event_type=matched_event.type,
+                event_subtype=matched_event.subtype,
+                confidence=matched_event.model_confidence,
+                bbox=obs.bbox
+            )
             matched_event.updated_at = now
+            matched_event.priority_score = calculate_priority_score(matched_event, current_time=now)
 
             transition = f"{old_status}->{matched_event.status}" if old_status != matched_event.status else "UPDATED"
             if self.on_event_updated:

@@ -180,7 +180,18 @@ export default function CockpitOverlay() {
           boxShadow: '0 8px 24px rgba(0,0,0,0.6)'
         }}>
           {bus.latestFrame ? (
-            <img src={bus.latestFrame} alt="Dashcam Stream" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <img src={bus.latestFrame} alt="Dashcam Stream" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {(bus.detections || []).map((d, index) => {
+                const box = d.bbox || {};
+                return (
+                  <div key={`${d.class_name}-${index}`} style={{
+                    position: 'absolute', left: `${((box.x - box.width / 2) / 640) * 100}%`, top: `${((box.y - box.height / 2) / 480) * 100}%`,
+                    width: `${(box.width / 640) * 100}%`, height: `${(box.height / 480) * 100}%`, border: '2px solid #10b981', pointerEvents: 'none'
+                  }} />
+                );
+              })}
+            </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-dim)', fontSize: '11px', textAlign: 'center', padding: '10px' }}>
               <Bus size={28} style={{ opacity: 0.4, marginBottom: '6px' }} />

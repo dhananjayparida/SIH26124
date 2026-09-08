@@ -128,11 +128,29 @@ export default function EntityPanel() {
 
             <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)', background: '#000', minHeight: '190px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {v.latestFrame ? (
-                <img
-                  src={v.latestFrame}
-                  alt="Live Camera Feed"
-                  style={{ width: '100%', height: 'auto', maxHeight: '240px', objectFit: 'cover', display: 'block' }}
-                />
+                <div style={{ position: 'relative', width: '100%' }}>
+                  <img
+                    src={v.latestFrame}
+                    alt="Live Camera Feed"
+                    style={{ width: '100%', height: 'auto', maxHeight: '240px', objectFit: 'cover', display: 'block' }}
+                  />
+                  {(v.detections || []).map((d, index) => {
+                    const box = d.bbox || {};
+                    const left = ((box.x - box.width / 2) / 640) * 100;
+                    const top = ((box.y - box.height / 2) / 480) * 100;
+                    return (
+                      <div key={`${d.class_name}-${index}`} style={{
+                        position: 'absolute', left: `${left}%`, top: `${top}%`,
+                        width: `${(box.width / 640) * 100}%`, height: `${(box.height / 480) * 100}%`,
+                        border: '2px solid #10b981', pointerEvents: 'none'
+                      }}>
+                        <span style={{ position: 'absolute', top: '-18px', left: '-2px', background: '#10b981', color: '#052e16', padding: '2px 4px', fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap' }}>
+                          {d.class_name} {Math.round((d.confidence || 0) * 100)}%
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               ) : (
                 <div style={{ textAlign: 'center', color: 'var(--text-dim)', padding: '20px' }}>
                   <Bus size={32} style={{ opacity: 0.3, marginBottom: '8px' }} />

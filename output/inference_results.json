@@ -1,0 +1,52 @@
+{
+  "engine": "SIH26124-RoadHazardDetector",
+  "version": "1.0.0",
+  "run_timestamp": "2026-09-07T18:19:19.476639+00:00",
+  "config": {
+    "confidence": 0.25,
+    "input": "data\\training_dataset\\best\\val\\images\\sample_BUS_01_1788553516579.jpg",
+    "check_crossing": false
+  },
+  "summary": {
+    "total_frames": 1,
+    "frames_with_hazards": 1,
+    "total_detections": 2,
+    "by_class": {
+      "transverse_crack": 2
+    }
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "source": "data\\training_dataset\\best\\val\\images\\sample_BUS_01_1788553516579.jpg",
+      "ms": 2008.4,
+      "count": 2,
+      "detections": [
+        {
+          "class": "transverse_crack",
+          "confidence": 0.5018,
+          "severity": "MEDIUM",
+          "bbox": {
+            "x": 409.4,
+            "y": 401.4,
+            "w": 134.0,
+            "h": 30.4
+          },
+          "model": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        },
+        {
+          "class": "transverse_crack",
+          "confidence": 0.4186,
+          "severity": "MEDIUM",
+          "bbox": {
+            "x": 91.5,
+            "y": 401.4,
+            "w": 124.9,
+            "h": 29.5
+          },
+          "model": "D-FINE-DFINE_ROAD_DEFECT_LATEST"
+        }
+      ]
+    }
+  ]
+}

@@ -112,12 +112,11 @@ export function getTileLayerConfig(basemap = 'dark', apiKey = '') {
   if (basemap === 'satellite') {
     return {
       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP',
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS',
       subdomains: [],
       maxZoom: 19
     };
   } else if (basemap === 'streets') {
-    // OpenStreetMap standard tile servers ONLY support subdomains 'a', 'b', and 'c'
     return {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution: '&copy; OpenStreetMap contributors',
@@ -125,12 +124,12 @@ export function getTileLayerConfig(basemap = 'dark', apiKey = '') {
       maxZoom: 19
     };
   } else {
-    // Dark Tactical: CartoDB Dark Matter (subdomains a, b, c, d)
+    // Dark Tactical: Stadia Maps Alidade Smooth Dark — free, no API key required
     return {
-      url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-      attribution: '&copy; CARTO &copy; OpenStreetMap',
-      subdomains: 'abcd',
-      maxZoom: 19
+      url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+      attribution: '&copy; Stadia Maps &copy; OpenStreetMap contributors',
+      subdomains: [],
+      maxZoom: 20
     };
   }
 }

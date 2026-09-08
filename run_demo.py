@@ -38,7 +38,7 @@ def main():
     # 1. Start FastAPI AI Service (port 8000)
     print("[1/4] Starting FastAPI AI & D-FINE Fusion Service on port 8000...")
     fastapi_proc = subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "backend.ai_service.main:app", "--port", "8000", "--host", "0.0.0.0"],
+        [sys.executable, "-m", "uvicorn", "backend.ai_service.main:app", "--port", "8000", "--host", "0.0.0.0", "--reload"],
         cwd=str(ROOT_DIR),
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL
@@ -113,7 +113,7 @@ def main():
     print("==================================================================")
     print("  • Open the Phone Camera PWA link on your mobile browser.")
     print("  • Tap 'START SENSING' to stream your live phone camera to the map!")
-    print("  • Tap 'TRIGGER DEFECT' on your phone to test real-time D-FINE fusion.")
+    print("  • Live YOLO neural perception runs in real-time directly on camera frames.")
     print("==================================================================")
     print("\nCommands:")
     print("  [r] Run automated multi-bus corroboration replay simulation")

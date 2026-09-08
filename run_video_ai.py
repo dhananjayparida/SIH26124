@@ -1,4 +1,4 @@
-﻿"""
+"""
 Video AI Engine Runner — SIH26124 Urban Intelligence Platform.
 
 Reads a video file frame by frame, runs the full AI pipeline on each frame,
@@ -6,19 +6,21 @@ and writes all detections + fused events to a JSON file.
 
 Usage:
   python run_video_ai.py --video path/to/video.mp4
-  python run_video_ai.py --video path/to/video.mp4 --fps 2 --output output/video_result.json
+    python run_video_ai.py --video path/to/video.mp4 --model dfine --output output/video_result.json
   python run_video_ai.py --video path/to/video.mp4 --lat 20.2961 --lon 85.8245
   python run_video_ai.py --video path/to/video.mp4 --device BUS_CAM_01 --fps 3 --annotated
 
 Arguments:
   --video      Path to input video file (mp4, avi, mov, mkv …)
-  --fps        Frames to sample per second of video (default: 2)
-  --output     Output JSON path (default: output/video_ai_output.json)
+    --fps        Frames to sample per second of video (default: 4)
+    --model      Model checkpoint: dfine, best, or yolo (default: dfine)
+    --output     Output JSON path (default: output/video_ai_output.json)
   --device     Device/camera ID tag in output (default: VIDEO_CAM)
   --lat        Starting GPS latitude  (default: 0.0 — no GPS)
   --lon        Starting GPS longitude (default: 0.0 — no GPS)
   --annotated  Also write an annotated output video with bounding-box overlays
-  --conf       Detection confidence threshold (default: 0.40)
+    --conf       Detection confidence threshold (default: 0.20)
+    --fusion-radius  Distance in meters used to group detections (default: 30)
 """
 
 from __future__ import annotations
@@ -46,6 +48,11 @@ from ai_engine.perception.detector import RoadDefectDetector
 from ai_engine.fusion.engine import SpatioTemporalFusionEngine
 
 OUTPUT_DIR = ROOT_DIR / "output"
+MODEL_PATHS = {
+    "dfine": ROOT_DIR / "models" / "dfine_road_defect_latest.pt",
+    "best": ROOT_DIR / "models" / "best_road_defect_model.pt",
+    "yolo": ROOT_DIR / "yolov8n.pt",
+}
 
 # BGR colors for annotation overlay
 CLASS_COLORS = {
@@ -71,11 +78,12 @@ def frame_to_b64(frame_bgr: np.ndarray) -> str:
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
-def annotate_frame(frame: np.ndarray, result: DetectionResult) -> np.ndarray:
-    """Draw bounding boxes + labels on a copy of the frame."""
+def annotate_frame(frame: np.ndarray, result: DetectionResult, min_conf: float = 0.20) -> np.ndarray:
+    """Draw bounding boxes + labels on a copy of the frame for detections >= min_conf."""
     annotated = frame.copy()
     h, w = annotated.shape[:2]
-    for det in result.detections:
+    visible_detections = [det for det in result.detections if det.confidence >= min_conf]
+    for det in visible_detections:
         color = CLASS_COLORS.get(det.class_name, (0, 255, 0))
         bx = det.bbox
         # bbox is [cx, cy, bw, bh] in pixels
@@ -95,7 +103,7 @@ def annotate_frame(frame: np.ndarray, result: DetectionResult) -> np.ndarray:
 
     # Frame info overlay
     ts_str = datetime.fromtimestamp(result.timestamp, tz=timezone.utc).strftime("%H:%M:%S UTC")
-    det_count = len(result.detections)
+    det_count = len(visible_detections)
     cv2.putText(annotated, f"Detections: {det_count}  |  {ts_str}",
                 (10, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA)
     return annotated
@@ -108,6 +116,9 @@ def run_video_pipeline(
     start_lat: float,
     start_lon: float,
     conf_threshold: float,
+    fusion_radius_meters: float,
+    model_name: str,
+    model_path: Path,
     write_annotated: bool,
     output_path: Path,
 ) -> dict:
@@ -137,11 +148,15 @@ def run_video_pipeline(
         writer = cv2.VideoWriter(str(annotated_path), fourcc, sample_fps, (fw, fh))
 
     print("\n[AI Engine] Initialising RoadDefectDetector...")
-    detector = RoadDefectDetector(confidence_threshold=conf_threshold)
+    detector = RoadDefectDetector(
+        model_type=model_name,
+        weights_path=str(model_path),
+        confidence_threshold=conf_threshold,
+    )
 
     print("[AI Engine] Initialising SpatioTemporalFusionEngine...")
     fused_events: list[Event] = []
-    fusion_engine = SpatioTemporalFusionEngine(spatial_radius_meters=30.0)
+    fusion_engine = SpatioTemporalFusionEngine(spatial_radius_meters=fusion_radius_meters)
 
     all_detections: list[dict] = []
     frame_idx = 0
@@ -230,7 +245,7 @@ def run_video_pipeline(
 
         # Annotated output
         if writer:
-            annotated = annotate_frame(frame, result)
+            annotated = annotate_frame(frame, result, min_conf=conf_threshold)
             writer.write(annotated)
 
         frame_idx += 1
@@ -272,6 +287,8 @@ def run_video_pipeline(
             "device_id": device_id,
             "gps_origin": {"latitude": start_lat, "longitude": start_lon},
             "conf_threshold": conf_threshold,
+            "model": model_name,
+            "model_weights": str(model_path),
             "processing_time_sec": round(elapsed, 2),
             "total_detections": sum(len(d["detections"]) for d in all_detections),
             "total_events": len(events_out),
@@ -289,8 +306,10 @@ def main():
         description="Run the SIH26124 AI Engine on a video file and export results as JSON."
     )
     parser.add_argument("--video",    required=True, help="Path to input video file")
-    parser.add_argument("--fps",      type=float, default=2.0,
-                        help="Frames to sample per second (default: 2)")
+    parser.add_argument("--model",    choices=MODEL_PATHS, default="dfine",
+                        help="Model checkpoint: dfine, best, or yolo (default: dfine)")
+    parser.add_argument("--fps",      type=float, default=4.0,
+                        help="Frames to sample per second (default: 4)")
     parser.add_argument("--output",   default=str(OUTPUT_DIR / "video_ai_output.json"),
                         help="Output JSON path")
     parser.add_argument("--device",   default="VIDEO_CAM", help="Device ID tag (default: VIDEO_CAM)")
@@ -298,8 +317,10 @@ def main():
     parser.add_argument("--lon",      type=float, default=0.0,  help="GPS longitude")
     parser.add_argument("--annotated", action="store_true",
                         help="Also write annotated output video with bounding boxes")
-    parser.add_argument("--conf",     type=float, default=0.40,
-                        help="Detection confidence threshold (default: 0.40)")
+    parser.add_argument("--conf",     type=float, default=0.20,
+                        help="Detection confidence threshold (default: 0.20)")
+    parser.add_argument("--fusion-radius", type=float, default=30.0,
+                        help="Fusion radius in meters (default: 30)")
     args = parser.parse_args()
 
     video_path = Path(args.video)
@@ -309,17 +330,23 @@ def main():
 
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    model_path = MODEL_PATHS[args.model]
+    if not model_path.exists():
+        print(f"[ERROR] Model checkpoint not found: {model_path}")
+        sys.exit(1)
 
     print("=" * 60)
     print("  SIH26124 — VIDEO AI ENGINE RUNNER")
     print("=" * 60)
     print(f"  Video    : {video_path}")
+    print(f"  Model    : {args.model} ({model_path})")
     print(f"  Sample   : {args.fps} FPS")
     print(f"  Device   : {args.device}")
     print(f"  GPS      : lat={args.lat}, lon={args.lon}")
     print(f"  Output   : {output_path}")
     print(f"  Annotated: {args.annotated}")
     print(f"  Conf     : {args.conf}")
+    print(f"  Fusion   : {args.fusion_radius} m")
     print("=" * 60)
 
     result = run_video_pipeline(
@@ -329,6 +356,9 @@ def main():
         start_lat=args.lat,
         start_lon=args.lon,
         conf_threshold=args.conf,
+        fusion_radius_meters=args.fusion_radius,
+        model_name=args.model,
+        model_path=model_path,
         write_annotated=args.annotated,
         output_path=output_path,
     )

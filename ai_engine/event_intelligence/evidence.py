@@ -40,8 +40,31 @@ class EvidenceManager:
             filename = f"{event_id[:8]}_{observation_id[:8]}.jpg"
             target_path = self.storage_dir / filename
 
-            # If bbox is provided, draw high-visibility detection box and label
-            if bbox and len(bbox) == 4:
+            # Extract bbox coordinates safely
+            x1, y1, x2, y2 = None, None, None, None
+            if bbox is not None:
+                if hasattr(bbox, "x") and hasattr(bbox, "width"):
+                    # BoundingBox object: center (x, y) with width and height
+                    bx, by, bw, bh = float(bbox.x), float(bbox.y), float(bbox.width), float(bbox.height)
+                    x1 = bx - bw / 2.0
+                    y1 = by - bh / 2.0
+                    x2 = bx + bw / 2.0
+                    y2 = by + bh / 2.0
+                elif isinstance(bbox, dict):
+                    if "x1" in bbox and "x2" in bbox:
+                        x1, y1, x2, y2 = float(bbox["x1"]), float(bbox.get("y1", 0)), float(bbox["x2"]), float(bbox.get("y2", 0))
+                    else:
+                        bx, by = float(bbox.get("x", 0)), float(bbox.get("y", 0))
+                        bw, bh = float(bbox.get("width", bbox.get("w", 0))), float(bbox.get("height", bbox.get("h", 0)))
+                        x1 = bx - bw / 2.0
+                        y1 = by - bh / 2.0
+                        x2 = bx + bw / 2.0
+                        y2 = by + bh / 2.0
+                elif isinstance(bbox, (list, tuple)) and len(bbox) == 4:
+                    x1, y1, x2, y2 = float(bbox[0]), float(bbox[1]), float(bbox[2]), float(bbox[3])
+
+            # Draw visual defect box and label if bbox is available
+            if x1 is not None and x2 is not None:
                 try:
                     import cv2
                     import numpy as np
@@ -51,7 +74,6 @@ class EvidenceManager:
 
                     if img is not None:
                         h, w = img.shape[:2]
-                        x1, y1, x2, y2 = bbox
                         if max(x1, y1, x2, y2) <= 1.05:
                             px1, py1, px2, py2 = int(x1 * w), int(y1 * h), int(x2 * w), int(y2 * h)
                         else:

@@ -41,8 +41,23 @@ const coordsDisplay = document.getElementById('coordsDisplay');
 const speedDisplay = document.getElementById('speedDisplay');
 const packetDisplay = document.getElementById('packetDisplay');
 const btnToggle = document.getElementById('btnToggleStream');
-const btnSimulate = document.getElementById('btnSimulateDefect');
+const btnSimulate = document.getElementById('btnSimulateDefect') || document.getElementById('aiModeIndicator');
 const tapPrompt = document.getElementById('tapToStartPrompt');
+
+// SIH26124 — Full 10 defect categories for mobile edge sensing simulation
+const SIH_DEFECT_CLASSES = [
+  { class_name: 'pothole', label: 'POTHOLE', confidence: 0.92, x: 320, y: 270, w: 140, h: 90 },
+  { class_name: 'longitudinal_crack', label: 'LONGITUDINAL CRACK', confidence: 0.88, x: 310, y: 300, w: 220, h: 20 },
+  { class_name: 'transverse_crack', label: 'TRANSVERSE CRACK', confidence: 0.86, x: 320, y: 310, w: 20, h: 180 },
+  { class_name: 'alligator_crack', label: 'ALLIGATOR CRACK', confidence: 0.89, x: 300, y: 350, w: 170, h: 110 },
+  { class_name: 'damaged_road', label: 'DAMAGED ROAD', confidence: 0.84, x: 280, y: 330, w: 220, h: 140 },
+  { class_name: 'missing_divider', label: 'MISSING DIVIDER', confidence: 0.81, x: 320, y: 240, w: 60, h: 200 },
+  { class_name: 'no_zebracrossing', label: 'MISSING ZEBRA', confidence: 0.87, x: 320, y: 340, w: 450, h: 120 },
+  { class_name: 'damaged_signboard', label: 'DAMAGED SIGNBOARD', confidence: 0.83, x: 100, y: 150, w: 90, h: 110 },
+  { class_name: 'waterlogging', label: 'WATERLOGGING', confidence: 0.90, x: 320, y: 360, w: 320, h: 160 },
+  { class_name: 'debris', label: 'ROAD DEBRIS', confidence: 0.85, x: 250, y: 370, w: 120, h: 80 }
+];
+let defectCycleIndex = 0;
 
 /**
  * 1. Initialize Device Registration & Heartbeat Keepalive
@@ -107,25 +122,25 @@ const btnGpsReal = document.getElementById('btnGpsReal');
 const btnGpsSim = document.getElementById('btnGpsSim');
 const gpsStatusPill = document.getElementById('gpsStatusPill');
 
-state.gpsMode = 'sim'; // 'sim' | 'real' (Defaults to Bhubaneswar Janpath Corridor)
+state.gpsMode = 'sim'; // 'sim' | 'real' (Defaults to GITA College area, Bhubaneswar)
 state.hasRealGpsFix = false;
 state.prevGps = null;
 state.simInterval = null;
 state.simWaypointIndex = 0;
 state.simSubProgress = 0.0;
 
-// High-fidelity Janpath Transit Corridor in Bhubaneswar (10 Waypoint Loop)
+// GITA Autonomous College Transit Route, Janla, Bhubaneswar (10 Waypoint Loop)
 const BHUBANESWAR_JANPATH_ROUTE = [
-  { lat: 20.29200, lon: 85.82100, speedKmh: 24.5 },  // Master Canteen Station
-  { lat: 20.29360, lon: 85.82240, speedKmh: 26.0 },  // Kharvela Nagar
-  { lat: 20.29615, lon: 85.82455, speedKmh: 25.0 },  // Ram Mandir Square
-  { lat: 20.29760, lon: 85.82590, speedKmh: 28.0 },  // Satya Nagar
-  { lat: 20.29950, lon: 85.82760, speedKmh: 27.5 },  // Janpath Flyover
-  { lat: 20.30180, lon: 85.82980, speedKmh: 29.0 },  // Vani Vihar Square
-  { lat: 20.30450, lon: 85.83220, speedKmh: 24.0 },  // Saheed Nagar Junction
-  { lat: 20.30180, lon: 85.82980, speedKmh: 26.5 },  // Vani Vihar Return
-  { lat: 20.29760, lon: 85.82590, speedKmh: 28.0 },  // Satya Nagar Return
-  { lat: 20.29450, lon: 85.82320, speedKmh: 25.0 }   // Kharvela Nagar Return
+  { lat: 20.18000, lon: 85.73800, speedKmh: 22.0 },  // GITA College Main Gate
+  { lat: 20.18120, lon: 85.73950, speedKmh: 24.0 },  // NH-16 Service Road
+  { lat: 20.18280, lon: 85.74100, speedKmh: 25.5 },  // Janla Square
+  { lat: 20.18450, lon: 85.74280, speedKmh: 27.0 },  // Khandagiri Link
+  { lat: 20.18600, lon: 85.74450, speedKmh: 28.0 },  // AIIMS Odisha Junction
+  { lat: 20.18450, lon: 85.74280, speedKmh: 26.0 },  // Khandagiri Return
+  { lat: 20.18280, lon: 85.74100, speedKmh: 25.0 },  // Janla Square Return
+  { lat: 20.18120, lon: 85.73950, speedKmh: 24.0 },  // NH-16 Return
+  { lat: 20.18000, lon: 85.73800, speedKmh: 23.0 },  // GITA Gate Return
+  { lat: 20.17880, lon: 85.73680, speedKmh: 22.0 }   // Campus Loop End
 ];
 
 function setGpsModeUI(mode) {
@@ -136,7 +151,7 @@ function setGpsModeUI(mode) {
       btnGpsReal.style.background = '#1e293b';
       btnGpsReal.style.color = '#94a3b8';
       if (gpsStatusPill) {
-        gpsStatusPill.textContent = 'JANPATH (SIM)';
+        gpsStatusPill.textContent = 'GITA ROUTE (SIM)';
         gpsStatusPill.style.background = 'rgba(56,189,248,0.2)';
         gpsStatusPill.style.color = '#38bdf8';
       }
@@ -162,7 +177,7 @@ function activateSimMode(reason = '') {
     state.watchId = null;
   }
   startSimulatedMotion();
-  console.log(`[PWA] Switched to Janpath Transit Loop${reason ? ' (' + reason + ')' : ''}`);
+  console.log(`[PWA] Switched to GITA College Transit Loop${reason ? ' (' + reason + ')' : ''}`);
 }
 
 function activateRealGps() {
@@ -171,7 +186,7 @@ function activateRealGps() {
   stopSimulatedMotion();
 
   if (!window.isSecureContext && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    alert('Notice: Mobile browsers (Chrome/Safari) restrict hardware GPS to secure HTTPS origins. Falling back to Bhubaneswar Janpath Corridor simulation.');
+    alert('Notice: Mobile browsers (Chrome/Safari) restrict hardware GPS to secure HTTPS origins. Falling back to GITA College area simulation.');
     activateSimMode('HTTP origin blocked');
     return;
   }
@@ -449,7 +464,7 @@ function startTestCardStream() {
 /**
  * 5. Frame Sampling & Packet Transmission (2.5 FPS)
  */
-async function sendSensorPacket() {
+async function sendSensorPacket(forceHttp = false) {
   if (!state.isStreaming) return;
 
   try {
@@ -472,20 +487,6 @@ async function sendSensorPacket() {
   const now = Date.now() / 1000;
   const extraMetadata = { source_type: 'phone_pwa' };
 
-  if (state.pendingDefectInjection) {
-    extraMetadata.mock_defect = {
-      class_name: 'pothole',
-      confidence: 0.91,
-      x: 320,
-      y: 270,
-      w: 130,
-      h: 90
-    };
-    state.pendingDefectInjection = false;
-    btnSimulate.style.background = '#1e293b';
-    console.log('[PWA] Injected pothole defect into packet');
-  }
-
   const packet = {
     packet_id: `pkt_${state.deviceId}_${Date.now()}`,
     device_id: state.deviceId,
@@ -500,15 +501,15 @@ async function sendSensorPacket() {
   const sendStart = performance.now();
 
   // Send over WebSocket if connected, otherwise fallback to HTTP POST
-  if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+  if (!forceHttp && state.ws && state.ws.readyState === WebSocket.OPEN) {
     try {
       state.ws.send(payloadStr);
       adjustAdaptiveQuality(performance.now() - sendStart);
     } catch (e) {
-      sendViaHttp(payloadStr);
+      await sendViaHttp(payloadStr);
     }
   } else {
-    sendViaHttp(payloadStr);
+    await sendViaHttp(payloadStr);
   }
 
   state.packetsSent++;
@@ -524,16 +525,66 @@ function adjustAdaptiveQuality(rttMs) {
   }
 }
 
-function sendViaHttp(payloadStr) {
+async function sendViaHttp(payloadStr) {
   const gatewayUrl = `${window.location.protocol}//${window.location.host}`;
   const start = performance.now();
-  fetch(`${gatewayUrl}/ingest/packet`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.token || ''}` },
-    body: payloadStr
-  }).then(() => {
+  try {
+    const response = await fetch(`${gatewayUrl}/ingest/packet`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.token || ''}` },
+      body: payloadStr
+    });
     adjustAdaptiveQuality(performance.now() - start);
-  }).catch(() => {});
+    if (!response.ok) {
+      const details = await response.text();
+      throw new Error(`HTTP ${response.status}: ${details}`);
+    }
+    const data = await response.json();
+    if (data && data.detections && data.detections.length > 0) {
+      renderLiveDetections(data.detections);
+    }
+    return data;
+  } catch (error) {
+    console.error('[PWA] Sensor packet failed:', error);
+    throw error;
+  }
+}
+
+/**
+ * Render genuine YOLO/D-FINE model predictions directly on phone camera HUD
+ */
+function renderLiveDetections(detections) {
+  if (!detections || detections.length === 0) return;
+  try {
+    ctx.save();
+    for (const d of detections) {
+      const bbox = d.bbox || {};
+      const x = bbox.x || 320;
+      const y = bbox.y || 240;
+      const w = bbox.width || 120;
+      const h = bbox.height || 80;
+      const rx = Math.max(10, x - w / 2);
+      const ry = Math.max(10, y - h / 2);
+      const confPct = Math.round((d.confidence || 0) * 100);
+      const modelName = d.model_version || 'YOLOv8';
+      const label = `[${modelName}] ${d.class_name.toUpperCase()} (${confPct}%)`;
+
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(rx, ry, w, h);
+
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.9)';
+      const textWidth = Math.max(200, label.length * 7.5 + 20);
+      ctx.fillRect(rx, Math.max(0, ry - 22), textWidth, 22);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText(label, rx + 6, Math.max(15, ry - 6));
+    }
+    ctx.restore();
+  } catch (err) {
+    console.warn('[PWA] Canvas HUD render error:', err);
+  }
 }
 
 function updateBandwidth() {
@@ -549,7 +600,7 @@ function updateBandwidth() {
 }
 
 /**
- * 6. Stream Toggle & Defect Trigger Controls
+ * 6. Stream Toggle & Live AI Perception Controls
  */
 async function toggleStreaming() {
   if (!state.isStreaming) {
@@ -585,15 +636,11 @@ async function toggleStreaming() {
 btnToggle.addEventListener('click', toggleStreaming);
 document.getElementById('viewportArea')?.addEventListener('click', toggleStreaming);
 
-btnSimulate.addEventListener('click', () => {
-  state.pendingDefectInjection = true;
-  btnSimulate.style.background = '#dc2626';
-  if (!state.isStreaming) {
-    state.isStreaming = true;
-    sendSensorPacket();
-    state.isStreaming = false;
-  }
-});
+if (btnSimulate) {
+  btnSimulate.addEventListener('click', () => {
+    console.log('[PWA] Live AI Mode: Point camera at road hazards for genuine neural detection.');
+  });
+}
 
 // Clean Startup: Register device & start Janpath corridor GPS simulation
 initDevice();

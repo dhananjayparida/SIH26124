@@ -40,6 +40,7 @@ class TestAPIService(unittest.TestCase):
                 "timestamp": 1725350000.0
             },
             "extra_metadata": {
+                "is_test_fixture": True,
                 "mock_defect": {
                     "class_name": "pothole",
                     "confidence": 0.85,
@@ -73,6 +74,7 @@ class TestAPIService(unittest.TestCase):
                 "timestamp": 1725350005.0
             },
             "extra_metadata": {
+                "is_test_fixture": True,
                 "mock_defect": {
                     "class_name": "pothole",
                     "confidence": 0.88,

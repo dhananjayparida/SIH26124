@@ -156,7 +156,7 @@ export default function PhoneConnectModal({ isOpen, onClose }) {
             <ol style={{ fontSize: '12px', color: 'var(--text-muted)', paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <li>Open the link on your smartphone and allow <b>Camera</b> and <b>Location</b> permissions.</li>
               <li>Tap <b>"START SENSING"</b> — you will see your live camera feed and your phone appear on the command center map!</li>
-              <li>Point camera at a simulated pothole or tap <b>"TRIGGER DEFECT"</b> to stream an observation.</li>
+              <li>Point camera at road hazards or test samples for real-time live YOLO perception.</li>
               <li>Watch the command center flip the event from <b>CANDIDATE</b> → <b>CORROBORATED</b> in real time.</li>
             </ol>
           </div>
