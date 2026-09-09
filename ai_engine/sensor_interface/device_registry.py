@@ -58,14 +58,17 @@ class DeviceRegistry:
         lon: Optional[float] = None,
         speed: Optional[float] = None,
         heading: Optional[float] = None,
+        source_type: Optional[str] = None,
         is_detection: bool = False
     ) -> DeviceRecord:
         """Update last seen timestamp and latest geonav coordinates."""
         now = datetime.now(timezone.utc).timestamp()
         if device_id not in self._devices:
-            self.register(device_id)
+            self.register(device_id, source_type=source_type or "phone_pwa")
 
         dev = self._devices[device_id]
+        if source_type:
+            dev.source_type = source_type
         dev.last_seen = now
         dev.status = "LIVE"
         dev.packets_sent += 1

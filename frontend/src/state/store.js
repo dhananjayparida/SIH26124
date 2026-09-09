@@ -19,27 +19,21 @@ export const useStore = create((set, get) => ({
     trails:         true,
     annotations:    true,
     radar:          true,
-    coverage:       false   // Coverage freshness layer
+    coverage:       false,  // Coverage freshness layer (backend-provided cells)
+    highPriority:   true    // HIGH_PRIORITY events, independent of domain layers
   },
   // Basemap style: 'dark' | 'satellite' | 'streets'
-  basemap: 'dark',
+  // OSM Streets is the no-key default. Optional Mapbox/MapTiler keys remain supported.
+  basemap: 'streets',
   // Followed entity ID for tactical follow mode
   followedVehicleId: null,
   // Cockpit view overlay
   cockpitMode: false,
-  // Analyst map annotations
-  annotations: [
-    {
-      id: 'ann_1',
-      latitude: 20.1840,
-      longitude: 85.7420,
-      category: 'ROADWORK',
-      note: 'GITA Autonomous College Road — surface repair in progress, lane reduction',
-      created_at: Date.now() / 1000 - 3600
-    }
-  ],
-  // AI Command Copilot modal
+  // Analyst annotations are user-created; no static demo annotation is preloaded.
+  annotations: [],
+  // Rule-based command shortcuts modal
   isCopilotOpen: false,
+  transportStatus: 'CONNECTING', // CONNECTING | WEBSOCKET | HTTP_FALLBACK
   // HUD Statistics — includes mode (LIVE | REPLAY | STANDBY)
   hudMetrics: {
     active_vehicles: 0,
@@ -57,6 +51,15 @@ export const useStore = create((set, get) => ({
   gridHealthCells: [],
   // Coverage freshness cells
   coverageCells: [],
+  // Client-side operational filters. They only narrow data already returned by fleet/events APIs.
+  mapFilters: {
+    eventType: 'ALL',
+    eventStatus: 'ALL',
+    priority: 'ALL',
+    sourceStatus: 'ALL',
+    timeRange: 'ALL',
+    vehicleId: 'ALL'
+  },
   // Maintenance Queue Modal
   isQueueModalOpen: false,
 
@@ -65,7 +68,7 @@ export const useStore = create((set, get) => ({
   isMapKeyModalOpen: false,
 
   // Live Map Cursor Coordinates Inspector
-  cursorCoords: { lat: 20.18, lng: 85.74 },
+  cursorCoords: { lat: 20.2961, lng: 85.8245 },
 
   // Actions
   setBasemap: (basemap) => set({ basemap }),
@@ -75,14 +78,28 @@ export const useStore = create((set, get) => ({
   },
   setMapKeyModalOpen: (isOpen) => set({ isMapKeyModalOpen: isOpen }),
   setCursorCoords: (coords) => set({ cursorCoords: coords }),
+  setMapFilter: (key, value) => set((state) => ({
+    mapFilters: { ...state.mapFilters, [key]: value }
+  })),
+  clearMapFilters: () => set({
+    mapFilters: { eventType: 'ALL', eventStatus: 'ALL', priority: 'ALL', sourceStatus: 'ALL', timeRange: 'ALL', vehicleId: 'ALL' }
+  }),
   setFollowedVehicle: (id) => set({ followedVehicleId: id }),
   setCockpitMode: (cockpitMode) => set({ cockpitMode }),
   setCopilotOpen: (isCopilotOpen) => set({ isCopilotOpen }),
+  setTransportStatus: (transportStatus) => set({ transportStatus }),
   addAnnotation: (ann) => set((state) => ({ annotations: [...state.annotations, ann] })),
   removeAnnotation: (id) => set((state) => ({ annotations: state.annotations.filter((a) => a.id !== id) })),
-  toggleLayer: (layerName) => set((state) => ({
-    layers: { ...state.layers, [layerName]: !state.layers[layerName] }
-  })),
+  toggleLayer: (layerName) => {
+    const becomesVisible = !get().layers[layerName];
+    set((state) => ({
+      layers: { ...state.layers, [layerName]: !state.layers[layerName] }
+    }));
+    // Coverage is an optional, real backend dataset; load it only when requested.
+    if (layerName === 'coverage' && becomesVisible && get().coverageCells.length === 0) {
+      get().fetchCoverage();
+    }
+  },
 
   selectEntity: (type, id, data = null) => set({
     selectedEntity: { type, id, data }

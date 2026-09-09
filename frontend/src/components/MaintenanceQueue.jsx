@@ -105,7 +105,7 @@ export default function MaintenanceQueue() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <AlertTriangle size={20} color="#f59e0b" />
               <span style={{ fontSize: '15px', fontWeight: 800, letterSpacing: '0.05em' }}>
-                PRIORITIZED MUNICIPAL MAINTENANCE QUEUE
+                PRIORITIZED MAINTENANCE WORKFLOW
               </span>
               {queue.length > 0 && (
                 <span style={{
@@ -140,7 +140,8 @@ export default function MaintenanceQueue() {
             ) : queue.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '60px 40px', color: 'var(--text-dim)' }}>
                 <AlertTriangle size={32} style={{ opacity: 0.3, marginBottom: 12 }} />
-                <div>No open road defects currently queued for repair.</div>
+              <div>No open events are currently queued for maintenance.</div>
+              <div style={{ marginTop: 8, fontSize: 11 }}>Resolved events and their repair/observation history remain available through event investigation.</div>
               </div>
             ) : (
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
@@ -155,6 +156,7 @@ export default function MaintenanceQueue() {
                     <th style={th}>Sources</th>
                     <th style={th}>Priority</th>
                     <th style={th}>GPS</th>
+                    <th style={th}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -264,6 +266,9 @@ export default function MaintenanceQueue() {
                       {/* GPS */}
                       <td style={{ ...td, color: 'var(--text-dim)', fontFamily: 'monospace', fontSize: 11 }}>
                         {item.latitude?.toFixed(4)}, {item.longitude?.toFixed(4)}
+                      </td>
+                      <td style={td}>
+                        <span style={{ color: 'var(--accent-cyan)', fontSize: 11, fontWeight: 700 }}>INVESTIGATE →</span>
                       </td>
                     </tr>
                   ))}

@@ -89,12 +89,46 @@ def get_event_detail(event_id: str, db: Session = Depends(get_db)) -> Dict[str, 
         timeline.append({
             "observation_id": obs.observation_id,
             "device_id": obs.device_id,
+            "packet_id": obs.packet_id,
             "timestamp": obs.timestamp,
             "latitude": obs.latitude,
             "longitude": obs.longitude,
             "model_confidence": obs.model_confidence,
-            "snapshot_path": obs.snapshot_path
+            "snapshot_path": obs.snapshot_path,
+            "model_name": obs.model_name,
+            "model_version": obs.model_version,
+            "source_type": obs.source_type,
+            "evidence_status": obs.evidence_status,
+            "bbox": obs.bbox.model_dump() if obs.bbox else None,
         })
+
+    evidence = [
+        {
+            "observation_id": obs.observation_id,
+            "uri": obs.snapshot_path,
+            "status": obs.evidence_status,
+            "device_id": obs.device_id,
+            "packet_id": obs.packet_id,
+            "timestamp": obs.timestamp,
+            "latitude": obs.latitude,
+            "longitude": obs.longitude,
+            "model_name": obs.model_name,
+            "model_version": obs.model_version,
+            "model_confidence": obs.model_confidence,
+        }
+        for obs in sorted_obs
+    ]
+    confidences = [obs.model_confidence for obs in sorted_obs]
+    evidence_summary = {
+        "observation_count": len(sorted_obs),
+        "distinct_device_count": len({obs.device_id for obs in sorted_obs}),
+        "evidence_count": sum(1 for obs in sorted_obs if obs.evidence_status == "AVAILABLE"),
+        "first_observed_at": sorted_obs[0].timestamp if sorted_obs else None,
+        "last_observed_at": sorted_obs[-1].timestamp if sorted_obs else None,
+        "average_model_confidence": round(sum(confidences) / len(confidences), 4) if confidences else None,
+        "max_model_confidence": max(confidences) if confidences else None,
+        "source_devices": sorted({obs.device_id for obs in sorted_obs}),
+    }
 
     # Fetch repairs log
     repairs = db.query(RepairDB).filter(RepairDB.event_id == event_id).order_by(RepairDB.reported_at.desc()).all()
@@ -128,6 +162,8 @@ def get_event_detail(event_id: str, db: Session = Depends(get_db)) -> Dict[str, 
         "created_at": event.created_at,
         "updated_at": event.updated_at,
         "urban_memory_timeline": timeline,
+        "evidence": evidence,
+        "evidence_summary": evidence_summary,
         "repair_history": repair_history
     }
 

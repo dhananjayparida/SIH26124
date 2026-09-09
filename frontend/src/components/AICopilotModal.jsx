@@ -15,7 +15,7 @@ export default function AICopilotModal() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      text: 'Urban Intelligence Copilot online. Ask me to locate defects, check fleet health, trigger simulations, or export municipal work orders.'
+      text: 'Command shortcuts ready. Use the listed commands to navigate current fleet, event, cockpit, and maintenance data.'
     }
   ]);
   const [executing, setExecuting] = useState(false);
@@ -52,11 +52,11 @@ export default function AICopilotModal() {
         reply = 'No open high-priority defects currently found.';
       }
     } else if (qLower.includes('buses') || qLower.includes('active') || qLower.includes('fleet')) {
-      reply = `Fleet Status: ${hudMetrics.active_vehicles} connected vehicles registered, with ${hudMetrics.live_sources} currently streaming live frames over WebSocket/HTTP.`;
+      reply = `Fleet Status: ${hudMetrics.active_vehicles} connected vehicles registered, with ${hudMetrics.live_sources} currently marked LIVE by the backend.`;
     } else if (qLower.includes('cockpit') || qLower.includes('follow') || qLower.includes('dashcam')) {
       setCockpitMode(true);
       setCopilotOpen(false);
-      reply = 'Engaged Tactical Cockpit Sensing View on primary vehicle.';
+      reply = 'Opened cockpit view. Select a bus to inspect its current telemetry and latest received frame.';
     } else if (qLower.includes('maintenance') || qLower.includes('queue') || qLower.includes('work order') || qLower.includes('export')) {
       setQueueModalOpen(true);
       setCopilotOpen(false);
@@ -64,7 +64,7 @@ export default function AICopilotModal() {
     } else if (qLower.includes('corroborat') || qLower.includes('count') || qLower.includes('summary')) {
       reply = `Urban Memory Summary: ${hudMetrics.open_events} total defects recorded. ${hudMetrics.corroborated_events} corroborated by 2+ buses, and ${hudMetrics.high_priority_events} elevated to High-Priority.`;
     } else {
-      reply = `Command received: "${q}". Analyzed live geospatial layer and updated active viewport.`;
+      reply = `That command is not available. Use one of the listed shortcuts; this panel does not use a generative AI service.`;
     }
 
     setTimeout(() => {
@@ -80,7 +80,7 @@ export default function AICopilotModal() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Sparkles size={18} color="var(--accent-cyan)" />
             <span style={{ fontSize: '15px', fontWeight: 800 }}>
-              URBAN INTELLIGENCE COPILOT (VOICE & TOOL COMMANDS)
+              OPERATIONAL COMMAND SHORTCUTS
             </span>
           </div>
           <button
@@ -161,7 +161,7 @@ export default function AICopilotModal() {
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
-              placeholder="Ask Copilot (e.g. 'Show worst pothole on Janpath' or 'Enter cockpit mode')..."
+              placeholder="Enter a supported shortcut, e.g. 'Show highest priority road defect'"
               style={{
                 flex: 1,
                 background: '#0a0f1d',

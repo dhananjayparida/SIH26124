@@ -151,6 +151,12 @@ class Observation(BaseModel):
     model_confidence: float = Field(..., ge=0.0, le=1.0)
     bbox: Optional[BoundingBox] = None
     snapshot_path: Optional[str] = None
+    # Additive traceability metadata.  Defaults preserve historical rows and
+    # callers that only provide the original contract.
+    model_name: Optional[str] = None
+    model_version: Optional[str] = None
+    source_type: Optional[str] = None
+    evidence_status: str = "MISSING"  # AVAILABLE | NOT_CAPTURED_POLICY | MISSING
     event_id: Optional[str] = None
 
 

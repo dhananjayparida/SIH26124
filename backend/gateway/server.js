@@ -37,13 +37,19 @@ const wss = new WebSocketServer({ server });
 
 const corsOptions = config.ALLOWED_ORIGINS.length > 0
   ? { origin: config.ALLOWED_ORIGINS }
-  : { origin: false };
+  : { origin: true };
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '20mb' }));
 
 // Serve mobile PWA client directly
 const pwaPath = path.resolve(__dirname, '../../phone_pwa');
-app.use('/pwa', express.static(pwaPath));
+app.use('/pwa', express.static(pwaPath, { index: 'index.html' }));
+
+// Explicit fallback: /pwa/ and /pwa (with or without trailing slash) -> index.html
+// This ensures ?device_id=BUS_LIVE_01 query params are passed through correctly
+app.get(['/pwa', '/pwa/'], (req, res) => {
+  res.sendFile(path.join(pwaPath, 'index.html'));
+});
 
 // Serve visual evidence snapshots, test samples, and recorded dashcam media
 const evidencePath = path.resolve(__dirname, '../../data/evidence');
@@ -298,6 +304,7 @@ app.post('/devices/register', async (req, res) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         device_id: devId,
+        source_type,
         latitude: latitude,
         longitude: longitude,
         speed: speed,
@@ -310,6 +317,7 @@ app.post('/devices/register', async (req, res) => {
     const broadcastMsg = JSON.stringify({
       type: 'TELEMETRY_UPDATE',
       device_id: devId,
+      source_type,
       latitude,
       longitude,
       speed,
@@ -444,6 +452,19 @@ const eventDetailHandler = async (req, res) => {
 app.get('/events/:id', eventDetailHandler);
 app.get('/api/events/:id', eventDetailHandler);
 
+// Additive fleet detail proxy.  The existing fleet/status list remains unchanged.
+const fleetDetailHandler = async (req, res) => {
+  try {
+    const response = await fetch(`${config.FASTAPI_URL}/fleet/${req.params.id}`);
+    const data = await response.json();
+    res.status(response.status).json(data);
+  } catch (e) {
+    res.status(502).json({ error: `Proxy failed: ${e.message}` });
+  }
+};
+app.get('/fleet/:id', fleetDetailHandler);
+app.get('/api/fleet/:id', fleetDetailHandler);
+
 // POST proxy for repair-report and resolve
 app.post(['/events/:id/repair-report', '/api/events/:id/repair-report'], requireAdmin, async (req, res) => {
   try {
@@ -572,10 +593,18 @@ setInterval(() => {
 }, 10000);
 
 const PORT = config.GATEWAY_PORT || 5000;
-server.listen(PORT, () => {
+const localIp = getLocalIp();
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`================================================================`);
   console.log(`[Gateway] High-Throughput Load Balancer running on port ${PORT}`);
   console.log(`[Gateway] Ingestion Concurrency Pool: 12 Parallel Workers`);
-  console.log(`[Gateway] Fast Health Endpoint: http://localhost:${PORT}/healthz`);
+  console.log(`[Gateway] Health: http://localhost:${PORT}/healthz`);
+  console.log(`================================================================`);
+  console.log(`[Gateway] 📱 Phone PWA (Local Wi-Fi):`);
+  console.log(`[Gateway]    http://${localIp}:${PORT}/pwa/?device_id=BUS_LIVE_01`);
+  console.log(`[Gateway] 📱 Phone PWA (localhost):`);
+  console.log(`[Gateway]    http://localhost:${PORT}/pwa/?device_id=BUS_LIVE_01`);
+  console.log(`[Gateway]`);
+  console.log(`[Gateway] NOTE: Phone camera needs HTTPS. Use cloudflared tunnel.`);
   console.log(`================================================================`);
 });

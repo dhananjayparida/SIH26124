@@ -43,6 +43,20 @@ const packetDisplay = document.getElementById('packetDisplay');
 const btnToggle = document.getElementById('btnToggleStream');
 const btnSimulate = document.getElementById('btnSimulateDefect') || document.getElementById('aiModeIndicator');
 const tapPrompt = document.getElementById('tapToStartPrompt');
+const connStatusEl = document.getElementById('connStatus');
+
+function setConnStatus(msg, color) {
+  if (!connStatusEl) return;
+  connStatusEl.textContent = msg;
+  connStatusEl.style.color = color || '#94a3b8';
+}
+
+// A source is hardware-live only when both a real GPS fix and camera stream are active.
+// Any test-card or simulated-GPS fallback is transmitted as `sim` so the dashboard can label it truthfully.
+function currentSourceType() {
+  const hasLiveCamera = Boolean(state.mediaStream && videoEl?.srcObject && videoEl.videoWidth > 0);
+  return state.gpsMode === 'real' && hasLiveCamera ? 'phone_pwa' : 'sim';
+}
 
 // SIH26124 — Full 10 defect categories for mobile edge sensing simulation
 const SIH_DEFECT_CLASSES = [
@@ -75,7 +89,7 @@ async function initDevice() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         device_id: requestedId,
-        source_type: 'phone_pwa',
+        source_type: currentSourceType(),
         latitude: state.currentGps?.latitude || null,
         longitude: state.currentGps?.longitude || null,
         speed: state.currentGps?.speed || 0,
@@ -108,7 +122,7 @@ async function sendHeartbeat() {
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.token || ''}` },
       body: JSON.stringify({
         device_id: state.deviceId,
-        source_type: 'phone_pwa',
+        source_type: currentSourceType(),
         latitude: state.currentGps.latitude,
         longitude: state.currentGps.longitude,
         speed: state.currentGps.speed,
@@ -369,36 +383,101 @@ function connectWebSocket() {
 
   try {
     const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${wsProto}//${window.location.host}/ws?role=sensor&device_id=${state.deviceId}&token=${state.token || 'tok'}`;
+    const token = state.token || '';
+    const wsUrl = `${wsProto}//${window.location.host}/ws?role=sensor&device_id=${encodeURIComponent(state.deviceId)}&token=${encodeURIComponent(token)}`;
 
+    setConnStatus('⬤ CONNECTING...', '#f59e0b');
     state.ws = new WebSocket(wsUrl);
 
     state.ws.onopen = () => {
       console.log('[PWA] WebSocket connected -> LIVE');
       statusDot.classList.add('connected');
+      setConnStatus('⬤ LIVE WS', '#10b981');
     };
 
-    state.ws.onclose = () => {
+    state.ws.onclose = (ev) => {
       statusDot.classList.remove('connected');
+      setConnStatus('⬤ HTTP FALLBACK', '#f59e0b');
+      console.log(`[PWA] WebSocket closed (${ev.code}). Using HTTP fallback.`);
       if (state.isStreaming) {
-        setTimeout(connectWebSocket, 2000);
+        setTimeout(connectWebSocket, 3000);
       }
     };
 
-    state.ws.onerror = () => {
+    state.ws.onerror = (err) => {
       statusDot.classList.remove('connected');
+      setConnStatus('⬤ WS ERROR', '#ef4444');
     };
   } catch (e) {
-    console.warn('[PWA] WebSocket init error, will use HTTP fallback');
+    console.warn('[PWA] WebSocket init error, will use HTTP fallback:', e.message);
+    setConnStatus('⬤ HTTP ONLY', '#f59e0b');
   }
+}
+
+async function checkTunnelStatus() {
+  // Always try to get tunnel URL; banner only shown on HTTP
+  try {
+    const res = await fetch('/tunnel-url');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.tunnel_url && window.location.protocol === 'http:') {
+        const banner = document.getElementById('httpsBanner');
+        const btn = document.getElementById('httpsSwitchBtn');
+        if (banner && btn) {
+          btn.href = `${data.tunnel_url}/pwa/?device_id=${encodeURIComponent(state.deviceId)}`;
+          banner.classList.add('visible');
+        }
+      }
+    }
+  } catch (e) {}
 }
 
 /**
  * 4. Safe Mobile Camera Initialization (Zero-Crash Fallback)
  */
 async function startCamera() {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    console.warn('[PWA] Camera API unavailable. Using synthetic road test card.');
+  // Check if camera API is available
+  // On HTTP (non-localhost), mobile browsers block camera
+  const isSecure = window.isSecureContext ||
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
+
+  if (!isSecure || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    console.warn('[PWA] Camera API unavailable — not a secure context (HTTP on mobile).');
+
+    // Try to offer the HTTPS tunnel link
+    try {
+      const res = await fetch('/tunnel-url');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.tunnel_url) {
+          const targetUrl = `${data.tunnel_url}/pwa/?device_id=${encodeURIComponent(state.deviceId)}`;
+          // Show banner
+          const banner = document.getElementById('httpsBanner');
+          const btn = document.getElementById('httpsSwitchBtn');
+          if (banner && btn) { btn.href = targetUrl; banner.classList.add('visible'); }
+
+          const doSwitch = confirm(
+            'Mobile Chrome/Safari blocks live camera over plain HTTP.\n\n' +
+            'A secure HTTPS tunnel is available!\n\n' +
+            'Tap OK to switch to HTTPS and enable live camera.'
+          );
+          if (doSwitch) { window.location.href = targetUrl; return; }
+        }
+      }
+    } catch (e) {}
+
+    // Fallback: inform user and use simulated test card
+    const origin = window.location.origin;
+    const flagUrl = 'chrome://flags/#unsafely-treat-insecure-origin-as-secure';
+    alert(
+      'Camera blocked on HTTP.\n\n' +
+      'To enable live camera:\n' +
+      '  1. Use the HTTPS tunnel URL shown in start.bat output, OR\n' +
+      '  2. On Chrome Android: ' + flagUrl + '\n' +
+      '     Add: ' + origin + '\n\n' +
+      'Using simulated sensor stream for now.'
+    );
     startTestCardStream();
     return;
   }
@@ -457,12 +536,12 @@ function startTestCardStream() {
     ctx.fillText(`SPEED: ${(state.currentGps.speed * 3.6).toFixed(1)} KM/H | HDG: ${(state.currentGps.heading).toFixed(0)}°`, 40, 175);
     ctx.fillText(`TIME: ${new Date().toLocaleTimeString()}`, 40, 210);
     ctx.fillStyle = '#10b981';
-    ctx.fillText(`STATUS: SENSING ACTIVE`, 40, 245);
+    ctx.fillText(`STATUS: SIMULATED TEST FRAME`, 40, 245);
   }, 350);
 }
 
 /**
- * 5. Frame Sampling & Packet Transmission (2.5 FPS)
+ * 5. Frame Sampling & Packet Transmission (4 FPS)
  */
 async function sendSensorPacket(forceHttp = false) {
   if (!state.isStreaming) return;
@@ -485,7 +564,7 @@ async function sendSensorPacket(forceHttp = false) {
   } catch (e) {}
 
   const now = Date.now() / 1000;
-  const extraMetadata = { source_type: 'phone_pwa' };
+  const extraMetadata = { source_type: currentSourceType() };
 
   const packet = {
     packet_id: `pkt_${state.deviceId}_${Date.now()}`,
@@ -593,7 +672,7 @@ function updateBandwidth() {
     const kbps = ((state.bytesSent / 1024) / elapsedSec).toFixed(1);
     const qPct = Math.round((state.adaptiveQuality || 0.55) * 100);
     netHud.textContent = `BW: ${kbps} KB/s | Q:${qPct}%`;
-    fpsHud.textContent = `FPS: 2.5`;
+    fpsHud.textContent = `FPS: 4`;
     state.bytesSent = 0;
     state.lastByteCheck = Date.now();
   }
@@ -605,31 +684,32 @@ function updateBandwidth() {
 async function toggleStreaming() {
   if (!state.isStreaming) {
     state.isStreaming = true;
-    btnToggle.textContent = 'STOP SENSING';
+    btnToggle.textContent = '⏹ STOP SENSING';
     btnToggle.classList.remove('btn-primary');
     btnToggle.classList.add('btn-danger');
     if (tapPrompt) tapPrompt.style.display = 'none';
 
-    // Start camera ONLY upon user tap (prevents mobile browser security crash)
+    // Start camera ONLY upon user gesture (required by mobile browsers)
     await startCamera();
     connectWebSocket();
 
     if (state.streamInterval) clearInterval(state.streamInterval);
-    state.streamInterval = setInterval(sendSensorPacket, 400); // 2.5 FPS
+    state.streamInterval = setInterval(sendSensorPacket, 250); // 4 FPS
   } else {
     state.isStreaming = false;
-    btnToggle.textContent = 'START SENSING';
+    btnToggle.textContent = '▶ START SENSING';
     btnToggle.classList.remove('btn-danger');
     btnToggle.classList.add('btn-primary');
     if (tapPrompt) tapPrompt.style.display = 'block';
 
-    if (state.streamInterval) clearInterval(state.streamInterval);
-    if (state.testCardInterval) clearInterval(state.testCardInterval);
+    if (state.streamInterval) { clearInterval(state.streamInterval); state.streamInterval = null; }
+    if (state.testCardInterval) { clearInterval(state.testCardInterval); state.testCardInterval = null; }
     if (state.mediaStream) {
       state.mediaStream.getTracks().forEach((track) => track.stop());
       state.mediaStream = null;
     }
     videoEl.srcObject = null;
+    setConnStatus('⬤ IDLE', '#94a3b8');
   }
 }
 
@@ -645,3 +725,4 @@ if (btnSimulate) {
 // Clean Startup: Register device & start Janpath corridor GPS simulation
 initDevice();
 activateSimMode('Startup default');
+checkTunnelStatus();

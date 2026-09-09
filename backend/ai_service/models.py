@@ -1,6 +1,6 @@
 """
 SQLAlchemy database models for the Urban Intelligence Platform.
-Compatible with SQLite (default) and PostgreSQL / PostGIS.
+SQLite persistence models for the Urban Intelligence Platform.
 """
 
 import time
@@ -73,6 +73,10 @@ class ObservationDB(Base):
     model_confidence = Column(Float, default=0.5)
     bbox = Column(JSON, nullable=True)
     snapshot_path = Column(String(256), nullable=True)
+    model_name = Column(String(64), nullable=True)
+    model_version = Column(String(128), nullable=True)
+    source_type = Column(String(32), nullable=True)
+    evidence_status = Column(String(32), default="MISSING")
 
     event = relationship("EventDB", back_populates="observations")
 

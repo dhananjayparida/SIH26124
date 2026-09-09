@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { useStore } from '../state/store';
 import { formatSpeedKmh, getTileLayerConfig } from '../utils/geo';
@@ -8,6 +8,9 @@ export default function MapView() {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const tileLayerRef = useRef(null);
+  // Canvas keeps large event sets out of the DOM; fleet markers stay interactive HTML icons.
+  const eventRendererRef = useRef(L.canvas({ padding: 0.5 }));
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const layersRef = useRef({
     fleetGroup:          L.layerGroup(),
     trailsGroup:         L.layerGroup(),
@@ -16,7 +19,9 @@ export default function MapView() {
     trafficGroup:        L.layerGroup(),   // TRAFFIC events
     safetyGroup:         L.layerGroup(),   // SAFETY events
     incidentGroup:       L.layerGroup(),   // INCIDENT events
+    highPriorityGroup:   L.layerGroup(),
     gridGroup:           L.layerGroup(),
+    coverageGroup:       L.layerGroup(),
     annotationsGroup:    L.layerGroup(),
     radarGroup:          L.layerGroup()
   });
@@ -24,6 +29,8 @@ export default function MapView() {
   const fleet = useStore((state) => state.fleet);
   const events = useStore((state) => state.events);
   const gridHealthCells = useStore((state) => state.gridHealthCells);
+  const coverageCells = useStore((state) => state.coverageCells);
+  const mapFilters = useStore((state) => state.mapFilters);
   const annotations = useStore((state) => state.annotations);
   const layers = useStore((state) => state.layers);
   const basemap = useStore((state) => state.basemap);
@@ -37,10 +44,10 @@ export default function MapView() {
   // 1. Initialize Map
   useEffect(() => {
     if (!mapInstanceRef.current && mapContainerRef.current) {
-      // Default center: GITA Autonomous College, Janla, Bhubaneswar
+      // Default city context: central Bhubaneswar. Roads and features come from the active OSM basemap.
       const map = L.map(mapContainerRef.current, {
-        center: [20.18, 85.74],
-        zoom: 14,
+        center: [20.2961, 85.8245],
+        zoom: 13,
         zoomControl: false
       });
 
@@ -53,6 +60,7 @@ export default function MapView() {
       });
 
       // Add feature layer groups
+      layersRef.current.coverageGroup.addTo(map);
       layersRef.current.gridGroup.addTo(map);
       layersRef.current.trailsGroup.addTo(map);
       layersRef.current.roadDamageGroup.addTo(map);
@@ -60,6 +68,7 @@ export default function MapView() {
       layersRef.current.trafficGroup.addTo(map);
       layersRef.current.safetyGroup.addTo(map);
       layersRef.current.incidentGroup.addTo(map);
+      layersRef.current.highPriorityGroup.addTo(map);
       layersRef.current.annotationsGroup.addTo(map);
       layersRef.current.radarGroup.addTo(map);
       layersRef.current.fleetGroup.addTo(map);
@@ -73,6 +82,16 @@ export default function MapView() {
         mapInstanceRef.current = null;
       }
     };
+  }, []);
+
+  // Native browser fullscreen avoids introducing another Leaflet plugin.
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setIsFullscreen(document.fullscreenElement === mapContainerRef.current?.parentElement);
+      mapInstanceRef.current?.invalidateSize();
+    };
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () => document.removeEventListener('fullscreenchange', syncFullscreen);
   }, []);
 
   // 2. Dynamic Basemap Tile Switcher (Mapbox / CARTO / Esri / OpenStreetMap)
@@ -107,7 +126,11 @@ export default function MapView() {
 
     if (!layers.fleet) return;
 
-    Object.values(fleet).forEach((bus) => {
+    Object.values(fleet).filter((bus) => {
+      if (mapFilters.vehicleId !== 'ALL' && bus.device_id !== mapFilters.vehicleId) return false;
+      if (mapFilters.sourceStatus !== 'ALL' && bus.status !== mapFilters.sourceStatus) return false;
+      return true;
+    }).forEach((bus) => {
       if (!bus.latitude || !bus.longitude) return;
 
       // Draw GPS Trail
@@ -160,6 +183,9 @@ export default function MapView() {
       );
 
       marker.on('click', () => {
+        // A bus selection is an operational cockpit action: retain its trail and follow its live telemetry.
+        useStore.getState().setFollowedVehicle(bus.device_id);
+        useStore.getState().setCockpitMode(true);
         selectEntity('vehicle', bus.device_id, bus);
       });
 
@@ -173,12 +199,12 @@ export default function MapView() {
         mapInstanceRef.current.panTo([fb.latitude, fb.longitude], { animate: true, duration: 0.5 });
       }
     }
-  }, [fleet, layers.fleet, layers.trails, selectedEntity, followedVehicleId, selectEntity]);
+  }, [fleet, layers.fleet, layers.trails, mapFilters.vehicleId, mapFilters.sourceStatus, selectedEntity, followedVehicleId, selectEntity]);
 
   // 4. Update Urban Event Pins (multi-domain)
   useEffect(() => {
     const {
-      roadDamageGroup, infrastructureGroup, trafficGroup, safetyGroup, incidentGroup
+      roadDamageGroup, infrastructureGroup, trafficGroup, safetyGroup, incidentGroup, highPriorityGroup
     } = layersRef.current;
 
     roadDamageGroup.clearLayers();
@@ -186,6 +212,7 @@ export default function MapView() {
     trafficGroup.clearLayers();
     safetyGroup.clearLayers();
     incidentGroup.clearLayers();
+    highPriorityGroup.clearLayers();
 
     // Domain colour palette (matches LayerPanel)
     const DOMAIN_COLORS = {
@@ -209,7 +236,25 @@ export default function MapView() {
       INCIDENT:       { group: incidentGroup,        layerKey: 'incident' },
     };
 
-    events.forEach((ev) => {
+    const now = Date.now() / 1000;
+    const minimumTimestamp = {
+      '1H': now - 60 * 60,
+      '24H': now - 24 * 60 * 60,
+      '7D': now - 7 * 24 * 60 * 60
+    }[mapFilters.timeRange];
+
+    events.filter((ev) => {
+      if (mapFilters.eventType !== 'ALL' && ev.type !== mapFilters.eventType) return false;
+      if (mapFilters.eventStatus !== 'ALL' && ev.status !== mapFilters.eventStatus) return false;
+      if (mapFilters.priority === 'HIGH_PRIORITY' && ev.status !== 'HIGH_PRIORITY') return false;
+      if (minimumTimestamp && Number(ev.updated_at || ev.created_at || 0) < minimumTimestamp) return false;
+      if (mapFilters.vehicleId !== 'ALL' && !(ev.source_vehicle_ids || []).includes(mapFilters.vehicleId)) return false;
+      if (mapFilters.sourceStatus !== 'ALL') {
+        const sources = ev.source_vehicle_ids || [];
+        if (!sources.some((id) => fleet[id]?.status === mapFilters.sourceStatus)) return false;
+      }
+      return true;
+    }).forEach((ev) => {
       if (!ev.latitude || !ev.longitude) return;
 
       const evType = (ev.type || 'ROAD_DAMAGE').toUpperCase();
@@ -217,16 +262,19 @@ export default function MapView() {
 
       // Respect layer toggle
       if (!layers[meta.layerKey]) return;
+      if (ev.status === 'HIGH_PRIORITY' && !layers.highPriority) return;
 
       const domainColor = DOMAIN_COLORS[evType] || '#eab308';
 
       // Lifecycle status → ring size (domain colour stays constant)
       let radius = 6;
       let strokeWidth = 1.5;
+      let dashArray;
+      let fillOpacity = 0.65;
       if (ev.status === 'CORROBORATED')      { radius = 7; strokeWidth = 2; }
-      else if (ev.status === 'HIGH_PRIORITY') { radius = 9; strokeWidth = 2.5; }
+      else if (ev.status === 'HIGH_PRIORITY') { radius = 9; strokeWidth = 2.5; fillOpacity = 0.95; }
       else if (ev.status === 'REPAIR_REPORTED') { radius = 7; strokeWidth = 2; }
-      else if (ev.status === 'RESOLVED')     { radius = 6; }
+      else if (ev.status === 'RESOLVED')     { radius = 6; dashArray = '3, 3'; fillOpacity = 0.35; }
 
       const isSelected = selectedEntity?.type === 'event' && selectedEntity?.id === ev.event_id;
 
@@ -236,7 +284,9 @@ export default function MapView() {
         color: isSelected ? '#ffffff' : '#0f172a',
         weight: isSelected ? 3 : strokeWidth,
         opacity: 1,
-        fillOpacity: ev.status === 'RESOLVED' ? 0.5 : 0.85
+        fillOpacity,
+        dashArray,
+        renderer: eventRendererRef.current
       });
 
       const domainLabel = evType.replace('_', ' ');
@@ -251,11 +301,13 @@ export default function MapView() {
         selectEntity('event', ev.event_id, ev);
       });
 
-      meta.group.addLayer(circle);
+      // HIGH_PRIORITY is a dedicated operational layer while retaining its real event domain.
+      (ev.status === 'HIGH_PRIORITY' ? highPriorityGroup : meta.group).addLayer(circle);
     });
   }, [
     events,
-    layers.roadDamage, layers.infrastructure, layers.traffic, layers.safety, layers.incident,
+    layers.roadDamage, layers.infrastructure, layers.traffic, layers.safety, layers.incident, layers.highPriority,
+    fleet, mapFilters,
     selectedEntity, selectEntity
   ]);
 
@@ -341,7 +393,33 @@ export default function MapView() {
     });
   }, [gridHealthCells, layers.gridHealth]);
 
-  // 8. Fly-to selected entity
+  // 8. Backend coverage is a sensing-freshness grid, not road geometry or a road-health claim.
+  useEffect(() => {
+    const { coverageGroup } = layersRef.current;
+    coverageGroup.clearLayers();
+
+    if (!layers.coverage) return;
+
+    coverageCells.forEach((cell) => {
+      if (!Array.isArray(cell.bounds)) return;
+      const rect = L.rectangle(cell.bounds, {
+        color: cell.color,
+        weight: 0.5,
+        fillColor: cell.color,
+        fillOpacity: cell.opacity
+      });
+      const lastSeen = cell.last_seen
+        ? new Date(cell.last_seen * 1000).toLocaleString()
+        : 'No sensing vehicle recorded';
+      rect.bindTooltip(
+        `<b>Coverage: ${cell.label}</b><br/>Last sensed: ${lastSeen}`,
+        { direction: 'center', opacity: 0.85 }
+      );
+      coverageGroup.addLayer(rect);
+    });
+  }, [coverageCells, layers.coverage]);
+
+  // 9. Fly-to selected entity
   useEffect(() => {
     if (!mapInstanceRef.current || !selectedEntity) return;
 
@@ -382,7 +460,17 @@ export default function MapView() {
 
   const handleCenterBhubaneswar = () => {
     if (!mapInstanceRef.current) return;
-    mapInstanceRef.current.flyTo([20.18, 85.74], 14, { duration: 1.2 });
+    mapInstanceRef.current.flyTo([20.2961, 85.8245], 13, { duration: 1.2 });
+  };
+
+  const handleToggleFullscreen = async () => {
+    const container = mapContainerRef.current?.parentElement;
+    if (!container) return;
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await container.requestFullscreen();
+    }
   };
 
   // Detect if any live phone is streaming from outside the primary Bhubaneswar bounding box
@@ -440,6 +528,17 @@ export default function MapView() {
           }}
         >
           🏙️ BHUBANESWAR
+        </button>
+        <button
+          onClick={handleToggleFullscreen}
+          title={isFullscreen ? 'Exit fullscreen map' : 'Open fullscreen map'}
+          aria-label={isFullscreen ? 'Exit fullscreen map' : 'Open fullscreen map'}
+          style={{
+            background: '#1e293b', border: '1px solid var(--border-color)', color: '#94a3b8',
+            padding: '6px 10px', borderRadius: '6px', fontSize: '14px', fontWeight: 700, cursor: 'pointer'
+          }}
+        >
+          {isFullscreen ? '⤢' : '⛶'}
         </button>
       </div>
 
@@ -516,7 +615,7 @@ export default function MapView() {
         </div>
         <div style={{ width: '1px', height: '12px', background: 'var(--border-color)' }} />
         <span style={{ color: mapApiKey ? '#10b981' : '#38bdf8', fontWeight: 700, fontSize: '10px' }}>
-          {mapApiKey ? 'MAPBOX HD' : 'CARTO / OSM'}
+          {mapApiKey ? 'OPTIONAL HD TILES' : 'OPENSTREETMAP'}
         </span>
       </div>
 

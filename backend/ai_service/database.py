@@ -1,17 +1,16 @@
 """
-Database session management and repository operations.
-Supports SQLite (zero setup) with seamless migration to PostgreSQL / PostGIS.
+SQLite database session management and repository operations.
 """
 
 import os
 from pathlib import Path
 from typing import List, Optional
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import sessionmaker, Session
 from .models import Base, VehicleDB, EventDB, ObservationDB, RepairDB
 from ai_engine.sensor_interface.contracts import Event, Observation
 
-# Use DATABASE_URL environment variable if set (e.g. postgresql://user:pass@localhost:5432/urban_intel), else local SQLite
+# Use DATABASE_URL when explicitly provided; the application default is local SQLite.
 DB_DIR = Path("data")
 DB_DIR.mkdir(parents=True, exist_ok=True)
 SQLITE_PATH = DB_DIR / "urban_intel.db"
@@ -25,8 +24,20 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def init_db():
-    """Initializes tables on startup."""
+    """Initializes tables and applies additive SQLite observation columns."""
     Base.metadata.create_all(bind=engine)
+    if engine.dialect.name == "sqlite":
+        existing = {column["name"] for column in inspect(engine).get_columns("observations")}
+        additions = {
+            "model_name": "VARCHAR(64)",
+            "model_version": "VARCHAR(128)",
+            "source_type": "VARCHAR(32)",
+            "evidence_status": "VARCHAR(32) DEFAULT 'MISSING'",
+        }
+        with engine.begin() as connection:
+            for name, definition in additions.items():
+                if name not in existing:
+                    connection.execute(text(f"ALTER TABLE observations ADD COLUMN {name} {definition}"))
 
 # Auto-initialize tables
 init_db()
@@ -57,6 +68,10 @@ def db_event_to_pydantic(db_ev: EventDB) -> Event:
                 model_confidence=o.model_confidence,
                 bbox=o.bbox,
                 snapshot_path=o.snapshot_path,
+                model_name=o.model_name,
+                model_version=o.model_version,
+                source_type=o.source_type,
+                evidence_status=o.evidence_status or "MISSING",
                 event_id=o.event_id
             ))
 
@@ -135,7 +150,11 @@ def save_pydantic_event(db: Session, event: Event) -> EventDB:
                 defect_type=obs.defect_type,
                 model_confidence=obs.model_confidence,
                 bbox=obs.bbox.model_dump() if obs.bbox else None,
-                snapshot_path=obs.snapshot_path
+                snapshot_path=obs.snapshot_path,
+                model_name=obs.model_name,
+                model_version=obs.model_version,
+                source_type=obs.source_type,
+                evidence_status=obs.evidence_status,
             )
             db.add(db_obs)
 

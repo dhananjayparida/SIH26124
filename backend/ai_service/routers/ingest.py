@@ -12,7 +12,7 @@ from ..database import get_db, save_pydantic_event, db_event_to_pydantic
 from ..models import EventDB, VehicleDB
 from ai_engine.sensor_interface.contracts import SensorPacket, Observation, Event
 from ai_engine.sensor_interface.device_registry import DeviceRegistry
-from ai_engine.perception.detector import RoadDefectDetector
+from ai_engine.perception.service import ConfiguredPerceptionDetector
 from ai_engine.fusion.engine import SpatioTemporalFusionEngine
 from ai_engine.fusion.spatial_index import bounding_box_for_radius
 from ai_engine.event_intelligence.severity import assess_event_severity
@@ -24,7 +24,7 @@ from ai_engine.specialized.traffic_intelligence import global_traffic_intelligen
 router = APIRouter(prefix="/ingest", tags=["Ingest"])
 
 # Shared engine instances
-detector = RoadDefectDetector(confidence_threshold=0.45)
+detector = ConfiguredPerceptionDetector()
 fusion_engine = SpatioTemporalFusionEngine(spatial_radius_meters=25.0)
 evidence_manager = EvidenceManager(storage_dir="data/evidence")
 registry = DeviceRegistry()
@@ -45,6 +45,7 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
         lon=packet.gps.longitude,
         speed=packet.gps.speed,
         heading=packet.gps.heading,
+        source_type=packet.extra_metadata.get("source_type", "phone_pwa"),
         is_detection=False
     )
 
@@ -65,6 +66,7 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
         )
         db.add(db_veh)
     else:
+        db_veh.source_type = packet.extra_metadata.get("source_type", db_veh.source_type)
         db_veh.last_seen = packet.frame_timestamp
         db_veh.latest_lat = packet.gps.latitude
         db_veh.latest_lon = packet.gps.longitude
@@ -76,6 +78,8 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
     # 2. Run perception inference
     detection_res = detector.detect(packet)
     fused_results = []
+    detector_metadata = getattr(detector, "metadata", {})
+    source_type = packet.extra_metadata.get("source_type", "phone_pwa")
 
     # Auto-save video frame and dataset sample
     if packet.frame_base64:
@@ -115,11 +119,19 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
                 observation_subtype=ev_subtype,
                 defect_type=ev_subtype,   # legacy alias
                 model_confidence=det.confidence,
-                bbox=det.bbox
+                bbox=det.bbox,
+                model_name=detector_metadata.get("model_name"),
+                model_version=det.model_version or detector_metadata.get("model_version"),
+                source_type=source_type,
+                evidence_status="MISSING",
             )
 
-            # Save snapshot if frame is provided
-            if packet.frame_base64:
+            # Evidence is selected independently of fusion.  Defaults preserve
+            # current capture-on-detection behavior; configured throttling only
+            # suppresses redundant same-device evidence writes.
+            if packet.frame_base64 and evidence_manager.should_capture(
+                packet.device_id, det.class_name, det.confidence, packet.frame_timestamp
+            ):
                 snapshot_uri = evidence_manager.save_base64_snapshot(
                     base64_str=packet.frame_base64,
                     event_id="pending",
@@ -129,6 +141,9 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
                     confidence=det.confidence
                 )
                 obs.snapshot_path = snapshot_uri
+                obs.evidence_status = "AVAILABLE" if snapshot_uri else "MISSING"
+            elif packet.frame_base64:
+                obs.evidence_status = "NOT_CAPTURED_POLICY"
 
             # Spatial pre-filtering query: candidate events within search radius
             min_lat, max_lat, min_lon, max_lon = bounding_box_for_radius(
@@ -180,6 +195,10 @@ async def ingest_packet(packet: SensorPacket, db: Session = Depends(get_db)) -> 
     # ── Traffic Intelligence Pass (feature-flagged) ────────────────────────────
     traffic_obs_list = global_traffic_intelligence.process(detection_res)
     for t_obs in traffic_obs_list:
+        t_obs.source_type = source_type
+        t_obs.model_name = detector_metadata.get("model_name")
+        t_obs.model_version = detector_metadata.get("model_version")
+        t_obs.evidence_status = "MISSING"
         ev_type = t_obs.observation_type
         ev_subtype = t_obs.observation_subtype
         min_lat2, max_lat2, min_lon2, max_lon2 = bounding_box_for_radius(

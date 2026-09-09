@@ -29,7 +29,7 @@
   │                                                                         │
   └────────────────────────────────────┬────────────────────────────────────┘
                                        |
-                             PostGIS / SQLite
+                                  SQLite
              (events, observations, vehicles, repairs, evidence)
                                        |
           React 18 + Leaflet GIS Command Center (Port 3000)

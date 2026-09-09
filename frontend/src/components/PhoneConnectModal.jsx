@@ -54,7 +54,7 @@ export default function PhoneConnectModal({ isOpen, onClose }) {
         <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           {/* Vehicle Device Selector */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--bg-card)', padding: '10px 14px', borderRadius: '8px' }}>
-            <span style={{ fontSize: '13px', fontWeight: 600 }}>Simulate Vehicle Identity:</span>
+            <span style={{ fontSize: '13px', fontWeight: 600 }}>Choose device ID:</span>
             <div style={{ display: 'flex', gap: '8px' }}>
               {['BUS_LIVE_01', 'BUS_LIVE_02', 'BUS_LIVE_03'].map((id) => (
                 <button
@@ -89,7 +89,7 @@ export default function PhoneConnectModal({ isOpen, onClose }) {
                 Scan QR Code with your Phone
               </div>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                Opens the live mobile sensing PWA over secure HTTPS with instant camera and GPS access (Zero configuration needed).
+                {liveTunnelUrl ? 'Opens the mobile sensing PWA through the configured HTTPS tunnel.' : 'Uses the local network URL. Camera/GPS permission may require HTTPS or localhost in the mobile browser.'}
               </div>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
                 <button
@@ -155,9 +155,9 @@ export default function PhoneConnectModal({ isOpen, onClose }) {
             </div>
             <ol style={{ fontSize: '12px', color: 'var(--text-muted)', paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <li>Open the link on your smartphone and allow <b>Camera</b> and <b>Location</b> permissions.</li>
-              <li>Tap <b>"START SENSING"</b> — you will see your live camera feed and your phone appear on the command center map!</li>
-              <li>Point camera at road hazards or test samples for real-time live YOLO perception.</li>
-              <li>Watch the command center flip the event from <b>CANDIDATE</b> → <b>CORROBORATED</b> in real time.</li>
+              <li>Tap <b>"START SENSING"</b>. If permissions and connection succeed, the camera frame and GPS appear in the command center.</li>
+              <li>Point the camera at a road condition; the configured backend perception model evaluates transmitted frames.</li>
+              <li>Corroboration requires observations from independent device IDs; a single phone remains a candidate source.</li>
             </ol>
           </div>
         </div>

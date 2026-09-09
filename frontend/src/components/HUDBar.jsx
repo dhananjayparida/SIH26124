@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../state/store';
-import { Bus, AlertTriangle, ShieldCheck, Activity, Layers, Radio, RefreshCw, Power } from 'lucide-react';
+import { Bus, AlertTriangle, ShieldCheck, Activity, Radio, RefreshCw, Power } from 'lucide-react';
 
 const MODE_STYLES = {
   LIVE:    { color: '#10b981', bg: 'rgba(16,185,129,0.15)', border: '#10b981', icon: Radio,      label: 'LIVE' },
@@ -10,9 +10,17 @@ const MODE_STYLES = {
 
 export default function HUDBar() {
   const hudMetrics = useStore((state) => state.hudMetrics);
+  const events = useStore((state) => state.events);
+  const selectEntity = useStore((state) => state.selectEntity);
   const mode = hudMetrics.mode || 'STANDBY';
   const modeStyle = MODE_STYLES[mode] || MODE_STYLES.STANDBY;
   const ModeIcon = modeStyle.icon;
+  const recentEvents = [...events]
+    .sort((a, b) => Number(b.updated_at || b.created_at || 0) - Number(a.updated_at || a.created_at || 0))
+    .slice(0, 5);
+  const statusColor = (status) => ({
+    HIGH_PRIORITY: '#ef4444', CORROBORATED: '#f97316', CANDIDATE: '#facc15', RESOLVED: '#10b981', REPAIR_REPORTED: '#38bdf8'
+  }[status] || '#94a3b8');
 
   return (
     <footer className="bottom-hud">
@@ -79,12 +87,26 @@ export default function HUDBar() {
         </span>
       </div>
 
-      <div style={{ width: '1px', height: '20px', background: 'var(--border-color)' }} />
+      <div style={{ width: '1px', height: '20px', background: 'var(--border-color)', flex: '0 0 auto' }} />
 
-      <div className="hud-stat">
-        <Layers size={15} color="#a855f7" />
-        <span>OBSERVATIONS:</span>
-        <span className="hud-stat-value mono">{hudMetrics.total_observations}</span>
+      <div className="event-strip" aria-label="Recent event activity">
+        <span className="event-strip-label">RECENT ACTIVITY</span>
+        {recentEvents.length === 0 ? (
+          <span style={{ color: 'var(--text-dim)', fontSize: '11px' }}>No event updates received.</span>
+        ) : recentEvents.map((event) => (
+          <button
+            className="event-strip-item"
+            key={event.event_id}
+            onClick={() => selectEntity('event', event.event_id, event)}
+            title="Select event on map"
+          >
+            <span className="event-strip-dot" style={{ background: statusColor(event.status) }} />
+            <span>
+              <strong>{String(event.type || 'EVENT').replace(/_/g, ' ')}</strong>
+              <small>{event.status} · {new Date((event.updated_at || event.created_at) * 1000).toLocaleTimeString()}</small>
+            </span>
+          </button>
+        ))}
       </div>
 
     </footer>

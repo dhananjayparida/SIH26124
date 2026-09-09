@@ -3,7 +3,7 @@ import { useStore } from '../state/store';
 import {
   Layers, Eye, EyeOff, Bus, AlertCircle, Grid, Navigation,
   Globe, MapPin, Radar, Crosshair, Key,
-  Construction, Car, ShieldAlert, Flame, Waves
+  Construction, Car, ShieldAlert, Flame, Waves, CircleAlert
 } from 'lucide-react';
 
 export default function LayerPanel() {
@@ -34,10 +34,10 @@ export default function LayerPanel() {
     },
     {
       key: 'traffic',
-      label: 'Traffic Intelligence',
+      label: 'Traffic Events',
       icon: Car,
       color: '#38bdf8',
-      desc: 'Vehicle Density · Bottlenecks · Flow'
+      desc: 'Only backend-reported traffic observations'
     },
     {
       key: 'safety',
@@ -58,6 +58,7 @@ export default function LayerPanel() {
   // Utility / spatial layers
   const utilityLayers = [
     { key: 'fleet',       label: 'Transit Fleet',     icon: Bus,        color: 'var(--accent-cyan)', desc: 'Live buses & telemetry' },
+    { key: 'highPriority',label: 'High Priority',     icon: CircleAlert,color: '#f43f5e', desc: 'Priority events needing attention' },
     { key: 'gridHealth',  label: 'Road Health Grid',  icon: Grid,       color: 'var(--accent-cyan)', desc: 'Spatial health index' },
     { key: 'trails',      label: 'GPS Breadcrumbs',   icon: Navigation, color: 'var(--accent-cyan)', desc: 'Vehicle movement trail' },
     { key: 'annotations', label: 'Analyst Notes',     icon: MapPin,     color: 'var(--accent-cyan)', desc: 'Roadwork & municipal flags' },

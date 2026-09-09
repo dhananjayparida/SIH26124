@@ -7,7 +7,9 @@ Clears:
   4. output/inference_results.json -> empty list
   5. evidence/ folder -> remove all files
 """
+import argparse
 import sqlite3, json, shutil
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent  # scratch/ -> project root
@@ -16,13 +18,42 @@ DB_PATH        = ROOT / "data" / "urban_intel.db"
 DEFECT_JSON    = ROOT / "data" / "defect_records.json"
 INFERENCE_JSON = ROOT / "output" / "inference_results.json"
 EVIDENCE_DIR   = ROOT / "data" / "evidence"
+BACKUP_DIR     = ROOT / "data" / "backups"
+
+parser = argparse.ArgumentParser(description="Reset local demo data after creating a SQLite backup.")
+parser.add_argument(
+    "--confirm-demo-reset",
+    action="store_true",
+    help="Required. Backs up data/urban_intel.db, then clears local demo data."
+)
+args = parser.parse_args()
+
+if not args.confirm_demo_reset:
+    print("Refusing to reset data without --confirm-demo-reset.")
+    print("No files or database rows were changed.")
+    raise SystemExit(2)
 
 print("\n" + "="*60)
 print("  SIH26124 - CLEARING ALL TEST DATA & QUEUE")
 print("="*60)
 
 # ── 1. SQLite DB ─────────────────────────────────────────────
-print("\n[1/5] Connecting to:", DB_PATH)
+print("\n[1/6] Backing up SQLite database ...")
+backup_stamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+if DB_PATH.exists():
+    backup_path = BACKUP_DIR / f"urban_intel-demo-reset-{backup_stamp}.db"
+    shutil.copy2(DB_PATH, backup_path)
+    print("      Backup created:", backup_path)
+else:
+    print("      Database not found; no backup created.")
+
+if EVIDENCE_DIR.exists():
+    evidence_backup = BACKUP_DIR / f"evidence-demo-reset-{backup_stamp}"
+    shutil.copytree(EVIDENCE_DIR, evidence_backup)
+    print("      Evidence backup created:", evidence_backup)
+
+print("\n[2/6] Connecting to:", DB_PATH)
 conn = sqlite3.connect(str(DB_PATH))
 cur  = conn.cursor()
 
@@ -45,7 +76,7 @@ conn.close()
 print("      DB cleared and committed.")
 
 # ── 2. defect_records.json ────────────────────────────────────
-print("\n[2/5] Clearing defect_records.json ...")
+print("\n[3/6] Clearing defect_records.json ...")
 if DEFECT_JSON.exists():
     DEFECT_JSON.write_text("[]", encoding="utf-8")
     print("      defect_records.json -> []")
@@ -53,7 +84,7 @@ else:
     print("      Not found, skipping.")
 
 # ── 3. inference_results.json ─────────────────────────────────
-print("\n[3/5] Clearing inference_results.json ...")
+print("\n[4/6] Clearing inference_results.json ...")
 if INFERENCE_JSON.exists():
     INFERENCE_JSON.write_text("[]", encoding="utf-8")
     print("      inference_results.json -> []")
@@ -61,7 +92,7 @@ else:
     print("      Not found, skipping.")
 
 # ── 4. evidence/ folder ───────────────────────────────────────
-print("\n[4/5] Clearing evidence/ folder ...")
+print("\n[5/6] Clearing evidence/ folder ...")
 if EVIDENCE_DIR.exists():
     files = list(EVIDENCE_DIR.iterdir())
     count = 0
@@ -77,7 +108,7 @@ else:
     print("      evidence/ not found, skipping.")
 
 # ── 5. Done ───────────────────────────────────────────────────
-print("\n[5/5] Verifying DB is empty ...")
+print("\n[6/6] Verifying DB is empty ...")
 conn = sqlite3.connect(str(DB_PATH))
 cur  = conn.cursor()
 for tbl in deleted:

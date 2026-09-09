@@ -5,10 +5,11 @@ Fleet Router: Monitor sensing vehicle nodes, live GPS positions, and device fres
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 import time
 
 from ..database import get_db
-from ..models import VehicleDB
+from ..models import VehicleDB, ObservationDB
 from .ingest import registry
 
 router = APIRouter(prefix="/fleet", tags=["Fleet"])
@@ -21,6 +22,14 @@ def get_fleet_status(db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
     cached_devices = {d.device_id: d for d in registry.list_devices()}
 
     db_vehicles = db.query(VehicleDB).all()
+    observation_stats = {
+        row.device_id: {"observation_count": row.observation_count, "event_count": row.event_count}
+        for row in db.query(
+            ObservationDB.device_id.label("device_id"),
+            func.count(ObservationDB.id).label("observation_count"),
+            func.count(func.distinct(ObservationDB.event_id)).label("event_count"),
+        ).group_by(ObservationDB.device_id).all()
+    }
     now = time.time()
     results = []
 
@@ -51,13 +60,50 @@ def get_fleet_status(db: Session = Depends(get_db)) -> List[Dict[str, Any]]:
             "speed": rec.latest_speed if rec else v.latest_speed,
             "heading": rec.latest_heading if rec else v.latest_heading,
             "status": status,
+            "connection_state": status,
             "last_seen": last_seen,
             "seconds_since_seen": seconds_ago,
             "packets_sent": rec.packets_sent if rec else 0,
-            "detections_reported": rec.detections_reported if rec else 0
+            "detections_reported": rec.detections_reported if rec else 0,
+            "observations_count": observation_stats.get(v.device_id, {}).get("observation_count", 0),
+            "events_observed_count": observation_stats.get(v.device_id, {}).get("event_count", 0),
         })
 
     return results
+
+
+@router.get("/{device_id}")
+def get_fleet_device_detail(device_id: str, db: Session = Depends(get_db)) -> Dict[str, Any]:
+    """Additive per-device traceability API for map/cockpit consumers."""
+    vehicle = db.query(VehicleDB).filter(VehicleDB.device_id == device_id).first()
+    if not vehicle:
+        return {"device_id": device_id, "found": False}
+
+    fleet_row = next((item for item in get_fleet_status(db) if item["device_id"] == device_id), None)
+    observations = db.query(ObservationDB).filter(
+        ObservationDB.device_id == device_id
+    ).order_by(ObservationDB.timestamp.desc()).limit(25).all()
+    return {
+        "found": True,
+        "vehicle": fleet_row,
+        "recent_observations": [
+            {
+                "observation_id": item.id,
+                "event_id": item.event_id,
+                "packet_id": item.packet_id,
+                "timestamp": item.timestamp,
+                "latitude": item.latitude,
+                "longitude": item.longitude,
+                "detection_type": item.defect_type,
+                "model_confidence": item.model_confidence,
+                "model_name": item.model_name,
+                "model_version": item.model_version,
+                "snapshot_path": item.snapshot_path,
+                "evidence_status": item.evidence_status or "MISSING",
+            }
+            for item in observations
+        ],
+    }
 
 
 
@@ -77,6 +123,7 @@ def record_heartbeat(
         lon=payload.get("longitude"),
         speed=payload.get("speed"),
         heading=payload.get("heading"),
+        source_type=payload.get("source_type", "phone_pwa"),
         is_detection=False
     )
 
@@ -97,6 +144,7 @@ def record_heartbeat(
         )
         db.add(db_veh)
     else:
+        db_veh.source_type = payload.get("source_type", db_veh.source_type)
         db_veh.last_seen = rec.last_seen
         db_veh.latest_lat = rec.latest_lat
         db_veh.latest_lon = rec.latest_lon

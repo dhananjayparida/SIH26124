@@ -19,8 +19,8 @@ Arguments:
   --lat        Starting GPS latitude  (default: 0.0 — no GPS)
   --lon        Starting GPS longitude (default: 0.0 — no GPS)
   --annotated  Also write an annotated output video with bounding-box overlays
-    --conf       Detection confidence threshold (default: 0.20)
-    --fusion-radius  Distance in meters used to group detections (default: 30)
+  --conf       Detection confidence threshold (default: 0.22)
+  --fusion-radius  Distance in meters used to group detections (default: 30)
 """
 
 from __future__ import annotations
@@ -78,7 +78,7 @@ def frame_to_b64(frame_bgr: np.ndarray) -> str:
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
-def annotate_frame(frame: np.ndarray, result: DetectionResult, min_conf: float = 0.20) -> np.ndarray:
+def annotate_frame(frame: np.ndarray, result: DetectionResult, min_conf: float = 0.22) -> np.ndarray:
     """Draw bounding boxes + labels on a copy of the frame for detections >= min_conf."""
     annotated = frame.copy()
     h, w = annotated.shape[:2]
@@ -317,8 +317,8 @@ def main():
     parser.add_argument("--lon",      type=float, default=0.0,  help="GPS longitude")
     parser.add_argument("--annotated", action="store_true",
                         help="Also write annotated output video with bounding boxes")
-    parser.add_argument("--conf",     type=float, default=0.20,
-                        help="Detection confidence threshold (default: 0.20)")
+    parser.add_argument("--conf",     type=float, default=0.22,
+                        help="Detection confidence threshold (default: 0.22)")
     parser.add_argument("--fusion-radius", type=float, default=30.0,
                         help="Fusion radius in meters (default: 30)")
     args = parser.parse_args()

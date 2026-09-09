@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../state/store';
-import { X, ShieldAlert, CheckCircle2, Wrench, Clock, Bus, MapPin, Award, Crosshair, Navigation, Maximize2, Image as ImageIcon, Eye, Copy, Check } from 'lucide-react';
+import { X, ShieldAlert, CheckCircle2, Wrench, Clock, Bus, MapPin, Award, Crosshair, Navigation, Maximize2, Image as ImageIcon, Eye, Copy, Check, Camera, ScanLine, History } from 'lucide-react';
 import { formatSpeedKmh } from '../utils/geo';
 
 export default function EntityPanel() {
@@ -8,6 +8,10 @@ export default function EntityPanel() {
   const clearSelection = useStore((state) => state.clearSelection);
   const fetchEvents = useStore((state) => state.fetchEvents);
   const fetchEventDetail = useStore((state) => state.fetchEventDetail);
+  const setQueueModalOpen = useStore((state) => state.setQueueModalOpen);
+  const events = useStore((state) => state.events);
+  const fleet = useStore((state) => state.fleet);
+  const selectEntity = useStore((state) => state.selectEntity);
   const [actionLoading, setActionLoading] = useState(false);
   const [activeEvidenceIndex, setActiveEvidenceIndex] = useState(0);
   const [isEvidenceModalOpen, setEvidenceModalOpen] = useState(false);
@@ -19,6 +23,13 @@ export default function EntityPanel() {
     setImgError(false);
     setCopiedCoords(false);
   }, [selectedEntity?.id]);
+
+  // A map/list click carries summary data. Load the existing detail endpoint once for investigation context.
+  useEffect(() => {
+    if (selectedEntity?.type === 'event' && selectedEntity.id) {
+      fetchEventDetail(selectedEntity.id);
+    }
+  }, [selectedEntity?.id, selectedEntity?.type, fetchEventDetail]);
 
   const copyCoords = (lat, lon) => {
     if (lat && lon) {
@@ -41,6 +52,15 @@ export default function EntityPanel() {
   if (selectedEntity.type === 'vehicle') {
     const v = selectedEntity.data || {};
     const isLive = v.status === 'LIVE';
+    const sourceLabel = v.status === 'REPLAY'
+      ? 'REPLAY'
+      : v.source_type === 'sim'
+        ? 'SIMULATED'
+        : (v.status || 'OFFLINE');
+    const observedEvents = events
+      .filter((event) => (event.source_vehicle_ids || []).includes(selectedEntity.id))
+      .sort((a, b) => Number(b.updated_at || b.created_at || 0) - Number(a.updated_at || a.created_at || 0));
+    const frameSources = Object.values(fleet).filter((vehicle) => vehicle.latestFrame);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -77,7 +97,7 @@ export default function EntityPanel() {
             >
               <div style={{ fontSize: '10px', color: 'var(--text-dim)' }}>SOURCE HEALTH</div>
               <div style={{ fontSize: '12px', fontWeight: 800, color: isLive ? '#10b981' : '#94a3b8' }}>
-                {v.status || 'OFFLINE'}
+                {sourceLabel}
               </div>
             </div>
 
@@ -117,13 +137,11 @@ export default function EntityPanel() {
           {/* LIVE CAMERA DASHCAM STREAM VIEW */}
           <div>
             <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>LIVE DASHCAM FEED</span>
-              {isLive && (
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#ef4444', fontSize: '11px', fontWeight: 700 }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
-                  LIVE
-                </span>
-              )}
+              <span>CAMERA FRAME</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: isLive ? '#ef4444' : '#f59e0b', fontSize: '11px', fontWeight: 700 }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: isLive ? '#ef4444' : '#f59e0b', display: 'inline-block' }} />
+                {v.latestFrame ? sourceLabel : 'NO FRAME'}
+              </span>
             </div>
 
             <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)', background: '#000', minHeight: '190px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -238,15 +256,73 @@ export default function EntityPanel() {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: 'var(--text-dim)' }}>Packets Processed:</span>
-              <span className="mono">{v.packets_sent || 0} frames</span>
+              <span style={{ color: 'var(--text-dim)' }}>Last Seen:</span>
+              <span className="mono">{v.last_seen ? new Date(v.last_seen * 1000).toLocaleString() : 'Not reported'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-dim)' }}>Detections Triggered:</span>
               <span className="mono" style={{ color: '#facc15' }}>{v.detections_reported || 0}</span>
             </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--text-dim)' }}>Events Observed:</span>
+              <span className="mono">{v.events_observed_count ?? 'Not reported'}</span>
+            </div>
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <Camera size={14} color="var(--accent-cyan)" /> AVAILABLE CAMERA SOURCES ({frameSources.length})
+            </div>
+            {frameSources.length > 1 ? (
+              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                {frameSources.map((source) => (
+                  <button key={source.device_id} onClick={() => {
+                    useStore.getState().setFollowedVehicle(source.device_id);
+                    selectEntity('vehicle', source.device_id, source);
+                  }} style={{ padding: '5px 8px', borderRadius: '4px', border: `1px solid ${source.device_id === selectedEntity.id ? 'var(--accent-cyan)' : 'var(--border-color)'}`, background: source.device_id === selectedEntity.id ? 'rgba(56,189,248,.12)' : 'var(--bg-card)', color: 'var(--text-main)', cursor: 'pointer', fontSize: '10px', fontFamily: 'monospace' }}>
+                    {source.device_id}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div style={{ color: 'var(--text-dim)', fontSize: '11px' }}>
+                {frameSources.length === 1 ? 'Only one source has supplied a camera frame.' : 'No camera frame has been received from any source.'}
+              </div>
+            )}
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <ScanLine size={14} color="var(--accent-cyan)" /> LATEST AI DETECTIONS ({(v.detections || []).length})
+            </div>
+            {(v.detections || []).length === 0 ? (
+              <div style={{ color: 'var(--text-dim)', fontSize: '11px' }}>No detections in the latest received telemetry frame.</div>
+            ) : (v.detections || []).map((detection, index) => (
+              <div key={`${detection.class_name || 'detection'}-${index}`} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '5px', padding: '7px 8px', marginBottom: '5px', background: 'rgba(255,255,255,.025)', border: '1px solid var(--border-color)', borderRadius: '5px', fontSize: '11px' }}>
+                <strong style={{ textTransform: 'capitalize' }}>{detection.class_name || 'Unlabelled detection'}</strong>
+                <span className="mono" style={{ color: '#10b981' }}>{((detection.confidence ?? 0) * 100).toFixed(0)}%</span>
+                <span className="mono" style={{ color: 'var(--text-dim)', gridColumn: '1 / -1' }}>
+                  {detection.bbox ? `bbox x:${Math.round(detection.bbox.x)} y:${Math.round(detection.bbox.y)} w:${Math.round(detection.bbox.width)} h:${Math.round(detection.bbox.height)}` : 'Bounding box not supplied'} · {v.last_seen ? new Date(v.last_seen * 1000).toLocaleTimeString() : 'Timestamp not supplied'}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <History size={14} color="var(--accent-cyan)" /> EVENTS OBSERVED BY THIS BUS ({observedEvents.length})
+            </div>
+            {observedEvents.length === 0 ? (
+              <div style={{ color: 'var(--text-dim)', fontSize: '11px' }}>No fused events currently list this bus as a source.</div>
+            ) : observedEvents.map((event) => (
+              <button key={event.event_id} onClick={() => selectEntity('event', event.event_id, event)} style={{ width: '100%', textAlign: 'left', padding: '8px', marginBottom: '5px', background: 'rgba(255,255,255,.025)', border: '1px solid var(--border-color)', borderRadius: '5px', color: 'var(--text-main)', cursor: 'pointer' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', fontSize: '11px', fontWeight: 700 }}><span>{String(event.type || 'EVENT').replace(/_/g, ' ')}</span><span style={{ color: 'var(--accent-cyan)' }}>{((event.event_confidence ?? 0) * 100).toFixed(0)}%</span></div>
+                <div className="mono" style={{ color: 'var(--text-dim)', fontSize: '10px', marginTop: '3px' }}>{event.status || 'State not supplied'} · {event.latitude?.toFixed(5)}, {event.longitude?.toFixed(5)} · {event.updated_at ? new Date(event.updated_at * 1000).toLocaleTimeString() : 'Timestamp not supplied'}</div>
+              </button>
+            ))}
           </div>
         </div>
+
       </div>
     );
   }
@@ -303,6 +379,18 @@ export default function EntityPanel() {
   };
 
   const statusStyle = getStatusStyle(ev.status);
+  const sourceDevices = [...new Set(timeline.map((observation) => observation.device_id).filter(Boolean))];
+  const reportedSourceDevices = sourceDevices.length ? sourceDevices : (ev.source_vehicle_ids || []);
+  const repeatedObservations = Math.max(0, timeline.length - sourceDevices.length);
+  const evidenceItems = (ev.evidence || []).filter((item) => item.status === 'AVAILABLE' && item.uri);
+  const repairHistory = ev.repair_history || [];
+  const lifecycleSteps = [
+    { label: 'DETECTED', active: true, complete: true },
+    { label: 'CORROBORATED', active: (reportedSourceDevices.length || ev.unique_sources || 0) >= 2, complete: (reportedSourceDevices.length || ev.unique_sources || 0) >= 2 },
+    { label: 'PRIORITIZED', active: ev.status === 'HIGH_PRIORITY', complete: ev.status === 'HIGH_PRIORITY' },
+    { label: 'REPAIR REPORTED', active: repairHistory.length > 0, complete: repairHistory.length > 0 },
+    { label: 'RESOLVED', active: ev.status === 'RESOLVED', complete: ev.status === 'RESOLVED' }
+  ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -343,6 +431,7 @@ export default function EntityPanel() {
           <div style={{ fontSize: '16px', fontWeight: 800, textTransform: 'capitalize', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {(ev.subtype || 'Unknown').replace(/_/g, ' ')}
           </div>
+          <div className="mono" style={{ color: 'var(--text-dim)', fontSize: '10px', marginTop: '4px' }}>EVENT {ev.event_id || selectedEntity.id}</div>
         </div>
         <button
           onClick={clearSelection}
@@ -403,6 +492,52 @@ export default function EntityPanel() {
               {ev.unique_sources} VEHICLES
             </div>
           </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-card)', padding: '10px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '11px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <div><div style={{ color: 'var(--text-dim)' }}>SEVERITY</div><strong>{ev.severity || 'Not reported'}</strong></div>
+          <div><div style={{ color: 'var(--text-dim)' }}>PRIORITY SCORE</div><strong className="mono">{ev.priority_score ?? 'Not reported'}</strong></div>
+          <div><div style={{ color: 'var(--text-dim)' }}>FIRST OBSERVED</div><strong className="mono">{(ev.evidence_summary?.first_observed_at || ev.created_at) ? new Date((ev.evidence_summary?.first_observed_at || ev.created_at) * 1000).toLocaleString() : 'Not reported'}</strong></div>
+          <div><div style={{ color: 'var(--text-dim)' }}>LAST OBSERVED</div><strong className="mono">{(ev.evidence_summary?.last_observed_at || ev.updated_at) ? new Date((ev.evidence_summary?.last_observed_at || ev.updated_at) * 1000).toLocaleString() : 'Not reported'}</strong></div>
+        </div>
+
+        <div style={{ background: 'rgba(56,189,248,.05)', padding: '11px 12px', borderRadius: '8px', border: '1px solid rgba(56,189,248,.2)', fontSize: '11px', display: 'grid', gap: '7px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}><span style={{ color: 'var(--text-dim)' }}>LOCATION</span><span className="mono">{ev.latitude?.toFixed(6)}, {ev.longitude?.toFixed(6)}</span></div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}><span style={{ color: 'var(--text-dim)' }}>MAP CONTEXT</span><span style={{ color: 'var(--text-muted)' }}>OpenStreetMap roads at event location</span></div>
+          <div style={{ color: 'var(--text-dim)', lineHeight: 1.4 }}>No application road-segment match is recorded for this event.</div>
+        </div>
+
+        <div style={{ background: 'var(--bg-card)', padding: '11px 12px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+          <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 800, marginBottom: '8px' }}>WHY THIS EVENT IS TRUSTED</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '7px', fontSize: '10px' }}>
+            <div><div style={{ color: 'var(--text-dim)' }}>OBSERVATIONS</div><strong className="mono">{timeline.length || ev.observation_count || 0}</strong></div>
+            <div><div style={{ color: 'var(--text-dim)' }}>INDEPENDENT</div><strong className="mono">{reportedSourceDevices.length || ev.unique_sources || 0} DEVICE{(reportedSourceDevices.length || ev.unique_sources || 0) === 1 ? '' : 'S'}</strong></div>
+            <div><div style={{ color: 'var(--text-dim)' }}>REPEATED</div><strong className="mono">{repeatedObservations} SAME-DEVICE</strong></div>
+          </div>
+          <div style={{ color: 'var(--text-dim)', fontSize: '10px', marginTop: '8px', lineHeight: 1.4 }}>
+            Independent-device corroboration counts unique source devices. Repeated observations from one device remain recorded but do not add a source.
+          </div>
+        </div>
+
+        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-muted)' }}>PERSISTENT URBAN MEMORY</div>
+          <div style={{ color: 'var(--text-dim)', fontSize: '11px', lineHeight: 1.55 }}>
+            Source vehicles: <span className="mono" style={{ color: 'var(--text-main)' }}>{reportedSourceDevices.length ? reportedSourceDevices.join(', ') : 'Not reported'}</span><br />
+            Current state: <strong style={{ color: statusStyle.color }}>{ev.status || 'Not reported'}</strong> · Repair records: <strong>{repairHistory.length}</strong>
+          </div>
+        </div>
+
+        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-muted)' }}>EVIDENCE LEDGER ({evidenceItems.length} AVAILABLE)</div>
+          {evidenceItems.length === 0 ? (
+            <div style={{ color: 'var(--text-dim)', fontSize: '11px' }}>No evidence frame is available for inspection.</div>
+          ) : evidenceItems.map((item) => (
+            <div key={item.observation_id} style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', gap: '8px', padding: '6px 0', borderBottom: '1px solid rgba(255,255,255,.05)' }}>
+              <span className="mono">{item.device_id}</span>
+              <span style={{ color: 'var(--text-dim)' }}>{item.timestamp ? new Date(item.timestamp * 1000).toLocaleTimeString() : 'Timestamp not supplied'}</span>
+              <span style={{ color: '#10b981' }}>{((item.model_confidence ?? 0) * 100).toFixed(0)}%</span>
+            </div>
+          ))}
         </div>
 
         {/* Evidence Visual Snapshot */}
@@ -479,7 +614,7 @@ export default function EntityPanel() {
               }}>
                 <span>{ev.subtype || 'DEFECT'}</span>
                 <span>•</span>
-                <span>{((ev.model_confidence || ev.event_confidence || 0.85) * 100).toFixed(0)}% CONF</span>
+                <span>{((ev.model_confidence ?? ev.event_confidence ?? 0) * 100).toFixed(0)}% CONF</span>
               </div>
 
               {/* Multi-Photo Carousel Selector */}
@@ -566,10 +701,10 @@ export default function EntityPanel() {
             }}>
               <ShieldAlert size={24} color="var(--text-dim)" style={{ opacity: 0.6 }} />
               <div>
-                <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>Defect Telemetry Corroborated</span>
+                <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>No visual evidence attached</span>
               </div>
               <span style={{ fontSize: '10px', color: 'var(--text-dim)' }}>
-                Visual snapshot saved in local evidence store or telemetry replay
+                Evidence availability is reported in the event timeline when present
               </span>
             </div>
           )}
@@ -616,22 +751,62 @@ export default function EntityPanel() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderLeft: '2px solid rgba(56, 189, 248, 0.3)', paddingLeft: '12px' }}>
-            {timeline.map((obs, idx) => (
-              <div key={obs.observation_id || idx} style={{ fontSize: '11px', background: 'rgba(255,255,255,0.02)', padding: '6px 8px', borderRadius: '4px' }}>
+            {timeline.map((obs, idx) => {
+              const isSameDeviceRepeat = timeline.slice(0, idx).some((prior) => prior.device_id === obs.device_id);
+              return (
+              <div key={obs.observation_id || idx} style={{ fontSize: '11px', background: 'rgba(255,255,255,0.02)', padding: '7px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,.04)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
                   <span style={{ color: 'var(--accent-cyan)' }}>#{idx + 1} {obs.device_id}</span>
-                  <span className="mono" style={{ color: '#10b981' }}>{(obs.model_confidence * 100).toFixed(0)}% conf</span>
+                  <span className="mono" style={{ color: '#10b981' }}>{((obs.model_confidence ?? 0) * 100).toFixed(0)}% conf</span>
                 </div>
                 <div style={{ color: 'var(--text-dim)', fontSize: '10px', marginTop: '2px' }}>
-                  {new Date(obs.timestamp * 1000).toLocaleTimeString()} · lat {obs.latitude.toFixed(4)}
+                  {obs.timestamp ? new Date(obs.timestamp * 1000).toLocaleTimeString() : 'Timestamp not supplied'} · {obs.latitude?.toFixed(5)}, {obs.longitude?.toFixed(5)}
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '5px' }}>
+                  <span style={{ color: isSameDeviceRepeat ? '#facc15' : '#10b981', fontSize: '9px', fontWeight: 700 }}>{isSameDeviceRepeat ? 'REPEATED SAME DEVICE' : 'INDEPENDENT SOURCE'}</span>
+                  {obs.source_type === 'replay' && <span style={{ color: '#f59e0b', fontSize: '9px', fontWeight: 700 }}>REPLAY SOURCE</span>}
+                  <span style={{ color: obs.evidence_status === 'AVAILABLE' ? '#10b981' : 'var(--text-dim)', fontSize: '9px' }}>EVIDENCE: {obs.evidence_status || 'Not reported'}</span>
                 </div>
               </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {repairHistory.length > 0 && (
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+            <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}><Wrench size={14} color="var(--accent-cyan)" /> REPAIR HISTORY ({repairHistory.length})</div>
+            {repairHistory.map((repair) => (
+              <div key={repair.id} style={{ fontSize: '11px', padding: '7px 8px', marginBottom: '5px', background: 'rgba(56,189,248,.04)', border: '1px solid rgba(56,189,248,.15)', borderRadius: '5px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px' }}><strong>{repair.status || 'Repair update'}</strong><span className="mono">{repair.reported_at ? new Date(repair.reported_at * 1000).toLocaleString() : 'Timestamp not supplied'}</span></div>
+                <div style={{ color: 'var(--text-dim)', marginTop: '3px' }}>{repair.reported_by || 'Reporter not supplied'}{repair.notes ? ` · ${repair.notes}` : ''}</div>
+              </div>
             ))}
+          </div>
+        )}
+
+        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-muted)' }}>CLOSED-LOOP LIFECYCLE</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+            {lifecycleSteps.map((step) => (
+              <span key={step.label} style={{ padding: '4px 6px', borderRadius: '4px', fontSize: '9px', fontWeight: 800, color: step.active ? (step.complete ? '#10b981' : '#facc15') : 'var(--text-dim)', background: step.active ? (step.complete ? 'rgba(16,185,129,.1)' : 'rgba(250,204,21,.08)') : 'rgba(255,255,255,.025)', border: `1px solid ${step.active ? (step.complete ? 'rgba(16,185,129,.35)' : 'rgba(250,204,21,.3)') : 'var(--border-color)'}` }}>
+                {step.complete ? '✓ ' : ''}{step.label}
+              </span>
+            ))}
+          </div>
+          <div style={{ color: 'var(--text-dim)', fontSize: '10px', lineHeight: 1.45, marginTop: '8px' }}>
+            Steps are shown only from current persisted fields: distinct sources, current priority state, repair records, and current resolution state. Re-check/verification is not an automatic backend state; no persistence assessment is inferred here.
           </div>
         </div>
 
         {/* Municipal Workflow Action Buttons */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: 'auto', paddingTop: '12px' }}>
+          <button
+            onClick={() => setQueueModalOpen(true)}
+            style={{ padding: '9px', borderRadius: '6px', border: '1px solid rgba(56,189,248,.45)', background: 'rgba(56,189,248,.08)', color: 'var(--accent-cyan)', fontWeight: 700, fontSize: '12px', cursor: 'pointer' }}
+          >
+            OPEN MAINTENANCE QUEUE
+          </button>
           {ev.status !== 'REPAIR_REPORTED' && ev.status !== 'RESOLVED' && (
             <button
               onClick={handleReportRepair}
@@ -754,7 +929,7 @@ export default function EntityPanel() {
                 <div>
                   <div style={{ color: 'var(--text-dim)' }}>DETECTION CONFIDENCE</div>
                   <div className="mono" style={{ fontWeight: 700, color: '#10b981', marginTop: '2px' }}>
-                    {((ev.model_confidence || ev.event_confidence || 0.85) * 100).toFixed(1)}% (D-FINE)
+                    {((ev.model_confidence ?? ev.event_confidence ?? 0) * 100).toFixed(1)}%
                   </div>
                 </div>
                 <div>

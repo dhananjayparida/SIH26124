@@ -31,12 +31,12 @@ def kill_all():
 
 def main():
     print("==================================================================")
-    print("  SIH26124 — AI-POWERED URBAN INTELLIGENCE PLATFORM (D-FINE)")
+    print("  SIH26124 — URBAN INTELLIGENCE PLATFORM")
     print("  Starting all services: AI Engine, Gateway, Web GIS, & Mobile PWA")
     print("==================================================================\n")
 
     # 1. Start FastAPI AI Service (port 8000)
-    print("[1/4] Starting FastAPI AI & D-FINE Fusion Service on port 8000...")
+    print("[1/4] Starting FastAPI perception and fusion service on port 8000...")
     fastapi_proc = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "backend.ai_service.main:app", "--port", "8000", "--host", "0.0.0.0", "--reload"],
         cwd=str(ROOT_DIR),
@@ -70,9 +70,23 @@ def main():
     processes.append(frontend_proc)
     time.sleep(1.5)
 
+    local_ip = "127.0.0.1"
+    try:
+        import socket
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        local_ip = s.getsockname()[0]
+        s.close()
+    except Exception:
+        pass
+
     # 4. Start Cloudflare Tunnel for Phone Camera HTTPS
     tunnel_url = None
     cloudflared_bin = ROOT_DIR / "cloudflared.exe"
+    data_dir = ROOT_DIR / "data"
+    data_dir.mkdir(exist_ok=True)
+    tunnel_file = data_dir / "tunnel_url.txt"
+
     if cloudflared_bin.exists():
         print("[4/4] Starting Cloudflare HTTPS Tunnel for Mobile Phone Camera...")
         tunnel_proc = subprocess.Popen(
@@ -86,20 +100,46 @@ def main():
             cwd=str(ROOT_DIR),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            text=True
+            text=True,
+            bufsize=1
         )
         processes.append(tunnel_proc)
 
-        # Read tunnel output to extract trycloudflare URL
+        # Read tunnel output to extract trycloudflare URL (allow up to 25s)
         start_wait = time.time()
-        while time.time() - start_wait < 10:
+        print("      Waiting for Cloudflare Tunnel public HTTPS URL (takes ~10s)...")
+        while time.time() - start_wait < 25:
             line = tunnel_proc.stdout.readline()
             if line:
                 match = re.search(r'https://[a-zA-Z0-9-]+\.trycloudflare\.com', line)
                 if match:
                     tunnel_url = match.group(0)
+                    try:
+                        tunnel_file.write_text(tunnel_url, encoding="utf-8")
+                    except Exception:
+                        pass
                     break
-            time.sleep(0.1)
+            time.sleep(0.05)
+
+        # Background thread to keep reading if tunnel arrives later
+        if not tunnel_url:
+            def _async_tunnel_reader(proc):
+                nonlocal tunnel_url
+                while True:
+                    l = proc.stdout.readline()
+                    if not l:
+                        break
+                    m = re.search(r'https://[a-zA-Z0-9-]+\.trycloudflare\.com', l)
+                    if m and not tunnel_url:
+                        tunnel_url = m.group(0)
+                        try:
+                            tunnel_file.write_text(tunnel_url, encoding="utf-8")
+                        except Exception:
+                            pass
+                        print(f"\n[Tunnel Ready] 📱 Phone Camera HTTPS: {tunnel_url}/pwa/?device_id=BUS_LIVE_01\n")
+                        break
+            t = threading.Thread(target=_async_tunnel_reader, args=(tunnel_proc,), daemon=True)
+            t.start()
 
     print("\n==================================================================")
     print("  🚀 PLATFORM IS FULLY OPERATIONAL!")
@@ -107,13 +147,13 @@ def main():
     print("  💻 GIS Command Center:    http://localhost:3000")
     print("  ⚙️  AI REST API & Docs:    http://localhost:8000/docs")
     if tunnel_url:
-        print(f"  📱 Phone Camera PWA:      {tunnel_url}/pwa/?device_id=BUS_LIVE_01")
-    else:
-        print("  📱 Local Wi-Fi PWA:       http://localhost:5000/pwa/?device_id=BUS_LIVE_01")
+        print(f"  📱 Phone Camera (HTTPS):  {tunnel_url}/pwa/?device_id=BUS_LIVE_01")
+    print(f"  📱 Local Wi-Fi PWA:       http://{local_ip}:5000/pwa/?device_id=BUS_LIVE_01")
+    print(f"  📱 Localhost (This PC):   http://localhost:5000/pwa/?device_id=BUS_LIVE_01")
     print("==================================================================")
     print("  • Open the Phone Camera PWA link on your mobile browser.")
     print("  • Tap 'START SENSING' to stream your live phone camera to the map!")
-    print("  • Live YOLO neural perception runs in real-time directly on camera frames.")
+    print("  • The configured backend perception model evaluates transmitted camera frames.")
     print("==================================================================")
     print("\nCommands:")
     print("  [r] Run automated multi-bus corroboration replay simulation")

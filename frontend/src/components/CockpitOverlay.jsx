@@ -7,13 +7,22 @@ export default function CockpitOverlay() {
   const cockpitMode = useStore((state) => state.cockpitMode);
   const setCockpitMode = useStore((state) => state.setCockpitMode);
   const followedVehicleId = useStore((state) => state.followedVehicleId);
+  const selectedEntity = useStore((state) => state.selectedEntity);
   const fleet = useStore((state) => state.fleet);
   const events = useStore((state) => state.events);
 
   if (!cockpitMode) return null;
 
-  const bus = (followedVehicleId && fleet[followedVehicleId]) || Object.values(fleet)[0] || {};
+  const selectedBusId = selectedEntity?.type === 'vehicle' ? selectedEntity.id : null;
+  const bus = (selectedBusId && fleet[selectedBusId]) || (followedVehicleId && fleet[followedVehicleId]) || Object.values(fleet)[0] || {};
   const isLive = bus.status === 'LIVE';
+  const feedState = bus.status === 'REPLAY'
+    ? 'REPLAY'
+    : bus.source_type === 'sim'
+      ? 'SIMULATED'
+      : isLive
+        ? 'LIVE'
+        : (bus.status || 'OFFLINE');
   const speedKmh = formatSpeedKmh(bus.speed);
   const heading = (bus.heading || 0).toFixed(0);
 
@@ -61,7 +70,7 @@ export default function CockpitOverlay() {
           <div>
             <div style={{ fontSize: '11px', color: 'var(--text-dim)', letterSpacing: '1px' }}>GEV COCKPIT SENSING VIEW</div>
             <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--accent-cyan)' }}>
-              {bus.device_id || 'BUS_SIM_01'}
+              {bus.device_id || 'NO SOURCE SELECTED'}
             </div>
           </div>
           <span style={{
@@ -73,7 +82,7 @@ export default function CockpitOverlay() {
             color: isLive ? '#10b981' : '#94a3b8',
             border: isLive ? '1px solid #10b981' : '1px solid #64748b'
           }}>
-            {isLive ? 'LIVE FEED' : 'SIMULATED'}
+            {feedState}
           </span>
         </div>
 
@@ -195,8 +204,8 @@ export default function CockpitOverlay() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-dim)', fontSize: '11px', textAlign: 'center', padding: '10px' }}>
               <Bus size={28} style={{ opacity: 0.4, marginBottom: '6px' }} />
-              <div>Dashcam Stream Active</div>
-              <div style={{ fontSize: '10px', color: 'var(--accent-cyan)' }}>Sampling 2.5 FPS</div>
+              <div>No camera frame received</div>
+              <div style={{ fontSize: '10px', color: 'var(--accent-cyan)' }}>Waiting for this source's telemetry</div>
             </div>
           )}
           <div style={{
@@ -213,8 +222,8 @@ export default function CockpitOverlay() {
             fontFamily: 'monospace',
             color: '#38bdf8'
           }}>
-            <span>CAM_01</span>
-            <span>D-FINE PERCEPTION</span>
+            <span>{bus.device_id || 'NO SOURCE'}</span>
+            <span>{feedState} · {(bus.detections || []).length} DETECTIONS</span>
           </div>
         </div>
       </div>

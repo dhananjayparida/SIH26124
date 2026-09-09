@@ -4,6 +4,7 @@ Stores and manages defect image frames for audit trails and municipal dispatch.
 """
 
 import base64
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -14,6 +15,34 @@ class EvidenceManager:
     def __init__(self, storage_dir: str = "data/evidence"):
         self.storage_dir = Path(storage_dir)
         self.storage_dir.mkdir(parents=True, exist_ok=True)
+        self.min_confidence = self._threshold(os.getenv("EVIDENCE_MIN_CONFIDENCE", "0"))
+        self.interval_seconds = self._interval(os.getenv("EVIDENCE_INTERVAL_SECONDS", "0"))
+        self._last_capture = {}
+
+    @staticmethod
+    def _threshold(value: str) -> float:
+        try:
+            return min(1.0, max(0.0, float(value)))
+        except (TypeError, ValueError):
+            return 0.0
+
+    @staticmethod
+    def _interval(value: str) -> float:
+        try:
+            return max(0.0, float(value))
+        except (TypeError, ValueError):
+            return 0.0
+
+    def should_capture(self, device_id: str, defect_type: str, confidence: float, timestamp: float) -> bool:
+        """Optional same-device throttling; independent-source fusion is unchanged."""
+        if confidence < self.min_confidence:
+            return False
+        key = (device_id, (defect_type or "unknown").lower())
+        last = self._last_capture.get(key)
+        if self.interval_seconds and last is not None and timestamp - last < self.interval_seconds:
+            return False
+        self._last_capture[key] = timestamp
+        return True
 
     def save_base64_snapshot(
         self,

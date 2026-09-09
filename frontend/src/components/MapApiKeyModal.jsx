@@ -77,8 +77,8 @@ export default function MapApiKeyModal() {
                 </div>
                 <div style={{ fontSize: '10px', color: 'var(--text-dim)', marginTop: '2px' }}>
                   {isCustomActive
-                    ? 'Streaming high-resolution Mapbox/Maptiler vector tiles'
-                    : 'Streaming CARTO Dark Matter, Esri Satellite, and OpenStreetMap'}
+                    ? 'Using the selected Mapbox or MapTiler tile service'
+                    : 'Using the selected no-key basemap: OpenStreetMap, Stadia, or Esri'}
                 </div>
               </div>
             </div>
